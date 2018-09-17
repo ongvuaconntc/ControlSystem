@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -22,7 +23,7 @@ import hongmp.chinhnt.controlsystem.object.SystemElement;
 import hongmp.chinhnt.controlsystem.object.SystemFunction;
 
 public class ViewElementActivity extends AppCompatActivity {
-    static String ipServer="192.168.137.197";
+    static String ipServer="10.3.141.1";
     static int port=11000;
     static boolean TEST_MODE=false;
 
@@ -34,6 +35,12 @@ public class ViewElementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
+        if (android.os.Build.VERSION.SDK_INT > 9)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -62,6 +69,10 @@ public class ViewElementActivity extends AppCompatActivity {
         if (!TEST_MODE) {
             try {
                 client = new MyTCPClient(InetAddress.getByName(ipServer), port);
+                String x="hello\n";
+                byte[] data=new byte[6];
+                for (int i=0;i<6;i++) data[i]=(byte)x.charAt(i);
+                client.writeData(data);
             } catch (Exception e) {
                 e.printStackTrace();
 
