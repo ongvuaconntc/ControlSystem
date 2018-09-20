@@ -14,6 +14,19 @@
   -->
 
 <toolbox>
+    <category name="Arduino" colour="330">
+        <block type="init_arduino"></block>
+        <block type="loop_arduino">
+        </block>
+        <block type="setup_arduino"></block>
+        <block type="set port mode">
+            <field name="PortName">1</field>
+        </block>
+        <block type="set_port_value">
+        </block>
+        <block type="get_port_value"></block>
+        <block type="delay_arduino"></block>
+    </category>
     <category name="Logic" colour="210">
         <block type="controls_if"></block>
         <block type="controls_ifelse"></block>
@@ -302,5 +315,8 @@
         </block>
     </category>
     <category name="Biến" colour="330" custom="VARIABLE" />
+
+
+
     <!-- <category name="Functions" colour="290" custom="PROCEDURE" /> -->
 </toolbox>

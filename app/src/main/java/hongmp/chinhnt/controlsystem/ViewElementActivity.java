@@ -25,7 +25,7 @@ import hongmp.chinhnt.controlsystem.object.SystemFunction;
 public class ViewElementActivity extends AppCompatActivity {
     static String ipServer="10.3.141.1";
     static int port=11000;
-    static boolean TEST_MODE=false;
+    static boolean TEST_MODE=true;
 
     ArrayList<SystemElement> listEl;
     private CustomAdapterSystemElement adapter;

@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.google.blockly.android.AbstractBlocklyActivity;
 import com.google.blockly.android.codegen.CodeGenerationRequest;
+import com.google.blockly.android.codegen.LanguageDefinition;
+import com.google.blockly.model.DefaultBlocks;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,10 +26,28 @@ import hongmp.chinhnt.controlsystem.object.SystemFunction;
 
 public class BlocklyActivity extends AbstractBlocklyActivity {
     String generated_Code;
-    private static List<String> MY_BLOCK_DEFINITIONS;
-    private static final List<String> JAVASCRIPT_GENERATORS = Arrays.asList(
-            // Custom block generators go here. Default blocks are already included.
+    private static List<String> MY_BLOCK_DEFINITIONS=Arrays.asList(
+            "myblock/colour_blocks.json",
+            "myblock/list_blocks.json",
+            "myblock/logic_blocks.json",
+            "myblock/loop_blocks.json",
+            "myblock/math_blocks.json",
+            "myblock/procedures.json",
+            "myblock/text_blocks.json",
+            "myblock/variable_blocks.json",
+            "myblock/arduino.json"
     );
+    private static final List<String> JAVASCRIPT_GENERATORS = Arrays.asList(
+            // Custom block generators go here. Default blocks are already included
+            "generator/mygenerators.js"
+    );
+
+    @NonNull
+    @Override
+    protected LanguageDefinition getBlockGeneratorLanguage() {
+        return super.getBlockGeneratorLanguage();
+    }
+
     CodeGenerationRequest.CodeGeneratorCallback mCodeGeneratorCallback =
             new MyGenerators(this, "BlocklyActivity");
     SystemFunction function=null;
@@ -35,7 +55,6 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        System.out.println("onCreate");
         super.onCreate(savedInstanceState, persistentState);
 
 
@@ -61,9 +80,6 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         return assetPaths;
     }
     public static List<String> getAllBlockDefinitions() {
-        if (MY_BLOCK_DEFINITIONS == null) {
-            MY_BLOCK_DEFINITIONS = Collections.unmodifiableList(Arrays.asList("myblock/colour_blocks.json", "myblock/list_blocks.json", "myblock/logic_blocks.json", "myblock/loop_blocks.json", "myblock/math_blocks.json", "myblock/procedures.json", "myblock/text_blocks.json", "myblock/variable_blocks.json"));
-        }
         return MY_BLOCK_DEFINITIONS;
     }
 
@@ -164,4 +180,5 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         }
 
     }
+
 }
