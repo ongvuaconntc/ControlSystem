@@ -16,14 +16,11 @@
 <toolbox>
     <category name="Arduino" colour="330">
         <block type="init_arduino"></block>
-        <block type="loop_arduino">
-        </block>
-        <block type="setup_arduino"></block>
+        <block type="core_arduino"></block>
         <block type="set port mode">
             <field name="PortName">1</field>
         </block>
-        <block type="set_port_value">
-        </block>
+        <block type="set_port_value"></block>
         <block type="get_port_value"></block>
         <block type="delay_arduino"></block>
     </category>
