@@ -1,51 +1,88 @@
 package hongmp.chinhnt.controlsystem.list_utils;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
 import hongmp.chinhnt.controlsystem.ViewDetailElementActivity;
-import hongmp.chinhnt.controlsystem.ViewElementActivity;
 import hongmp.chinhnt.controlsystem.BlocklyActivity;
 import hongmp.chinhnt.controlsystem.R;
 import hongmp.chinhnt.controlsystem.object.SystemFunction;
 
-public class CustomAdapterSystemFunction extends ArrayAdapter<SystemFunction> {
+public class CustomAdapterSystemFunction extends  RecyclerView.Adapter<CustomAdapterSystemFunction.ViewHolder>{
     private ViewDetailElementActivity activity;
-    public static class ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder  {
         TextView txtName;
         TextView txtFunction;
         public Button btnUpdate;
         public Button btnRemove;
         public int position;
+        public ViewHolder(ConstraintLayout itemView) {
+            super(itemView);
+            this.txtName=itemView.findViewById(R.id.txtName);
+            this.txtFunction=itemView.findViewById(R.id.txtFunction);
+            this.btnUpdate=itemView.findViewById(R.id.btnUpdate);
+            this.btnRemove=itemView.findViewById(R.id.btnRemove);
+
+
+            this.btnUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SystemFunction function=functions.get(position);
+                    Intent intent=new Intent(activity,BlocklyActivity.class);
+                    intent.putExtra("function",function);
+                    activity.startActivity(intent);
+                }
+            });
+
+        }
     };
 
-    private Context context;
-    private int resource;
+
     private List<SystemFunction> functions;
-    public CustomAdapterSystemFunction(@NonNull Context context, int resource, @NonNull List<SystemFunction> objects) {
-        super(context, resource, objects);
-        this.context=context;
-        this.resource=resource;
+    public CustomAdapterSystemFunction(List<SystemFunction> objects) {
         this.functions=objects;
     }
 
+    public CustomAdapterSystemFunction.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                    int viewType) {
+        // create a new view
+        ConstraintLayout v = (ConstraintLayout) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.custom_recycler_view_function, parent, false);
+
+        CustomAdapterSystemFunction.ViewHolder vh = new CustomAdapterSystemFunction.ViewHolder(v);
+        return vh;
+    }
+
+
+    public void onBindViewHolder(@NonNull CustomAdapterSystemFunction.ViewHolder holder, int position) {
+        holder.txtName.setText("Port:"+new Integer(functions.get(position).getPort()).toString());
+        holder.txtFunction.setText("Function:"+functions.get(position).getName());
+        holder.position=position;
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return functions.size();
+    }
+
+/*
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
        ViewHolder viewHolder;
        View view=convertView;
        if (view==null){
-            view= LayoutInflater.from(context).inflate(R.layout.custom_list_view_function,parent,false);
+            view= LayoutInflater.from(context).inflate(R.layout.custom_recycler_view_function,parent,false);
             viewHolder=new ViewHolder();
             viewHolder.txtName=(TextView)view.findViewById(R.id.txtName);
             viewHolder.txtFunction=(TextView)view.findViewById(R.id.txtFunction);
@@ -83,6 +120,7 @@ public class CustomAdapterSystemFunction extends ArrayAdapter<SystemFunction> {
        return view;
 
     }
+    */
 
     public void setActivity(ViewDetailElementActivity activity) {
         this.activity = activity;

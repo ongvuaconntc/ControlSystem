@@ -56,7 +56,7 @@ Blockly.JavaScript['core_arduino'] = function(block) {
   var statements_do0 = Blockly.JavaScript.statementToCode(block, 'DO0');
   var statements_do = Blockly.JavaScript.statementToCode(block, 'DO');
   // TODO: Assemble JavaScript into code variable.
-  var code = 'function loop(){'+statements_do0+'};\n'+'function setup(){'+statements_do+'}\n';
+  var code = 'function setup(){'+statements_do0+'};\n'+'function loop(){'+statements_do+'}\n';
   return code;
 };
 

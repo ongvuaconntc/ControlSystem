@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ListView;
 
@@ -18,21 +20,24 @@ public class ViewDetailElementActivity extends AppCompatActivity {
 
     ArrayList<SystemFunction> listFunc;
     private CustomAdapterSystemFunction adapter;
-    private ListView listView;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         Intent intent=getIntent();
-        listView=(ListView) findViewById(R.id.list);
+        recyclerView=(RecyclerView) findViewById(R.id.recylcerView_);
 
         if (intent.getSerializableExtra("element")!=null) {
             SystemElement element = (SystemElement) intent.getSerializableExtra("element");
             listFunc=element.getListFunctions();
-            adapter=new CustomAdapterSystemFunction(this,R.layout.custom_list_view_function,listFunc);
+            adapter=new CustomAdapterSystemFunction(listFunc);
             adapter.setActivity(this);
-            listView.setAdapter(adapter);
+            mLayoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setAdapter(adapter);
         }
     }
 //    public void updateFunction(View v){

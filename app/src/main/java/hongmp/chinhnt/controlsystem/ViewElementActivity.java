@@ -11,6 +11,8 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ListView;
 
@@ -27,10 +29,11 @@ public class ViewElementActivity extends AppCompatActivity {
     static int port=11000;
     static boolean TEST_MODE=true;
 
-    ArrayList<SystemElement> listEl;
+    public ArrayList<SystemElement> listEl;
     private CustomAdapterSystemElement adapter;
     static public MyTCPClient client;
-    private ListView listView;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +67,7 @@ public class ViewElementActivity extends AppCompatActivity {
         } else {
             // Permission has already been granted
         }
-        listView=(ListView) findViewById(R.id.list);
+        recyclerView=(RecyclerView) findViewById(R.id.recyclerView);
 
         if (!TEST_MODE) {
             try {
@@ -110,10 +113,7 @@ public class ViewElementActivity extends AppCompatActivity {
             functions.add(function);
             functions.add(function1);
 
-
             SystemElement element=new SystemElement("Node1",functions);
-
-
 
             SystemFunction function7=new SystemFunction(1,"Hẹn giờ bật nóng lạnh","cửa cửa","Node2");
             SystemFunction function8=new SystemFunction(1,"Bật điều hòa","cửa cửa","Node2");
@@ -130,16 +130,17 @@ public class ViewElementActivity extends AppCompatActivity {
             listEl.add(element);
             listEl.add(element2);
         }
-
-        adapter=new CustomAdapterSystemElement(this,R.layout.custom_list_view_element,listEl);
+        mLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLayoutManager);
+        adapter=new CustomAdapterSystemElement(listEl);
         adapter.setActivity(this);
-        listView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
     }
     public void viewDetail(View v){
         Intent intent=new Intent(this,ViewDetailElementActivity.class);
         ConstraintLayout layout=(ConstraintLayout)v.getParent();
         CustomAdapterSystemElement.ViewHolder holder=(CustomAdapterSystemElement.ViewHolder)layout.getTag();
-
+        System.out.println("Holder: "+holder);
         if (holder==null) return;
         System.out.println("holder postion: "+holder.position);
         intent.putExtra("element",listEl.get(holder.position));

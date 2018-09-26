@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "hongmp.chinhnt.controlsystem"
         minSdkVersion 21
@@ -21,6 +22,7 @@ android {
 dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:cardview-v7:22.2.0'
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:support-v13:27.1.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
