@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class CustomAdapterSystemFunction extends  RecyclerView.Adapter<CustomAda
         public Button btnUpdate;
         public Button btnRemove;
         public int position;
-        public ViewHolder(ConstraintLayout itemView) {
+        public ViewHolder(LinearLayout itemView) {
             super(itemView);
             this.txtName=itemView.findViewById(R.id.txtName);
             this.txtFunction=itemView.findViewById(R.id.txtFunction);
@@ -55,7 +56,7 @@ public class CustomAdapterSystemFunction extends  RecyclerView.Adapter<CustomAda
     public CustomAdapterSystemFunction.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                                     int viewType) {
         // create a new view
-        ConstraintLayout v = (ConstraintLayout) LayoutInflater.from(parent.getContext())
+        LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_recycler_view_function, parent, false);
 
         CustomAdapterSystemFunction.ViewHolder vh = new CustomAdapterSystemFunction.ViewHolder(v);
