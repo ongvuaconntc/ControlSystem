@@ -105,6 +105,10 @@ public class ViewElementActivity extends AppCompatActivity {
         else{
             listEl=new ArrayList<>();
 
+            ArrayList<SystemFunction> m_function=new ArrayList<>();
+            m_function.add(new SystemFunction(0,"system control","system control","Master"));
+            SystemElement element_=new SystemElement("Master",m_function);
+
             SystemFunction function=new SystemFunction(1,"Tắt cửa","cửa cửa","Node1");
             SystemFunction function1=new SystemFunction(1,"Tắt đèn","cửa cửa","Node1");
 
@@ -126,10 +130,11 @@ public class ViewElementActivity extends AppCompatActivity {
 
             SystemElement element2=new SystemElement("Node2",functions_);
 
-
+            listEl.add(element_);
             listEl.add(element);
             listEl.add(element2);
         }
+        System.out.println("In View Element Activity");
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         adapter=new CustomAdapterSystemElement(listEl);

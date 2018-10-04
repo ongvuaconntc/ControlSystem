@@ -34,6 +34,7 @@
         <block type="logic_null"></block>
         <block type="logic_ternary"></block>
     </category>
+    <category name="Biến" colour="330" custom="VARIABLE" />
     <category name="Lặp" colour="120">
         <block type="controls_repeat_ext">
             <value name="TIMES">
@@ -232,88 +233,50 @@
             </value>
         </block>
     </category>
-    <category name="Danh sách" colour="260">
-        <block type="lists_create_empty"></block>
-        <block type="lists_repeat">
-            <value name="NUM">
-                <shadow type="math_number">
-                    <field name="NUM">5</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="lists_length"></block>
-        <block type="lists_isEmpty"></block>
-        <block type="lists_indexOf">
-            <value name="VALUE">
-                <block type="variables_get">
-                    <field name="VAR">list</field>
-                </block>
-            </value>
-        </block>
-        <block type="lists_getIndex">
-            <value name="VALUE">
-                <block type="variables_get">
-                    <field name="VAR">list</field>
-                </block>
-            </value>
-        </block>
-        <block type="lists_setIndex">
-            <value name="LIST">
-                <block type="variables_get">
-                    <field name="VAR">list</field>
-                </block>
-            </value>
-        </block>
-        <block type="lists_getSublist">
-            <value name="LIST">
-                <block type="variables_get">
-                    <field name="VAR">list</field>
-                </block>
-            </value>
-        </block>
-        <block type="lists_sort"></block>
-    </category>
-    <category name="Màu sắc" colour="20">
-        <block type="colour_picker"></block>
-        <block type="colour_random"></block>
-        <block type="colour_rgb">
-            <value name="RED">
-                <shadow type="math_number">
-                    <field name="NUM">100</field>
-                </shadow>
-            </value>
-            <value name="GREEN">
-                <shadow type="math_number">
-                    <field name="NUM">50</field>
-                </shadow>
-            </value>
-            <value name="BLUE">
-                <shadow type="math_number">
-                    <field name="NUM">0</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="colour_blend">
-            <value name="COLOUR1">
-                <shadow type="colour_picker">
-                    <field name="COLOUR">#ff0000</field>
-                </shadow>
-            </value>
-            <value name="COLOUR2">
-                <shadow type="colour_picker">
-                    <field name="COLOUR">#3333ff</field>
-                </shadow>
-            </value>
-            <value name="RATIO">
-                <shadow type="math_number">
-                    <field name="NUM">0.5</field>
-                </shadow>
-            </value>
-        </block>
-    </category>
-    <category name="Biến" colour="330" custom="VARIABLE" />
+
+    <category name="Hàm" colour="290" custom="PROCEDURE" />
 
 
 
-    <!-- <category name="Functions" colour="290" custom="PROCEDURE" /> -->
+    <!--<category name="Danh sách" colour="260">-->
+        <!--<block type="lists_create_empty"></block>-->
+        <!--<block type="lists_repeat">-->
+            <!--<value name="NUM">-->
+                <!--<shadow type="math_number">-->
+                    <!--<field name="NUM">5</field>-->
+                <!--</shadow>-->
+            <!--</value>-->
+        <!--</block>-->
+        <!--<block type="lists_length"></block>-->
+        <!--<block type="lists_isEmpty"></block>-->
+        <!--<block type="lists_indexOf">-->
+            <!--<value name="VALUE">-->
+                <!--<block type="variables_get">-->
+                    <!--<field name="VAR">list</field>-->
+                <!--</block>-->
+            <!--</value>-->
+        <!--</block>-->
+        <!--<block type="lists_getIndex">-->
+            <!--<value name="VALUE">-->
+                <!--<block type="variables_get">-->
+                    <!--<field name="VAR">list</field>-->
+                <!--</block>-->
+            <!--</value>-->
+        <!--</block>-->
+        <!--<block type="lists_setIndex">-->
+            <!--<value name="LIST">-->
+                <!--<block type="variables_get">-->
+                    <!--<field name="VAR">list</field>-->
+                <!--</block>-->
+            <!--</value>-->
+        <!--</block>-->
+        <!--<block type="lists_getSublist">-->
+            <!--<value name="LIST">-->
+                <!--<block type="variables_get">-->
+                    <!--<field name="VAR">list</field>-->
+                <!--</block>-->
+            <!--</value>-->
+        <!--</block>-->
+        <!--<block type="lists_sort"></block>-->
+    <!--</category>-->
 </toolbox>

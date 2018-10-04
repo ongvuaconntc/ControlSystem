@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import hongmp.chinhnt.controlsystem.BlocklyActivity;
 import hongmp.chinhnt.controlsystem.ViewDetailElementActivity;
 import hongmp.chinhnt.controlsystem.ViewElementActivity;
 import hongmp.chinhnt.controlsystem.R;
@@ -36,10 +37,18 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
             this.btnDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(activity,ViewDetailElementActivity.class);
-                    System.out.println("holder postion: "+position);
-                    intent.putExtra("element",activity.listEl.get(position));
-                    activity.startActivityForResult(intent,100);
+                    SystemElement element=activity.listEl.get(position);
+                    if (!element.getName().equalsIgnoreCase("Master")) {
+                        Intent intent = new Intent(activity, ViewDetailElementActivity.class);
+                        System.out.println("holder postion: " + position);
+                        intent.putExtra("element", element);
+                        activity.startActivityForResult(intent, 100);
+                    }
+                    else{
+                        Intent intent = new Intent(activity, BlocklyActivity.class);
+                        intent.putExtra("function", element.getListFunctions().get(0));
+                        activity.startActivity(intent);
+                    }
                 }
             });
 
