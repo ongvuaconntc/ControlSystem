@@ -68,7 +68,7 @@ Blockly.JavaScript['core_arduino'] = function(block) {
             if (j+1<k+1) variable=statements_do.substring(j+1,k+1);
             else variable="analogRead("+port+")";
 
-            var newSerial='Serial.print('+port+');Serial.println('+variable+');\n';
+            var newSerial='Serial.print('+port+');Serial.print("|");Serial.println('+variable+');\n';
             serialcode+=newSerial;
         }
         else
@@ -85,7 +85,7 @@ Blockly.JavaScript['core_arduino'] = function(block) {
             if (j+1<k+1) variable=statements_do.substring(j+1,k+1);
             else variable="digitalRead("+port+")";
 
-            var newSerial='Serial.print('+port+');Serial.println('+variable+');\n';
+            var newSerial='Serial.print('+port+');Serial.print("|");Serial.println('+variable+');\n';
             serialcode+=newSerial;
         }
         else
@@ -98,7 +98,7 @@ Blockly.JavaScript['core_arduino'] = function(block) {
             while (j>0&&statements_do[j]!=')')j++;
             var value=statements_do.substring(k+1,j);
 
-            var newSerial='Serial.print('+port+');Serial.println('+value+');\n';
+            var newSerial='Serial.print('+port+');Serial.print("|");Serial.println('+value+');\n';
             tmp=tmp.substring(0,j+2)+newSerial+tmp.substring(j+2);
         }
         else
@@ -111,7 +111,7 @@ Blockly.JavaScript['core_arduino'] = function(block) {
             while (j>0&&statements_do[j]!=')')j++;
             var value=statements_do.substring(k+1,j);
 
-            var newSerial='Serial.print('+port+');Serial.println('+value+');\n';
+            var newSerial='Serial.print('+port+');Serial.print("|");Serial.println('+value+');\n';
             tmp=tmp.substring(0,j+2)+newSerial+tmp.substring(j+2);
         }
 
