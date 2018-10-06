@@ -106,7 +106,7 @@ public class ViewElementActivity extends AppCompatActivity {
             listEl=new ArrayList<>();
 
             ArrayList<SystemFunction> m_function=new ArrayList<>();
-            m_function.add(new SystemFunction(0,"system control","system control","Master"));
+            m_function.add(new SystemFunction(0,"Master","system control","Master"));
             SystemElement element_=new SystemElement("Master",m_function);
 
             SystemFunction function=new SystemFunction(1,"Tắt cửa","cửa cửa","Node1");

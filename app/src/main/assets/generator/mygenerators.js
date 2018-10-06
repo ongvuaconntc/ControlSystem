@@ -1,5 +1,7 @@
 'use strict';
-Blockly.BlockSvg.START_HAT = true;
+var setup_init="\nchar portname[3];\nchar value[5];\nint portname_index=0;\nint value_index=0;\nint have_mess=0;\nvoid setup() {\n  Serial.begin(9600);\n  memset(portname,0,3);\n  memset(value,0,5);\n  have_mess=0;\n";
+var loop_init="\nwhile (Serial.available()>0){\n    have_mess=1;\n     \n    char incomingByte = Serial.read();\n    if (portname_index<2){\n      if (incomingByte=='|'){\n        portname_index=2;\n      }\n      else{\n      portname[portname_index]=incomingByte;\n      portname_index++;\n      }\n    }\n    else if (incomingByte!='|')\n    {\n      value[value_index]=incomingByte;\n      value_index++;\n    }\n    delay(3);\n  }\n  if (have_mess==1){\n   if (portname[0]=='A'||portname[0]=='a'){\n    pinMode(portname,OUTPUT);\n    analogWrite(portname,atoi(value));\n    Serial.print(portname);\n    Serial.print('|');\n    Serial.println(value);\n   }\n   else\n   {\n    int port=atoi(portname);\n    int int_value=atoi(value);\n    pinMode(port,OUTPUT);\n    digitalWrite(port,int_value);\n    Serial.print(port);\n    Serial.print('|');\n    Serial.println(int_value);\n   }\n   memset(portname,0,3);\n   memset(value,0,5);\n   portname_index=0;\n   value_index=0;\n   have_mess=0;\n   \n  }\n";
+
 Blockly.JavaScript['set_port_value'] = function(block) {
   var dropdown_port_name = block.getFieldValue('port_name');
   var value_portvalue = Blockly.JavaScript.valueToCode(block, 'PORTVALUE', Blockly.JavaScript.ORDER_ATOMIC);
@@ -117,7 +119,7 @@ Blockly.JavaScript['core_arduino'] = function(block) {
 
 
     }
-  var code = 'function setup(){\nSerial.begin(9600);\n'+statements_do0+'};\n'+'function loop(){\n'+tmp+serialcode+'}\n';
+  var code = setup_init+statements_do0+'};\n'+'function loop(){\n'+loop_init+tmp+serialcode+'}\n';
 
   return code;
 };

@@ -26,7 +26,8 @@ import hongmp.chinhnt.controlsystem.object.SystemFunction;
 
 public class BlocklyActivity extends AbstractBlocklyActivity {
     String generated_Code;
-    private static List<String> MY_BLOCK_DEFINITIONS=Arrays.asList(
+    static SystemFunction  function=null;
+    private static List<String> JS_NODE_BLOCK_DEFINITIONS=Arrays.asList(
             "myblock/colour_blocks.json",
             "myblock/list_blocks.json",
             "myblock/logic_blocks.json",
@@ -37,20 +38,42 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
             "myblock/variable_blocks.json",
             "myblock/arduino.json"
     );
+    private static List<String> PYTHON_NODE_BLOCK_DEFINITIONS=Arrays.asList(
+            "myblock/colour_blocks.json",
+            "myblock/list_blocks.json",
+            "myblock/logic_blocks.json",
+            "myblock/loop_blocks.json",
+            "myblock/math_blocks.json",
+            "myblock/procedures.json",
+            "myblock/text_blocks.json",
+            "myblock/variable_blocks.json",
+            "myblock/pi.json"
+    );
+
     private static final List<String> JAVASCRIPT_GENERATORS = Arrays.asList(
             // Custom block generators go here. Default blocks are already included
             "generator/mygenerators.js"
     );
+    private static final List<String> PYTHON_GENERATORS = Arrays.asList(
+            // Custom block generators go here. Default blocks are already included
+            "generator/pi_gen.js"
+    );
+
+    private static final LanguageDefinition PYTHON_LANGUAGE_DEF
+            = new LanguageDefinition("generator/python_compressed.js", "Blockly.Python");
 
     @NonNull
     @Override
     protected LanguageDefinition getBlockGeneratorLanguage() {
-        return super.getBlockGeneratorLanguage();
+        if (!function.getName().equalsIgnoreCase("Master"))
+            return super.getBlockGeneratorLanguage();
+        else
+            return PYTHON_LANGUAGE_DEF;
     }
 
     CodeGenerationRequest.CodeGeneratorCallback mCodeGeneratorCallback =
             new MyGenerators(this, "BlocklyActivity");
-    SystemFunction function=null;
+
 
 
     @Override
@@ -64,12 +87,15 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         if (intent.getSerializableExtra("function")!=null) {
            function = (SystemFunction) intent.getSerializableExtra("function");
         }
+        System.out.println("Name :"+function.getName());
     }
 
     @NonNull
     @Override
     protected String getToolboxContentsXmlPath() {
-        return "myblock/toolbox.xml";
+        if (!function.getName().equalsIgnoreCase("Master"))
+            return "myblock/toolbox.xml";
+        else return "myblock/toolboxpi.xml";
     }
 
     @NonNull
@@ -80,13 +106,18 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         return assetPaths;
     }
     public static List<String> getAllBlockDefinitions() {
-        return MY_BLOCK_DEFINITIONS;
+        if (!function.getName().equalsIgnoreCase("Master"))
+            return JS_NODE_BLOCK_DEFINITIONS;
+        else
+            return PYTHON_NODE_BLOCK_DEFINITIONS;
     }
 
     @NonNull
     @Override
     protected List<String> getGeneratorsJsPaths() {
-        return JAVASCRIPT_GENERATORS;
+        if (!function.getName().equalsIgnoreCase("Master"))
+            return JAVASCRIPT_GENERATORS;
+        else return PYTHON_GENERATORS;
     }
 
     @Override
@@ -107,6 +138,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         if (intent.getSerializableExtra("function")!=null) {
             function = (SystemFunction) intent.getSerializableExtra("function");
         }
+        System.out.println("Name :"+function.getName());
         return getLayoutInflater().inflate(R.layout.blockly_unified_workspace, null);
     }
 
@@ -180,5 +212,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         }
 
     }
+
+
 
 }
