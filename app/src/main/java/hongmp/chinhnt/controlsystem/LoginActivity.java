@@ -30,8 +30,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import hongmp.chinhnt.controlsystem.net.Configuration;
+import hongmp.chinhnt.controlsystem.net.ServerConnection;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -161,6 +172,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             focusView = mPasswordView;
             cancel = true;
         }
+
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -292,14 +304,51 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... data) {
             // TODO: attempt authentication against a network service.
-
+            HttpURLConnection conn = null;
+            byte[] postDataBytes = null;
+            String intentData = "";
             try {
+                // prepare data
+                Map<String, Object> params = new LinkedHashMap<>();
+                params.put("request", "login");
+                params.put("email", this.mEmail);
+                params.put("password", this.mPassword);
+                StringBuilder postData = new StringBuilder();
+                for (Map.Entry<String, Object> param : params.entrySet()) {
+                    if (postData.length() != 0) postData.append('&');
+                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                }
+                postDataBytes = postData.toString().getBytes("UTF-8");
+
                 // Simulate network access.
+                URL url = new URL(Configuration.SERVER_IP + ":" + Configuration.PORT + "/");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+                conn.setDoOutput(true);
+                conn.getOutputStream().write(postDataBytes);
+                Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                StringBuilder returnData = new StringBuilder();
+                for (int c; (c = in.read()) >= 0; ) {
+                    returnData.append((char) c);
+                }
+                intentData = returnData.toString();
+                if (intentData.equals("login successfully")) {
+                    return true;
+                } else if (intentData.equals("login failed")) {
+                    return false;
+                }
+
                 Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("ex: " + e);
+                return true;
             }
 
             for (String credential : DUMMY_CREDENTIALS) {

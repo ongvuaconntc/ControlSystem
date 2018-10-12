@@ -45,9 +45,9 @@ public class MyTCPClient {
      public ArrayList<SystemElement> requestStatus(){
         ArrayList<SystemElement> list=new ArrayList<>();
 
-         SystemFunction function7=new SystemFunction(1,"Hẹn giờ bật nóng lạnh_","cửa cửa","Node2");
-         SystemFunction function8=new SystemFunction(1,"Bật điều hòa_","cửa cửa","Node2");
-         SystemFunction function9=new SystemFunction(1,"Bật camera_","cửa cửa","Node2");
+         SystemFunction function7 = new SystemFunction(1 + "", "Hẹn giờ bật nóng lạnh_", "cửa cửa", "Node2");
+         SystemFunction function8 = new SystemFunction(1 + "", "Bật điều hòa_", "cửa cửa", "Node2");
+         SystemFunction function9 = new SystemFunction(1 + "", "Bật camera_", "cửa cửa", "Node2");
 
          ArrayList<SystemFunction> functions_=new ArrayList<>();
          functions_.add(function8);

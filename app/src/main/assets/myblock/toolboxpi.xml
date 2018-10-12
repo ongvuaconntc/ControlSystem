@@ -17,9 +17,9 @@
     <category name="Server" colour="330">
         <block type="pi_get_node_port_value"></block>
         <block type="pi_set_node_port_value"></block>
-        <block type="task_pi_control">
-        </block>
+        <block type="task_pi_control"></block>
         <block type="main_pi_control"></block>
+        <block type="pi_delay"></block>
     </category>
     <category name="Logic" colour="210">
         <block type="controls_if"></block>

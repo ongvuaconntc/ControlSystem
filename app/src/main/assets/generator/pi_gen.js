@@ -7,7 +7,7 @@ Blockly.Python['pi_get_node_port_value'] = function(block) {
   var text_nodename = block.getFieldValue('NodeName');
   var dropdown_portname = block.getFieldValue('portName');
   // TODO: Assemble Python into code variable.
-  var code = 'getPortValue(\''+text_nodename+"|"+dropdown_portname+'\')';
+  var code = 'get_port_value(\''+text_nodename+"|"+dropdown_portname+'\')';
   var check=listCOM.indexOf(text_nodename);
   if (check==-1){
       listCOM.push(text_nodename);
@@ -21,14 +21,17 @@ Blockly.Python['pi_set_node_port_value'] = function(block) {
   var dropdown_portname = block.getFieldValue('portName');
   var number_portvalue = block.getFieldValue('portValue');
   // TODO: Assemble Python into code variable.
-  var code = 'writeTask(\''+text_nodename+'\','+dropdown_portname+','+number_portvalue+')\n';
+  var code = 'write_task(\''+text_nodename+'\',\''+dropdown_portname+'|'+number_portvalue+'\')\n';
   return code;
 };
 
 Blockly.Python['task_pi_control'] = function(block) {
   var statements_do0 = Blockly.Python.statementToCode(block, 'DO0');
   // TODO: Assemble Python into code variable.
-  var code = 'def job'+number+'():\n    '+statements_do0+"\n";
+//  var code = `
+//  def job${number}():
+//${statements_do0}`;
+  var code = `def job():\n${statements_do0}`;
   number++;
   return code;
 };
@@ -44,4 +47,10 @@ Blockly.Python['main_pi_control'] = function(block) {
   }
   var code =py_init+py_init_2+py_init_3+statements_do0+listTask;
   return code;
+};
+Blockly.Python['pi_delay'] = function(block) {
+  var second = block.getFieldValue('SECOND');
+    // TODO: Assemble JavaScript into code variable.
+    var code = 'time.sleep('+second+');\n';
+    return code;
 };
