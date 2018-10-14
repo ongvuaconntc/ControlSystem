@@ -35,9 +35,8 @@ Blockly.JavaScript['get_port_value'] = function(block) {
   var code="";
   if (dropdown_name[0]=='A')
    code = 'analogRead('+dropdown_name+')';
-   else
+  else
    code = 'digitalRead('+dropdown_name+')';
-
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_NONE];
 };

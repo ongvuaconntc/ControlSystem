@@ -139,6 +139,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
             function = (SystemFunction) intent.getSerializableExtra("function");
         }
         System.out.println("Name :"+function.getName());
+        System.out.println("Node :"+function.getNode());
         return getLayoutInflater().inflate(R.layout.blockly_unified_workspace, null);
     }
 

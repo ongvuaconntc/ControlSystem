@@ -4,5 +4,9 @@
     <color name="colorPrimaryDark">#4d9e80</color>
     <color name="colorAccent">#90c4cf</color>
     <color name="background_light">#abc5d6</color>
-    <color name="background_light_dark">#868eb1</color>
+    <color name="background_light_dark">#b3bce5</color>
+    <color name="background_cardview">#c38ca6bf</color>
+    <color name="background_layout">#e4e9fdff</color>
+
+
 </resources>

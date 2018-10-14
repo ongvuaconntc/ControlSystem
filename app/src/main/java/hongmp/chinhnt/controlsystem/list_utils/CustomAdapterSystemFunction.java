@@ -65,7 +65,7 @@ public class CustomAdapterSystemFunction extends  RecyclerView.Adapter<CustomAda
 
 
     public void onBindViewHolder(@NonNull CustomAdapterSystemFunction.ViewHolder holder, int position) {
-        holder.txtName.setText("Port:"+new Integer(functions.get(position).getPort()).toString());
+        holder.txtName.setText("Port:"+functions.get(position).getPort());
         holder.txtFunction.setText("Function:"+functions.get(position).getName());
         holder.position=position;
 

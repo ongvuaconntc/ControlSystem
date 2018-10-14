@@ -47,6 +47,7 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
                     else{
                         Intent intent = new Intent(activity, BlocklyActivity.class);
                         intent.putExtra("function", element.getListFunctions().get(0));
+                        intent.putExtra("listEL",activity.listEl);
                         activity.startActivity(intent);
                     }
                 }

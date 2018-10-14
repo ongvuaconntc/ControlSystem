@@ -28,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -42,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 import hongmp.chinhnt.controlsystem.net.Configuration;
-import hongmp.chinhnt.controlsystem.net.ServerConnection;
+//import hongmp.chinhnt.controlsystem.net.ServerConnection;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -73,6 +74,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
         });
 
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -104,6 +107,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        mImageView=(ImageView)findViewById(R.id.imageView3);
+        mImageView.setVisibility(View.VISIBLE);
     }
 
     private void populateAutoComplete() {
@@ -230,6 +235,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mImageView.setVisibility(View.VISIBLE);
         }
     }
 
