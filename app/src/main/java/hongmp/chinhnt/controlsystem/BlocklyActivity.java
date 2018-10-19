@@ -1,7 +1,9 @@
 package hongmp.chinhnt.controlsystem;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,12 +16,14 @@ import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.codegen.LanguageDefinition;
 import com.google.blockly.model.DefaultBlocks;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import hongmp.chinhnt.controlsystem.blockly_utils.MyGenerators;
+import hongmp.chinhnt.controlsystem.file_utils.CustomJSONLoader;
 import hongmp.chinhnt.controlsystem.list_utils.CustomAdapterSystemFunction;
 import hongmp.chinhnt.controlsystem.object.SystemElement;
 import hongmp.chinhnt.controlsystem.object.SystemFunction;
@@ -49,6 +53,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
             "myblock/variable_blocks.json",
             "myblock/pi.json"
     );
+
 
     private static final List<String> JAVASCRIPT_GENERATORS = Arrays.asList(
             // Custom block generators go here. Default blocks are already included
@@ -133,11 +138,29 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
 
     @Override
     protected View onCreateContentView(int containerId) {
+
         System.out.println("onCreateContentView");
         Intent intent=getIntent();
         if (intent.getSerializableExtra("function")!=null) {
             function = (SystemFunction) intent.getSerializableExtra("function");
         }
+        /*
+        if (intent.getSerializableExtra("listEL")!=null){
+            ArrayList<SystemElement> listEL =(ArrayList<SystemElement>)intent.getSerializableExtra("listEL");
+            ArrayList<String> listCOm=new ArrayList<>();
+            for (SystemElement element:listEL){
+                if (!element.getName().equalsIgnoreCase("master")){
+                    listCOm.add(element.getName());
+                }
+            }
+            //if ( BlocklyActivity.PYTHON_NODE_BLOCK_DEFINITIONS.size()<9) {
+                System.out.println("WRITE TO EXTERNAL "+this.getExternalCacheDir()+"/newpi.json");
+                //BlocklyActivity.PYTHON_NODE_BLOCK_DEFINITIONS.add(this.getExternalCacheDir()+"/newpi.json");
+                CustomJSONLoader.getNewPIJson(listCOm, this);
+           // }
+
+        }
+        */
         System.out.println("Name :"+function.getName());
         System.out.println("Node :"+function.getNode());
         return getLayoutInflater().inflate(R.layout.blockly_unified_workspace, null);

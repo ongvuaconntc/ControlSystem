@@ -125,7 +125,7 @@ public class ViewElementActivity extends AppCompatActivity {
             SystemElement element=new SystemElement("Node1",functions);
 
             ArrayList<SystemFunction> m_function = new ArrayList<>();
-            m_function.add(new SystemFunction(0 + "", "Masterrr", "system control", "Master"));
+            m_function.add(new SystemFunction(0 + "", "Master", "system control", "Master"));
             SystemElement element_ = new SystemElement("Master", m_function);
             listEl.add(element_);
             listEl.add(element);
@@ -153,9 +153,17 @@ public class ViewElementActivity extends AppCompatActivity {
         System.out.println("scanning");
         ScanTask mScanTask = new ScanTask(this);
         try {
+            while (listEl.size()>0){
+                listEl.remove(0);
+                recyclerView.removeViewAt(0);
+                adapter.notifyItemRemoved(0);
+                adapter.notifyItemRangeChanged(0, listEl.size());
+            }
+
+
+
             JSONObject jsonObj = mScanTask.execute((Void) null).get();
 
-            listEl = new ArrayList<>();
 
             ArrayList<SystemFunction> m_function = new ArrayList<>();
             m_function.add(new SystemFunction("0", "Master", "system control", "Master"));
@@ -172,10 +180,9 @@ public class ViewElementActivity extends AppCompatActivity {
                 functions_.add(function7);
                 SystemElement element = new SystemElement("Node" + (i + 1), functions_);
                 listEl.add(element);
+                adapter.notifyItemInserted(i);
             }
-            adapter = new CustomAdapterSystemElement(listEl);
-            adapter.setActivity(this);
-            recyclerView.swapAdapter(adapter, false);
+            adapter.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("ex: " + e);
