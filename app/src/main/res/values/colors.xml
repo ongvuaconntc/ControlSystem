@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3fb590</color>
-    <color name="colorPrimaryDark">#4d9e80</color>
+    <!--<color name="colorPrimary">#3fb590</color>-->
+    <!--<color name="colorPrimaryDark">#4d9e80</color>-->
+    <!--<color name="colorAccent">#90c4cf</color>-->
+    <!--<color name="background_light">#abc5d6</color>-->
+    <!--<color name="background_light_dark">#b3bce5</color>-->
+    <!--<color name="background_cardview">#c38ca6bf</color>-->
+    <!--<color name="background_layout">#e4e9fdff</color>-->
+
+    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimaryDark">#2f3e9f</color>
     <color name="colorAccent">#90c4cf</color>
     <color name="background_light">#abc5d6</color>
     <color name="background_light_dark">#b3bce5</color>
-    <color name="background_cardview">#c38ca6bf</color>
-    <color name="background_layout">#e4e9fdff</color>
-
+    <color name="background_cardview">#69c9ff</color>
+    <color name="background_layout">#f9f9f9</color>
 
 </resources>

@@ -13,4 +13,10 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="list_of_nodes_in_system">List of nodes in System </string>
+    <string name="scan" >Scan</string>
+    <string name="detail" >Detail</string>
+    <string name="update">UPDATE</string>
+    <string name="remove">REMOVE</string>
+    <string name="list_of_functions_in_node">List of functions in a node</string>
 </resources>

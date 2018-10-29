@@ -19,17 +19,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateHidden|adjustPan">
-        <activity android:name=".ViewElementActivity"/>
+        <activity android:name=".ViewElementActivity" />
         <activity android:name=".BlocklyActivity" />
         <activity android:name=".ViewDetailElementActivity" />
-        <activity
-            android:name=".LoginActivity">
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".LanguageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ControlSystem</string>
+    <string name="title_activity_login">Đăng nhập</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Tên đăng nhập</string>
+    <string name="prompt_password">Mật khẩu</string>
+    <string name="action_sign_in">Đăng nhập</string>
+    <string name="action_sign_in_short">Đăng nhập</string>
+    <string name="error_invalid_email">Tên đăng nhập không đúng hoặc không tồn tại</string>
+    <string name="error_invalid_password">Mật khẩu quá ngắn</string>
+    <string name="error_incorrect_password">Mật khẩu không đúng</string>
+    <string name="error_field_required">Trường bắt buộc</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="list_of_nodes_in_system" >Danh sách điểm nối trong hệ thống</string>
+    <string name="scan" >Quét</string>
+    <string name="detail" >Chi tiết</string>
+    <string name="update">CẬP NHẬT</string>
+    <string name="remove">XÓA</string>
+    <string name="list_of_functions_in_node">Danh sách các hàm trong điểm nối</string>
+</resources>
