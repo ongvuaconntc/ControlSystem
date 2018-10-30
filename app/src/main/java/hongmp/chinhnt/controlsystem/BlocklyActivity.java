@@ -1,14 +1,13 @@
 package hongmp.chinhnt.controlsystem;
 
-import android.app.Application;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.blockly.android.AbstractBlocklyActivity;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import hongmp.chinhnt.controlsystem.blockly_utils.MyGenerators;
 import hongmp.chinhnt.controlsystem.file_utils.CustomJSONLoader;
@@ -28,9 +28,12 @@ import hongmp.chinhnt.controlsystem.list_utils.CustomAdapterSystemFunction;
 import hongmp.chinhnt.controlsystem.object.SystemElement;
 import hongmp.chinhnt.controlsystem.object.SystemFunction;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class BlocklyActivity extends AbstractBlocklyActivity {
     String generated_Code;
     static SystemFunction  function=null;
+    private static String languageApp;
+
     private static List<String> JS_NODE_BLOCK_DEFINITIONS=Arrays.asList(
             "myblock/colour_blocks.json",
             "myblock/list_blocks.json",
@@ -52,6 +55,29 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
             "myblock/text_blocks.json",
             "myblock/variable_blocks.json",
             "myblock/pi.json"
+    );
+
+    private static List<String> JS_NODE_BLOCK_DEFINITIONS_VIE=Arrays.asList(
+            "myblock/colour_blocks.json",
+            "myblock/list_blocks.json",
+            "myblock/logic_blocks_vi.json",
+            "myblock/loop_blocks_vi.json",
+            "myblock/math_blocks_vi.json",
+            "myblock/procedures_vi.json",
+            "myblock/text_blocks_vi.json",
+            "myblock/variable_blocks_vi.json",
+            "myblock/arduino_vi.json"
+    );
+    private static List<String> PYTHON_NODE_BLOCK_DEFINITIONS_VIE=Arrays.asList(
+            "myblock/colour_blocks.json",
+            "myblock/list_blocks.json",
+            "myblock/logic_blocks_vi.json",
+            "myblock/loop_blocks_vi.json",
+            "myblock/math_blocks_vi.json",
+            "myblock/procedures_vi.json",
+            "myblock/text_blocks_vi.json",
+            "myblock/variable_blocks_vi.json",
+            "myblock/pi_vi.json"
     );
 
 
@@ -98,9 +124,16 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
     @NonNull
     @Override
     protected String getToolboxContentsXmlPath() {
-        if (!function.getName().equalsIgnoreCase("Master"))
-            return "myblock/toolbox.xml";
-        else return "myblock/toolboxpi.xml";
+        if (!function.getName().equalsIgnoreCase("Master")) {
+            if(languageApp.equalsIgnoreCase("vi")){
+                return "myblock/toolbox_vi.xml";
+            }else return "myblock/toolbox.xml";
+        }
+        else
+        if(languageApp.equalsIgnoreCase("vi")) {
+            return "myblock/toolboxpi_vi.xml";
+        }else
+            return "myblock/toolboxpi.xml";
     }
 
     @NonNull
@@ -112,9 +145,17 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
     }
     public static List<String> getAllBlockDefinitions() {
         if (!function.getName().equalsIgnoreCase("Master"))
-            return JS_NODE_BLOCK_DEFINITIONS;
+            if(languageApp.equalsIgnoreCase("vi")){
+                return JS_NODE_BLOCK_DEFINITIONS_VIE;
+            }else {
+                return JS_NODE_BLOCK_DEFINITIONS;
+            }
         else
+        if(languageApp.equalsIgnoreCase("vi")) {
+            return PYTHON_NODE_BLOCK_DEFINITIONS_VIE;
+        }else{
             return PYTHON_NODE_BLOCK_DEFINITIONS;
+        }
     }
 
     @NonNull
@@ -161,6 +202,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
 
         }
         */
+        languageApp = getResources().getConfiguration().locale.getLanguage();
         System.out.println("Name :"+function.getName());
         System.out.println("Node :"+function.getNode());
         return getLayoutInflater().inflate(R.layout.blockly_unified_workspace, null);

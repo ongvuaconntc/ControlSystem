@@ -20,4 +20,8 @@
     <string name="update">CẬP NHẬT</string>
     <string name="remove">XÓA</string>
     <string name="list_of_functions_in_node">Danh sách các hàm trong điểm nối</string>
+    <string name="actionbar_load">Tải</string>
+    <string name="actionbar_save">Lưu</string>
+    <string name="actionbar_clear">Xóa</string>
+    <string name="actionbar_run">Chạy</string>
 </resources>

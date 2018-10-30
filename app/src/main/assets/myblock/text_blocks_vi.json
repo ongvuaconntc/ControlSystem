@@ -1,0 +1,320 @@
+[
+  {
+    "type": "text",
+    "message0": "%1 %2 %3",
+    "args0": [
+      {
+        "type": "field_image",
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAn0lEQVQI1z3OMa5BURSF4f/cQhAKjUQhuQmFNwGJEUi0RKN5rU7FHKhpjEH3TEMtkdBSCY1EIv8r7nFX9e29V7EBAOvu7RPjwmWGH/VuF8CyN9/OAdvqIXYLvtRaNjx9mMTDyo+NjAN1HNcl9ZQ5oQMM3dgDUqDo1l8DzvwmtZN7mnD+PkmLa+4mhrxVA9fRowBWmVBhFy5gYEjKMfz9AylsaRRgGzvZAAAAAElFTkSuQmCC",
+        "width": 12,
+        "height": 12,
+        "alt": "\u201C"
+      },
+      {
+        "type": "field_input",
+        "name": "TEXT",
+        "text": ""
+      },
+      {
+        "type": "field_image",
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAqUlEQVQI1z3KvUpCcRiA8ef9E4JNHhI0aFEacm1o0BsI0Slx8wa8gLauoDnoBhq7DcfWhggONDmJJgqCPA7neJ7p934EOOKOnM8Q7PDElo/4x4lFb2DmuUjcUzS3URnGib9qaPNbuXvBO3sGPHJDRG6fGVdMSeWDP2q99FQdFrz26Gu5Tq7dFMzUvbXy8KXeAj57cOklgA+u1B5AoslLtGIHQMaCVnwDnADZIFIrXsoXrgAAAABJRU5ErkJggg==",
+        "width": 12,
+        "height": 12,
+        "alt": "\u201D"
+      }
+    ],
+    "output": "String",
+    "colour": 160,
+    "tooltip": "Thư, từ hoặc dòng văn bản.",
+    "helpUrl": "https://en.wikipedia.org/wiki/String_(computer_science)"
+  },
+  {
+    "type": "text_append",
+    "message0": "Từ %1 nối thêm văn bản %2",
+    "args0": [
+      {
+        "type": "field_variable",
+        "name": "VAR",
+        "variable": "item"
+      },
+      {
+        "type": "input_value",
+        "name": "TEXT",
+        "check": "String"
+      }
+    ],
+    "output": "String",
+    "colour": 160,
+    "helpUrl": "https://github.com/google/blockly/wiki/Text#text-modification",
+    "TODO(#386)": "https://github.com/google/blockly-android/issues/386"
+  },
+  {
+    "type": "text_length",
+    "message0": "Độ dài của %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "VALUE",
+        "check": ["String", "Array"]
+      }
+    ],
+    "output": "Number",
+    "colour": 160,
+    "tooltip": "Trả về số chữ cái (bao gồm dấu cách) trong văn bản được cung cấp.",
+    "helpUrl": "https://github.com/google/blockly/wiki/Text#text-modification"
+  },
+  {
+    "type": "text_isEmpty",
+    "message0": "%1 trống rỗng",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "VALUE",
+        "check": ["String", "Array"]
+      }
+    ],
+    "inputsInline": true,
+    "output": "Boolean",
+    "colour": 160,
+    "tooltip": "Trả về đúng nếu văn bản được cung cấp trống.",
+    "helpUrl": "https://github.com/google/blockly/wiki/Text#checking-for-empty-text"
+  },
+  {
+    "type": "text_indexOf",
+    "message0": "Trong văn bản %1 tìm %2 lần xuất hiện của văn bản %3",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "VALUE",
+        "check": "String"
+      },
+      {
+        "type": "field_dropdown",
+        "name": "END",
+        "options": [
+          [
+            "đầu tiên",
+            "FIRST"
+          ],
+          [
+            "cuối cùng",
+            "LAST"
+          ]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "FIND",
+        "check": "String"
+      }
+    ],
+    "inputsInline": true,
+    "output": "Number",
+    "colour": 160,
+    "tooltip": "Trả về chỉ mục của lần xuất hiện đầu tiên / cuối cùng của văn bản đầu tiên trong văn bản thứ hai. Trả về% 1 nếu không tìm thấy văn bản.",
+    "helpUrl": "https://github.com/google/blockly/wiki/Text#finding-text"
+  },
+  {
+    "type": "text_charAt",
+    "message0": "Trong văn bản %1 lấy %2 %3",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "VALUE",
+        "check": "String"
+      },
+      {
+        "type": "field_dropdown",
+        "name": "WHERE",
+        "options": [
+          [
+            "chữ cái #",
+            "FROM_START"
+          ],
+          [
+            "chữ cái # từ kết thúc",
+            "FROM_END"
+          ]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "AT",
+        "check": "Number"
+      }
+    ],
+    "inputsInline": true,
+    "output": "String",
+    "colour": 160,
+    "tooltip": "Returns the letter at the specified position.",
+    "helpUrl": "https://github.com/google/blockly/wiki/Text#extracting-text",
+    "TODO(#390)": "https://github.com/google/blockly-android/issues/390"
+  },
+  {
+    "type": "text_getSubstring",
+    "message0": "Trong văn bản %1 lấy chuỗi con từ %2 %3 đến %4 %5",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "STRING",
+        "check": "String"
+      },
+      {
+        "type": "field_dropdown",
+        "name": "WHERE1",
+        "options": [
+          [
+            "chữ cái #",
+            "FROM_START"
+          ],
+          [
+            "chữ cái # từ kết thúc",
+            "FROM_END"
+          ]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "AT1",
+        "check": "Number"
+      },
+      {
+        "type": "field_dropdown",
+        "name": "WHERE2",
+        "options": [
+          [
+            "letter #",
+            "FROM_START"
+          ],
+          [
+            "letter # from end",
+            "FROM_END"
+          ]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "AT2",
+        "check": "Number"
+      }
+    ],
+    "inputsInline": true,
+    "output": "String",
+    "colour": 160,
+    "tooltip": "Trả về phần được chỉ định của văn bản.",
+    "helpUrl": "https://github.com/google/blockly/wiki/Text#extracting-a-region-of-text",
+    "TODO(#391)": "https://github.com/google/blockly-android/issues/391"
+  },
+  {
+    "type": "text_changeCase",
+    "message0": "Từ %1 %2",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "CASE",
+        "options": [
+          [
+            "viết hoa",
+            "UPPERCASE"
+          ],
+          [
+            "viết thường",
+            "LOWERCASE"
+          ],
+          [
+            "tiêu đề",
+            "TITLECASE"
+          ]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "TEXT",
+        "check": "String"
+      }
+    ],
+    "output": "String",
+    "colour": 160,
+    "tooltip": "Trả lại một bản sao của văn bản trong một trường hợp khác.",
+    "helpUrl": "https://github.com/google/blockly/wiki/Text#adjusting-text-case"
+  },
+  {
+    "type": "text_trim",
+    "message0": "Xóa dấu cách từ %1 của %2",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "MODE",
+        "options": [
+          [
+            "cả hai bên",
+            "BOTH"
+          ],
+          [
+            "bên trái",
+            "LEFT"
+          ],
+          [
+            "bên phải",
+            "RIGHT"
+          ]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "TEXT",
+        "check": "String"
+      }
+    ],
+    "output": "String",
+    "colour": 160,
+    "tooltip": "Trả lại bản sao của văn bản có dấu cách bị xóa khỏi một hoặc cả hai đầu.",
+    "helpUrl": "https://github.com/google/blockly/wiki/Text#trimming-removing-spaces"
+  },
+  {
+    "type": "text_print",
+    "message0": "Hiển thị %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "TEXT"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 160,
+    "tooltip": "Hiển thị văn bản, số hoặc giá trị khác được chỉ định.",
+    "helpUrl": "https://github.com/google/blockly/wiki/Text#printing-text"
+  },
+  {
+    "type": "text_prompt_ext",
+    "message0": "Nhắc %1 với thông báo %2",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "TYPE",
+        "options": [
+          [
+            "văn bản",
+            "TEXT"
+          ],
+          [
+            "số",
+            "NUMBER"
+          ]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "TEXT",
+        "check": "String"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 160,
+    "tooltip": "Nhắc người dùng cho một số văn bản hoặc một số.",
+    "helpUrl": "https://github.com/google/blockly/wiki/Text#getting-input-from-the-user",
+    "TODO(#394)": "https://github.com/google/blockly-android/issues/394"
+  }
+]

@@ -1,0 +1,260 @@
+[{
+  "type": "pi_get_node_port_value",
+  "message0": "Nút %1 %2",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "NodeName",
+      "text": ".//COM7"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "portName",
+      "options": [
+        [
+          "A0",
+          "A0"
+        ],
+        [
+          "A1",
+          "A1"
+        ],
+        [
+          "A2",
+          "A2"
+        ],
+        [
+          "A3",
+          "A3"
+        ],
+        [
+          "A4",
+          "A4"
+        ],
+        [
+          "A5",
+          "A5"
+        ],
+        [
+          "D0",
+          "0"
+        ],
+        [
+          "D1",
+          "1"
+        ],
+        [
+          "D2",
+          "2"
+        ],
+        [
+          "D3",
+          "3"
+        ],
+        [
+          "D4",
+          "4"
+        ],
+        [
+          "D5",
+          "5"
+        ],
+        [
+          "D6",
+          "6"
+        ],
+        [
+          "D7",
+          "7"
+        ],
+        [
+          "D8",
+          "8"
+        ],
+        [
+          "D9",
+          "9"
+        ],
+        [
+          "D10",
+          "10"
+        ],
+        [
+          "D11",
+          "11"
+        ],
+        [
+          "D12",
+          "12"
+        ],
+        [
+          "D13",
+          "13"
+        ]
+      ]
+    }
+  ],
+  "output": null,
+  "colour": 180,
+  "tooltip": "",
+  "helpUrl": ""
+},
+  {
+    "type": "pi_set_node_port_value",
+    "message0": "Đặt nút %1 cổng %2 giá trị %3",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "NodeName",
+        "text": ".//COM7"
+      },
+      {
+        "type": "field_dropdown",
+        "name": "portName",
+        "options": [
+          [
+            "A0",
+            "A0"
+          ],
+          [
+            "A1",
+            "A1"
+          ],
+          [
+            "A2",
+            "A2"
+          ],
+          [
+            "A3",
+            "A3"
+          ],
+          [
+            "A4",
+            "A4"
+          ],
+          [
+            "A5",
+            "A5"
+          ],
+          [
+            "D0",
+            "0"
+          ],
+          [
+            "D1",
+            "1"
+          ],
+          [
+            "D2",
+            "2"
+          ],
+          [
+            "D3",
+            "3"
+          ],
+          [
+            "D4",
+            "4"
+          ],
+          [
+            "D5",
+            "5"
+          ],
+          [
+            "D6",
+            "6"
+          ],
+          [
+            "D7",
+            "7"
+          ],
+          [
+            "D8",
+            "8"
+          ],
+          [
+            "D9",
+            "9"
+          ],
+          [
+            "D10",
+            "10"
+          ],
+          [
+            "D11",
+            "11"
+          ],
+          [
+            "D12",
+            "12"
+          ],
+          [
+            "D13",
+            "13"
+          ]
+        ]
+      },
+      {
+        "type": "field_number",
+        "name": "portValue",
+        "value": 0
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 315,
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "task_pi_control",
+    "message0": "Tác vụ %1 %2",
+    "args0": [
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "input_statement",
+        "name": "DO0"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "main_pi_control",
+    "message0": "Kiểm soát tác vụ %1 %2",
+    "args0": [
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "input_statement",
+        "name": "DO0"
+      }
+    ],
+    "previousStatement": null,
+    "colour": 90,
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "pi_delay",
+    "message0": "Độ trễ %1",
+    "args0": [
+      {
+        "type": "field_number",
+        "name": "SECOND",
+        "value": 0
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  }
+]

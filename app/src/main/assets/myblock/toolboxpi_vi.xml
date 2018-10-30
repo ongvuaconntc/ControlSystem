@@ -14,15 +14,12 @@
   -->
 
 <toolbox>
-    <category name="Arduino" colour="330">
-        <block type="init_arduino"></block>
-        <block type="core_arduino"></block>
-        <block type="set port mode">
-            <field name="PortName">1</field>
-        </block>
-        <block type="set_port_value"></block>
-        <block type="get_port_value"></block>
-        <block type="delay_arduino"></block>
+    <category name="Server" colour="330">
+        <block type="pi_get_node_port_value"></block>
+        <block type="pi_set_node_port_value"></block>
+        <block type="task_pi_control"></block>
+        <block type="main_pi_control"></block>
+        <block type="pi_delay"></block>
     </category>
     <category name="Logic" colour="210">
         <block type="controls_if"></block>
@@ -34,8 +31,8 @@
         <block type="logic_null"></block>
         <block type="logic_ternary"></block>
     </category>
-    <category name="Variable" colour="330" custom="VARIABLE" />
-    <category name="Loop" colour="120">
+    <category name="Biến" colour="330" custom="VARIABLE" />
+    <category name="Lặp" colour="120">
         <block type="controls_repeat_ext">
             <value name="TIMES">
                 <shadow type="math_number">
@@ -70,7 +67,7 @@
         <block type="controls_forEach"></block>
         <block type="controls_flow_statements"></block>
     </category>
-    <category name="Math" colour="230">
+    <category name="Toán" colour="230">
         <block type="math_number" gap="32">
             <field name="NUM">123</field>
         </block>
@@ -159,7 +156,7 @@
         </block>
         <block type="math_random_float"></block>
     </category>
-    <category name="String" colour="160">
+    <category name="Chuỗi - Xâu" colour="160">
         <block type="text"></block>
         <block type="text_append">
             <value name="TEXT">
@@ -234,7 +231,7 @@
         </block>
     </category>
 
-    <category name="Function" colour="290" custom="PROCEDURE" />
+    <category name="Hàm" colour="290" custom="PROCEDURE" />
 
 
 
