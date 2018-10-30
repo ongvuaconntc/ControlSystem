@@ -24,14 +24,14 @@ public class CustomAdapterSystemFunction extends  RecyclerView.Adapter<CustomAda
         TextView txtName;
         TextView txtFunction;
         public Button btnUpdate;
-        public Button btnRemove;
+    //    public Button btnRemove;
         public int position;
         public ViewHolder(LinearLayout itemView) {
             super(itemView);
             this.txtName=itemView.findViewById(R.id.txtName);
             this.txtFunction=itemView.findViewById(R.id.txtFunction);
             this.btnUpdate=itemView.findViewById(R.id.btnUpdate);
-            this.btnRemove=itemView.findViewById(R.id.btnRemove);
+         //   this.btnRemove=itemView.findViewById(R.id.btnRemove);
 
 
             this.btnUpdate.setOnClickListener(new View.OnClickListener() {
