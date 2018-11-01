@@ -1,7 +1,7 @@
 'use strict';
-var setup_init="\nchar portname[3];\nchar value[5];\nint portname_index=0;\nint value_index=0;\nint have_mess=0;\nvoid setup() {\n  Serial.begin(9600);\n  memset(portname,0,3);\n  memset(value,0,5);\n  have_mess=0;\n";
-var loop_init="\nwhile (Serial.available()>0){\n    have_mess=1;\n     \n    char incomingByte = Serial.read();\n    if (portname_index<2){\n      if (incomingByte=='|'){\n        portname_index=2;\n      }\n      else{\n      portname[portname_index]=incomingByte;\n      portname_index++;\n      }\n    }\n    else if (incomingByte!='|')\n    {\n      value[value_index]=incomingByte;\n      value_index++;\n    }\n    delay(3);\n  }\n  if (have_mess==1){\n   if (portname[0]=='A'||portname[0]=='a'){\n    pinMode(portname,OUTPUT);\n    analogWrite(portname,atoi(value));\n    Serial.print(portname);\n    Serial.print('|');\n    Serial.println(value);\n   }\n   else\n   {\n    int port=atoi(portname);\n    int int_value=atoi(value);\n    pinMode(port,OUTPUT);\n    digitalWrite(port,int_value);\n    Serial.print(port);\n    Serial.print('|');\n    Serial.println(int_value);\n   }\n   memset(portname,0,3);\n   memset(value,0,5);\n   portname_index=0;\n   value_index=0;\n   have_mess=0;\n   \n  }\n";
-
+var setup_init="\nbyte node_id[8];\nchar portname[3];\nchar value[5];\nint portname_index=0;\nint value_index=0;\nint node_id_index=0;\nint have_mess=0;\n\nvoid setup() {\n  Serial.begin(9600);\n  memset(portname,0,3);\n  memset(value,0,5);\n  memset(node_id,0,8);\n  have_mess=0;\n";
+var loop_init="\nwhile (Serial.available()>0){\n    have_mess=1;\n    \n    char incomingByte = Serial.read();\n    if (node_id_index<8){\n      //convert char value to int value\n      node_id[node_id_index]=incomingByte-'0';\n      node_id_index++;\n    }\n    else\n    if (portname_index<2){\n      if (incomingByte=='|'){\n        portname_index=2;\n      }\n      else{\n        portname[portname_index]=incomingByte;\n        portname_index++;\n      }\n    }\n    else if (incomingByte!='|')\n    {\n      value[value_index]=incomingByte;\n      value_index++;\n    }\n    delay(3);\n  }\n  if (have_mess==1){\n   if (checkId(node_id,8)==1){\n     if (value[0]=='?'){\n        char real_id[9];\n        memset(real_id,0,9);\n        getId(real_id,8);\n        real_id[8]='\\0';\n        if (portname[0]=='A'||portname[0]=='a'){\n        int int_value=analogRead(portname);\n        for (int u=0;u<8;u++) Serial.print(real_id[u]);\n        Serial.print(portname);\n        Serial.print('|');\n        Serial.println(int_value);\n       }\n       else\n       {\n        int port=atoi(portname);\n        int int_value=digitalRead(port);\n        for (int u=0;u<8;u++) Serial.print(real_id[u]);\n        Serial.print(port);\n        Serial.print('|');\n        Serial.println(int_value);\n       }\n     }\n     else{\n       if (portname[0]=='A'||portname[0]=='a'){\n        pinMode(portname,OUTPUT);\n        analogWrite(portname,atoi(value));\n       }\n       else\n       {\n        int port=atoi(portname);\n        int int_value=atoi(value);\n        pinMode(port,OUTPUT);\n        digitalWrite(port,int_value);\n       }\n     }\n   }\n   memset(portname,0,3);\n   memset(value,0,5);\n   memset(node_id,0,8);\n   portname_index=0;\n   value_index=0;\n   node_id_index=0;\n   have_mess=0;\n  }\n"
+var extra_function="\nint checkId(byte id[], int arr_size) {\n  unsigned int * pstart = (unsigned int *) 0x3E00;\n  int i;\n  if (arr_size != 8) return 0;\n  for (i = 0; i < arr_size; i++) {\n      byte c = pgm_read_word(pstart + i);\n      if (id[i] != c) return 0;\n   }\n  return 1;\n}\nvoid getId(char* id,int arr_size){\n  unsigned int * pstart = (unsigned int *) 0x3E00;\n  int i;\n  if (arr_size != 8) return 0;\n  for (i = 0; i < arr_size; i++) {\n      byte c = pgm_read_word(pstart + i);\n      id[i]=c+'0';\n   }\n}\n";
 Blockly.JavaScript['set_port_value'] = function(block) {
   var dropdown_port_name = block.getFieldValue('port_name');
   var value_portvalue = Blockly.JavaScript.valueToCode(block, 'PORTVALUE', Blockly.JavaScript.ORDER_ATOMIC);
@@ -69,8 +69,8 @@ Blockly.JavaScript['core_arduino'] = function(block) {
             if (j+1<k+1) variable=statements_do.substring(j+1,k+1);
             else variable="analogRead("+port+")";
 
-            var newSerial='Serial.print('+port+');Serial.print("|");Serial.println('+variable+');\n';
-            serialcode+=newSerial;
+            //var newSerial='Serial.print('+port+');Serial.print("|");Serial.println('+variable+');\n';
+            //serialcode+=newSerial;
         }
         else
         if (i+10<statements_do.length && statements_do.substring(i,i+11)=='digitalRead'){
@@ -86,8 +86,8 @@ Blockly.JavaScript['core_arduino'] = function(block) {
             if (j+1<k+1) variable=statements_do.substring(j+1,k+1);
             else variable="digitalRead("+port+")";
 
-            var newSerial='Serial.print('+port+');Serial.print("|");Serial.println('+variable+');\n';
-            serialcode+=newSerial;
+            //var newSerial='Serial.print('+port+');Serial.print("|");Serial.println('+variable+');\n';
+            //serialcode+=newSerial;
         }
         else
         if (i+10<statements_do.length && statements_do.substring(i,i+11)=='analogWrite'){
@@ -99,8 +99,8 @@ Blockly.JavaScript['core_arduino'] = function(block) {
             while (j>0&&statements_do[j]!=')')j++;
             var value=statements_do.substring(k+1,j);
 
-            var newSerial='Serial.print('+port+');Serial.print("|");Serial.println('+value+');\n';
-            tmp=tmp.substring(0,j+2)+newSerial+tmp.substring(j+2);
+//            var newSerial='Serial.print('+port+');Serial.print("|");Serial.println('+value+');\n';
+//            tmp=tmp.substring(0,j+2)+newSerial+tmp.substring(j+2);
         }
         else
         if (i+11<statements_do.length && statements_do.substring(i,i+12)=='digitalWrite'){
@@ -112,13 +112,13 @@ Blockly.JavaScript['core_arduino'] = function(block) {
             while (j>0&&statements_do[j]!=')')j++;
             var value=statements_do.substring(k+1,j);
 
-            var newSerial='Serial.print('+port+');Serial.print("|");Serial.println('+value+');\n';
-            tmp=tmp.substring(0,j+2)+newSerial+tmp.substring(j+2);
+            //var newSerial='Serial.print('+port+');Serial.print("|");Serial.println('+value+');\n';
+            //tmp=tmp.substring(0,j+2)+newSerial+tmp.substring(j+2);
         }
 
 
     }
-  var code = setup_init+statements_do0+'};\n'+'function loop(){\n'+loop_init+tmp+serialcode+'}\n';
+  var code = setup_init+statements_do0+'};\n'+'void loop(){\n'+loop_init+tmp+'}\n'+extra_function;
 
   return code;
 };

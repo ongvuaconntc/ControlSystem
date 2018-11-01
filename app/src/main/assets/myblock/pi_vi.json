@@ -5,7 +5,7 @@
     {
       "type": "field_input",
       "name": "NodeName",
-      "text": ".//COM7"
+      "text": "12345678"
     },
     {
       "type": "field_dropdown",
@@ -106,7 +106,7 @@
       {
         "type": "field_input",
         "name": "NodeName",
-        "text": ".//COM7"
+        "text": "12345678"
       },
       {
         "type": "field_dropdown",
