@@ -19,7 +19,7 @@ Blockly.Python['pi_set_node_port_value'] = function(block) {
   var dropdown_portname = block.getFieldValue('portName');
   var number_portvalue = block.getFieldValue('portValue');
   // TODO: Assemble Python into code variable.
-  var code = 'write_task(\''+text_nodename+dropdown_portname+'|'+number_portvalue+'\')\n';
+  var code = 'write_task(\''+text_nodename+dropdown_portname+'|'+number_portvalue+'\', \'str\')\n';
   return code;
 };
 
@@ -35,7 +35,13 @@ Blockly.Python['task_pi_control'] = function(block) {
   number++;
   var endline="\n            time.sleep(0.5)\n            if not job"+number+".running:\n                break\n        except:\n            print(\"An exception occurred at job\")\n            break\n";
 
-  var code ='\ndef job'+number+'():\n    job'+number+'.running = True\n    while True:\n        try:\n'+statements_do0+'\n'+endline;
+  //var code ='\ndef job'+number+'():\n    job'+number+'.running = True\n    while True:\n        try:\n'+statements_do0+'\n'+endline;
+  var statements_do0_tmp = "";
+  var res = statements_do0.split('\n');
+  for (i = 0; i < res.length; i++) {
+    statements_do0_tmp += '\t' + res[i] + '\n';
+  }
+  var code = '\n' + number + '|def job(self):\n\twhile self.running:\n'+statements_do0_tmp+'\n';
   return code;
 };
 Blockly.Python['main_pi_control'] = function(block) {

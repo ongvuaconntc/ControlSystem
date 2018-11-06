@@ -36,24 +36,17 @@ public class MyGenerators implements CodeGenerationRequest.CodeGeneratorCallback
             Toast.makeText(this.mContext, "Something went wrong with code generation.", Toast.LENGTH_LONG).show();
         } else {
             Log.d(this.mTag, "code: \n" + s);
-            String s1 = "def job():\n" +
-                    "    while True:\n" +
-                    "        if get_port_value(\"/dev/ttyACM0|9\") is None or get_port_value(\"/dev/ttyACM0|9\") == 0:\n" +
-                    "            write_task(\"/dev/ttyACM0\", \"9|1\")\n" +
-                    "        else:\n" +
-                    "            write_task(\"/dev/ttyACM0\", \"9|0\")\n" +
-                    "        time.sleep(0.5)";
-            ScanTask mScanTask = new ScanTask();
-            mScanTask.execute(s);
+            SendTask mSendTask = new SendTask();
+            mSendTask.execute(s);
             Toast.makeText(this.mContext, s, Toast.LENGTH_LONG).show();
             blocklyActivity.addNewCode(s);
         }
     }
 }
 
-class ScanTask extends AsyncTask<String, Void, Boolean> {
+class SendTask extends AsyncTask<String, Void, Boolean> {
 
-    ScanTask() {
+    SendTask() {
     }
 
     @Override
@@ -66,20 +59,38 @@ class ScanTask extends AsyncTask<String, Void, Boolean> {
         byte[] postDataBytes = null;
         String intentData = "";
         try {
-            // prepare data
-            Map<String, Object> params = new LinkedHashMap<>();
-            params.put("request", "create_job");
-            params.put("job_id", "001");
-            params.put("job_content", data[0]);
-            StringBuilder postData = new StringBuilder();
-            for (Map.Entry<String, Object> param : params.entrySet()) {
-                if (postData.length() != 0) postData.append('&');
-                postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-                postData.append('=');
-                postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+            if (data[0].startsWith("Ar:")) {
+                String code = data[0].substring(2, data[0].length());
+                // prepare data
+                Map<String, Object> params = new LinkedHashMap<>();
+                params.put("request", "send_arduino_code");
+                params.put("port", "/dev/ttyACM0");
+                params.put("q", code);
+                StringBuilder postData = new StringBuilder();
+                for (Map.Entry<String, Object> param : params.entrySet()) {
+                    if (postData.length() != 0) postData.append('&');
+                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                }
+                postDataBytes = postData.toString().getBytes("UTF-8");
+            } else {
+                String jobId = data[0].substring(0, data[0].indexOf('|'));
+                String code = data[0].substring(data[0].indexOf('|') + 1, data[0].length());
+                // prepare data
+                Map<String, Object> params = new LinkedHashMap<>();
+                params.put("request", "create_job");
+                params.put("job_id", jobId);
+                params.put("job_content", code);
+                StringBuilder postData = new StringBuilder();
+                for (Map.Entry<String, Object> param : params.entrySet()) {
+                    if (postData.length() != 0) postData.append('&');
+                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                }
+                postDataBytes = postData.toString().getBytes("UTF-8");
             }
-            postDataBytes = postData.toString().getBytes("UTF-8");
-
             // Simulate network access.
             URL url = new URL(Configuration.SERVER_IP + ":" + Configuration.PORT + "/");
             conn = (HttpURLConnection) url.openConnection();

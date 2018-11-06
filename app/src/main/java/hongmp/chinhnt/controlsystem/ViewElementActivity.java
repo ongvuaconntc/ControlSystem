@@ -164,7 +164,6 @@ public class ViewElementActivity extends AppCompatActivity {
 
             JSONObject jsonObj = mScanTask.execute((Void) null).get();
 
-
             ArrayList<SystemFunction> m_function = new ArrayList<>();
             m_function.add(new SystemFunction("0", "Master", "system control", "Master"));
             SystemElement element_ = new SystemElement("Master", m_function);
