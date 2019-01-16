@@ -42,6 +42,7 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
                         Intent intent = new Intent(activity, ViewDetailElementActivity.class);
                         System.out.println("holder postion: " + position);
                         intent.putExtra("element", element);
+                        intent.putExtra("User",activity.getUser());
                         activity.startActivityForResult(intent, 100);
                     }
                     else{

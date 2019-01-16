@@ -35,4 +35,5 @@ dependencies {
     releaseImplementation project(':blocklylib-core-release')
     debugImplementation project(':blocklylib-vertical-debug')
     releaseImplementation project(':blocklylib-vertical-release')
+    implementation 'com.android.support:design:27.1.1'
 }

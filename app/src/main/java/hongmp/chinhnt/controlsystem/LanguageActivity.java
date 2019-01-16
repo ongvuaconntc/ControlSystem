@@ -23,9 +23,7 @@ public class LanguageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_language);
-
         btnVie = (Button) findViewById(R.id.vie_lang);
-
         btnEng = (Button) findViewById(R.id.eng_lang);
         btnVie.setOnClickListener(new View.OnClickListener(){
 
@@ -34,7 +32,6 @@ public class LanguageActivity extends AppCompatActivity {
                 setLocale("vi");
             }
         });
-
         btnEng.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -54,6 +51,7 @@ public class LanguageActivity extends AppCompatActivity {
         resources.updateConfiguration(configuration,displayMetrics);
         Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }

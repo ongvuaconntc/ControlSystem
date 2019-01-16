@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent">
-    <!-- This layout creates an always open toolbox at the top and removes the trash. -->
+    <!-- This accountbarlayout creates an always open toolbox at the top and removes the trash. -->
 
     <fragment
         android:id="@+id/blockly_workspace"

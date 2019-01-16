@@ -16,7 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONObject;
 
@@ -30,12 +32,16 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import hongmp.chinhnt.controlsystem.list_utils.CustomAdapterSystemElement;
+import hongmp.chinhnt.controlsystem.list_utils.CustomAdapterSystemFunction;
 import hongmp.chinhnt.controlsystem.net.Configuration;
 import hongmp.chinhnt.controlsystem.net.MyTCPClient;
 import hongmp.chinhnt.controlsystem.object.SystemElement;
 import hongmp.chinhnt.controlsystem.object.SystemFunction;
+import hongmp.chinhnt.controlsystem.object.User;
 
 public class ViewElementActivity extends AppCompatActivity {
     static String ipServer = "10.3.141.1";
@@ -47,11 +53,20 @@ public class ViewElementActivity extends AppCompatActivity {
     static public MyTCPClient client;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
+    static int pressCount=0;
+    private ViewElementActivity pointer;
+    private User user;
+
+    private TextView txtAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
+        pressCount=0;
+        pointer=this;
+
+
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -131,11 +146,40 @@ public class ViewElementActivity extends AppCompatActivity {
             listEl.add(element);
         }
         System.out.println("In View Element Activity");
+        Intent intent=getIntent();
+        if (intent.getSerializableExtra("User")!=null) {
+            user = (User) intent.getSerializableExtra("User");
+        }
+
+        txtAccount=(TextView)findViewById(R.id.txtAccount);
+        txtAccount.setText(user.getName());
+        txtAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickAccount();
+            }
+        });
+
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         adapter = new CustomAdapterSystemElement(listEl);
         adapter.setActivity(this);
         recyclerView.setAdapter(adapter);
+
+
+
+
+    }
+
+    private void onClickAccount(){
+        //request for user Detail
+        Intent intent = new Intent(this, UserDetailActivity.class);
+        intent.putExtra("User",user);
+        startActivityForResult(intent, 100);
+    }
+
+    public User getUser(){
+        return user;
     }
 
     public void viewDetail(View v) {
@@ -146,8 +190,41 @@ public class ViewElementActivity extends AppCompatActivity {
         if (holder == null) return;
         System.out.println("holder postion: " + holder.position);
         intent.putExtra("element", listEl.get(holder.position));
+        intent.putExtra("User",user);
         startActivityForResult(intent, 100);
     }
+
+    @Override
+    public void onBackPressed() {
+
+        pressCount++;
+        if (pressCount==1) {
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            pointer.onBackPressed();
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            pressCount=0;
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Do you want to quit and log out the application?").setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).show();
+
+        }
+        else
+        {
+            pressCount=0;
+            super.onBackPressed();
+        }
+     }
 
     public void scanBtn(View v) {
         System.out.println("scanning");

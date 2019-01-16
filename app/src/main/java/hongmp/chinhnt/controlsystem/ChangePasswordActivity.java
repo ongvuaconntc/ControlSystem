@@ -3,7 +3,6 @@ package hongmp.chinhnt.controlsystem;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 
@@ -28,30 +27,17 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
-import hongmp.chinhnt.controlsystem.net.Configuration;
-import hongmp.chinhnt.controlsystem.object.User;
-//import hongmp.chinhnt.controlsystem.net.ServerConnection;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
+public class ChangePasswordActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -62,52 +48,41 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
+    private static final String[] DUMMY_CREDENTIALS = new String[]{
+            "foo@example.com:hello", "bar@example.com:world"
+    };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+    private UserChangePassTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private EditText mNewPasswordView;
+    private EditText mConfirmPasswordView;
+
     private View mProgressView;
     private View mLoginFormView;
-    private ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
+        setContentView(R.layout.activity_change_password);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
-
         mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
+        mNewPasswordView=(EditText)findViewById(R.id.newpassword);
+        mConfirmPasswordView=(EditText)findViewById(R.id.confirmnewpassword);
 
-
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = (Button) findViewById(R.id.btnCallChangePassword);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                attemptChange();
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
-        mImageView=(ImageView)findViewById(R.id.imageView3);
-        mImageView.setVisibility(View.VISIBLE);
+        mLoginFormView = findViewById(R.id.change_pass_form);
+        mProgressView = findViewById(R.id.change_pass_process);
     }
 
     private void populateAutoComplete() {
@@ -154,18 +129,21 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+    private void attemptChange() {
         if (mAuthTask != null) {
             return;
         }
 
         // Reset errors.
-        mEmailView.setError(null);
         mPasswordView.setError(null);
+        mNewPasswordView.setError(null);
+        mConfirmPasswordView.setError(null);
+
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String newpassword=mNewPasswordView.getText().toString();
+        String confirmnewpassword=mConfirmPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -177,6 +155,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             cancel = true;
         }
 
+        if (!TextUtils.isEmpty(newpassword) && !isPasswordValid(newpassword)) {
+            mNewPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mNewPasswordView;
+            cancel = true;
+        }
+
+
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -186,7 +171,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password,this);
+            mAuthTask = new UserChangePassTask(password,newpassword,confirmnewpassword);
             mAuthTask.execute((Void) null);
         }
     }
@@ -234,7 +219,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mImageView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -256,29 +240,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
-
-        addEmailsToAutoComplete(emails);
-    }
-
-    @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
 
     }
 
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmailView.setAdapter(adapter);
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
     }
 
 
@@ -296,65 +262,26 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
+    public class UserChangePassTask extends AsyncTask<Void, Void, Boolean> {
         private final String mPassword;
-        LoginActivity loginActivity;
+        private final String mNewPassword;
+        private final String mConfirmPassword;
 
-        UserLoginTask(String email, String password,LoginActivity loginActivity) {
-            mEmail = email;
+
+        UserChangePassTask(String password, String newpassword,String confirmpassword) {
             mPassword = password;
-            this.loginActivity=loginActivity;
+            mNewPassword=newpassword;
+            mConfirmPassword=confirmpassword;
         }
 
         @Override
-        protected Boolean doInBackground(Void... data) {
+        protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-            HttpURLConnection conn = null;
-            byte[] postDataBytes = null;
-            String intentData = "";
             try {
-                // prepare data
-                Map<String, Object> params = new LinkedHashMap<>();
-                params.put("request", "login");
-                params.put("email", this.mEmail);
-                params.put("password", this.mPassword);
-                StringBuilder postData = new StringBuilder();
-                for (Map.Entry<String, Object> param : params.entrySet()) {
-                    if (postData.length() != 0) postData.append('&');
-                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-                    postData.append('=');
-                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
-                }
-                postDataBytes = postData.toString().getBytes("UTF-8");
-
                 // Simulate network access.
-                URL url = new URL(Configuration.SERVER_IP + ":" + Configuration.PORT + "/");
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-                conn.setDoOutput(true);
-                conn.getOutputStream().write(postDataBytes);
-                Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-                StringBuilder returnData = new StringBuilder();
-                for (int c; (c = in.read()) >= 0; ) {
-                    returnData.append((char) c);
-                }
-                intentData = returnData.toString();
-                if (intentData.equals("login successfully")) {
-
-                    return true;
-                } else if (intentData.equals("login failed")) {
-                    return false;
-                }
-
-                Thread.sleep(2000);
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("ex: " + e);
-                return true;
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                return false;
             }
 
             // TODO: register the new account here.
@@ -367,18 +294,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(false);
 
             if (success) {
-                User user=new User();
-                user.setName("GoodBoy");
-                user.setPassword("1234243");
-                user.setLog_list("Log_list: ffmpeg.exe -i C:\\Users\\len\\Desktop\\Videos\\record.mp4 -loop 1 -i C:\\Users\\len\\Desktop\\Watermark\\1.png  -loop 1 -i C:\\Users\\len\\Desktop\\Watermark\\2.png  -loop 1 -i C:\\Users\\len\\Desktop\\Watermark\\3.png -loop 1 -i C:\\Users\\len\\Desktop\\Watermark2\\1.png -loop 1 -i C:\\Users\\len\\Desktop\\Watermark2\\2.png -loop 1 -i C:\\Users\\len\\Desktop\\Watermark2\\3.png -filter_complex \"[1]lut=a=val*0.3,scale=120:320,trim=0:3,fade=in:d=1:alpha=1,fade=out:st=2:d=1:alpha=1,loop=4:30:0,setpts=N/10/TB[1a];[2]scale=120:320,trim=0:3,fade=in:d=1:alpha=1,fade=out:st=2:d=1:alpha=1,loop=4:30:0,setpts=N/10/TB[2a];[3]scale=120:320,trim=0:3,fade=in:d=1:alpha=1,fade=out:st=2:d=1:alpha=1,loop=4:30:0,setpts=N/10/TB[3a];[4]scale=120:320,trim=0:3,fade=in:d=1:alpha=1,fade=out:st=2:d=1:alpha=1,loop=4:75:0,setpts=N/25/TB[4a];[5]scale=120:320,trim=0:3,fade=in:d=1:alpha=1,fade=out:st=2:d=1:alpha=1,loop=4:75:0,setpts=N/25/TB[5a];[6]scale=120:320,trim=0:3,fade=in:d=1:alpha=1,fade=out:st=2:d=1:alpha=1,loop=4:75:0,setpts=N/25/TB[6a]; [0][1a] overlay=10:10:enable='between(mod(floor(t/3),3),0,0)' [tmp]; [tmp][2a] overlay=10:10:enable='between(mod(floor(t/3),3),1,1)' [tmp1];  [tmp1][3a] overlay=10:10:enable='between(mod(floor(t/3),3),2,2)'[tmp2]; [tmp2][4a] overlay=main_w-overlay_w-10:10:enable='between(mod(floor(t/3),3),0,0)'[tmp3]; [tmp3][5a] overlay=main_w-overlay_w-10:10:enable='between(mod(floor(t/3),3),1,1)'[tmp4];  [tmp4][6a] overlay=main_w-overlay_w-10:10:enable='between(mod(floor(t/3),3),2,2)'\" -metadata title=\"\" -metadata artist=\"\" -metadata album_artist=\"\" -metadata album=\"\" -metadata date=\"\" -metadata track=\"\" -metadata genre=\"\" -metadata publisher=\"\" -metadata encoded_by=\"\" -metadata copyright=\"\" -metadata composer=\"\" -metadata performer=\"\" -metadata TIT1=\"\" -metadata TIT3=\"\" -metadata disc=\"\" -metadata TKEY=\"\" -metadata TBPM=\"\" -metadata language=\"eng\" -metadata encoder=\"\" output.mp4");
-
-                Intent intent=new Intent(loginActivity,ViewElementActivity.class);
-                intent.putExtra("User",user);
-                startActivity(intent);
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                mConfirmPasswordView.setError(getString(R.string.error_incorrect_password));
+                mConfirmPasswordView.requestFocus();
             }
         }
 

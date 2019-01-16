@@ -1,13 +1,17 @@
 package hongmp.chinhnt.controlsystem.list_utils;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,18 +24,20 @@ import hongmp.chinhnt.controlsystem.object.SystemFunction;
 
 public class CustomAdapterSystemFunction extends  RecyclerView.Adapter<CustomAdapterSystemFunction.ViewHolder>{
     private ViewDetailElementActivity activity;
+
     public class ViewHolder extends RecyclerView.ViewHolder  {
         TextView txtName;
-        TextView txtFunction;
+        public Button btnUpdateName;
         public Button btnUpdate;
     //    public Button btnRemove;
         public int position;
         public ViewHolder(LinearLayout itemView) {
             super(itemView);
             this.txtName=itemView.findViewById(R.id.txtName);
-            this.txtFunction=itemView.findViewById(R.id.txtFunction);
+            this.btnUpdateName=itemView.findViewById(R.id.btnUpdateName);
             this.btnUpdate=itemView.findViewById(R.id.btnUpdate);
          //   this.btnRemove=itemView.findViewById(R.id.btnRemove);
+
 
 
             this.btnUpdate.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +50,31 @@ public class CustomAdapterSystemFunction extends  RecyclerView.Adapter<CustomAda
                 }
             });
 
+            this.btnUpdateName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    builder.setTitle("Change Function Name");
+                    final EditText input = new EditText(activity);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
+                    builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String text = input.getText().toString();
+                            txtName.setText(text);
+                            //send update name to server;
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                }
+            });
         }
     };
 
@@ -65,10 +96,8 @@ public class CustomAdapterSystemFunction extends  RecyclerView.Adapter<CustomAda
 
 
     public void onBindViewHolder(@NonNull CustomAdapterSystemFunction.ViewHolder holder, int position) {
-        holder.txtName.setText("Port:"+functions.get(position).getPort());
-        holder.txtFunction.setText("Function:"+functions.get(position).getName());
+        holder.txtName.setText(functions.get(position).getName());
         holder.position=position;
-
     }
 
     @Override
@@ -83,7 +112,7 @@ public class CustomAdapterSystemFunction extends  RecyclerView.Adapter<CustomAda
        ViewHolder viewHolder;
        View view=convertView;
        if (view==null){
-            view= LayoutInflater.from(context).inflate(R.layout.custom_recycler_view_function,parent,false);
+            view= LayoutInflater.from(context).inflate(R.accountbarlayout.custom_recycler_view_function,parent,false);
             viewHolder=new ViewHolder();
             viewHolder.txtName=(TextView)view.findViewById(R.id.txtName);
             viewHolder.txtFunction=(TextView)view.findViewById(R.id.txtFunction);
