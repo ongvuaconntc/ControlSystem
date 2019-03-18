@@ -131,19 +131,25 @@ public class ViewElementActivity extends AppCompatActivity {
                 listEl = new ArrayList<>();
         } else {
             listEl = new ArrayList<>();
-            SystemFunction function=new SystemFunction("D1","Tắt cửa","cửa cửa","Node1");
-            SystemFunction function1=new SystemFunction("D2","Tắt đèn","cửa cửa","Node1");
+        //    SystemFunction function=new SystemFunction("D1","Tắt cửa","cửa cửa","Node1");
+//            SystemFunction function1=new SystemFunction("D2","Tắt đèn","cửa cửa","Node1");
 
             ArrayList<SystemFunction> functions=new ArrayList<>();
-            functions.add(function);
-            functions.add(function1);
+  //          functions.add(function);
+    //        functions.add(function1);
             SystemElement element=new SystemElement("Node1",functions);
+            SystemElement element1=new SystemElement("Node2",functions);
+            SystemElement element2=new SystemElement("Node3",functions);
+
 
             ArrayList<SystemFunction> m_function = new ArrayList<>();
             m_function.add(new SystemFunction(0 + "", "Master", "system control", "Master"));
             SystemElement element_ = new SystemElement("Master", m_function);
             listEl.add(element_);
             listEl.add(element);
+            listEl.add(element1);
+            listEl.add(element2);
+
         }
         System.out.println("In View Element Activity");
         Intent intent=getIntent();
