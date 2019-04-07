@@ -123,6 +123,30 @@ Blockly.JavaScript['core_arduino'] = function(block) {
   return code;
 };
 
+Blockly.JavaScript['servo_init'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = '#include <Servo.h>\n Servo '+text_name+';\n';
+  return code;
+};
+
+Blockly.JavaScript['servo_attach'] = function(block) {
+  var text_name0 = block.getFieldValue('NAME0');
+  var dropdown_name = block.getFieldValue('NAME1');
+  // TODO: Assemble JavaScript into code variable.
+  var code = text_name0+'.attach('+dropdown_name+');\n';
+  return code;
+};
+
+Blockly.JavaScript['servo_write'] = function(block) {
+  var text_name0 = block.getFieldValue('NAME0');
+  var number_name1 = block.getFieldValue('NAME1');
+  // TODO: Assemble JavaScript into code variable.
+  var code = text_name0+'.write('+number_name1+');\n';
+  return code;
+};
+
+
 Blockly.JavaScript.workspaceToCodeWithId = Blockly.JavaScript.workspaceToCode;
 
 Blockly.JavaScript.workspaceToCode = function(workspace) {
