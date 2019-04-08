@@ -146,6 +146,15 @@ Blockly.JavaScript['servo_write'] = function(block) {
   return code;
 };
 
+Blockly.JavaScript['pulsein'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_name0 = block.getFieldValue('NAME0');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'pulseIn('+dropdown_name+','+dropdown_name0+')';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
 
 Blockly.JavaScript.workspaceToCodeWithId = Blockly.JavaScript.workspaceToCode;
 

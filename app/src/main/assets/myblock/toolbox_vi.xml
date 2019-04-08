@@ -26,6 +26,7 @@
         <block type="servo_init"></block>
         <block type="servo_attach"></block>
         <block type="servo_write"></block>
+        <block type="pulsein"></block>
     </category>
     <category name="Logic" colour="210">
         <block type="controls_if"></block>
