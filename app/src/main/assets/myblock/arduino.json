@@ -616,4 +616,246 @@
     "tooltip": "",
     "helpUrl": ""
   }
+  ,
+  {
+    "type": "servo_detach",
+    "message0": "Servo %1 detach",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "NAME0",
+        "text": "ser1"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  }
+  ,
+  {
+    "type": "timer_init",
+    "message0": "init timer %1",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "NAME",
+        "text": "t1"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 135,
+    "tooltip": "",
+    "helpUrl": ""
+  }
+  ,{
+  "type": "timer_at_every",
+  "message0": "timer  %1 every milisecond %2 do function name  %3",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "NAME",
+      "text": "t1"
+    },
+    {
+      "type": "field_number",
+      "name": "NAME1",
+      "value": 1000,
+      "min": 0,
+      "max": 50000
+    },
+    {
+      "type": "field_input",
+      "name": "NAME2",
+      "text": "f1"
+    }
+  ],
+  "colour": 60,
+  "tooltip": "",
+  "helpUrl": ""
+}
+  ,{
+  "type": "load_cell_init",
+  "message0": "init load cell name %1 DOUT pin at %2 CLK pin at %3 calibration factor %4",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "NAME",
+      "text": "cell1"
+    },
+    {
+      "type": "field_input",
+      "name": "NAME2",
+      "text": "0"
+    },
+    {
+      "type": "field_input",
+      "name": "NAME3",
+      "text": "0"
+    },
+    {
+      "type": "field_input",
+      "name": "NAME4",
+      "text": "0"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 120,
+  "tooltip": "",
+  "helpUrl": ""
+},
+  {
+    "type": "get_load_cell_weight",
+    "message0": "%1 get load cell weight",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "NAME",
+        "text": "cell1"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "lcd_init",
+    "message0": "init lcd %1 : rs %2 enable %3 d4 %4 d5 %5 d6 %6 d7 %7",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "NAME",
+        "text": "lcd1"
+      },
+      {
+        "type": "field_input",
+        "name": "NAME0",
+        "text": "0"
+      },
+      {
+        "type": "field_input",
+        "name": "NAME1",
+        "text": "0"
+      },
+      {
+        "type": "field_input",
+        "name": "NAME2",
+        "text": "0"
+      },
+      {
+        "type": "field_input",
+        "name": "NAME3",
+        "text": "0"
+      },
+      {
+        "type": "field_input",
+        "name": "NAME4",
+        "text": "0"
+      },
+      {
+        "type": "field_input",
+        "name": "NAME5",
+        "text": "0"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 135,
+    "tooltip": "",
+    "helpUrl": ""
+  }
+  ,
+  {
+    "type": "lcd_begin",
+    "message0": "lcd %1 begin at column %2 row %3",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "NAME",
+        "text": "lcd1"
+      },
+      {
+        "type": "field_input",
+        "name": "NAME0",
+        "text": "16"
+      },
+      {
+        "type": "field_input",
+        "name": "NAME1",
+        "text": "2"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 135,
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "lcd_clear",
+    "message0": "lcd %1 clear",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "NAME",
+        "text": "lcd1"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 135,
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "lcd_set_cursor",
+    "message0": "lcd %1 set cursor column %2 row %3",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "NAME",
+        "text": "lcd1"
+      },
+      {
+        "type": "field_input",
+        "name": "NAME0",
+        "text": "0"
+      },
+      {
+        "type": "field_input",
+        "name": "NAME1",
+        "text": "0"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 135,
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "lcd_print",
+    "message0": "lcd %1 print %2",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "NAME",
+        "text": "lcd1"
+      },
+      {
+        "type": "field_input",
+        "name": "NAME0",
+        "text": "0"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 135,
+    "tooltip": "",
+    "helpUrl": ""
+  }
 ]

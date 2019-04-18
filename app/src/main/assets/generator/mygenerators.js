@@ -145,7 +145,12 @@ Blockly.JavaScript['servo_write'] = function(block) {
   var code = text_name0+'.write('+number_name1+');\n';
   return code;
 };
-
+Blockly.JavaScript['servo_detach'] = function(block) {
+  var text_name0 = block.getFieldValue('NAME0');
+  // TODO: Assemble JavaScript into code variable.
+  var code = text_name0+'.detach();\n';
+  return code;
+};
 Blockly.JavaScript['pulsein'] = function(block) {
   var dropdown_name = block.getFieldValue('NAME');
   var dropdown_name0 = block.getFieldValue('NAME0');
@@ -155,7 +160,79 @@ Blockly.JavaScript['pulsein'] = function(block) {
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
+Blockly.JavaScript['timer_init'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = '#include <Timer.h>\n Timer '+text_name+';\n';
+  return code;
+};
+Blockly.JavaScript['timer_at_every'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  var number_name1 = block.getFieldValue('NAME1');
+  var text_name2 = block.getFieldValue('NAME2');
+  // TODO: Assemble JavaScript into code variable.
+  var code = text_name+'every('+number_name1+','+text_name2+',0);\n';
+  return code;
+};
+Blockly.JavaScript['load_cell_init'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  var text_name2 = block.getFieldValue('NAME2');
+  var text_name3 = block.getFieldValue('NAME3');
+  var text_name4 = block.getFieldValue('NAME4');
+  // TODO: Assemble JavaScript into code variable.
+  var code = '#include <HX711.h>\n'+'#define DOUT  '+text_name2+'\n'+'#define CLK  '+text_name3+'\n'+'HX711 '+text_name+';\n'+'float calibration_factor = '+text_name4+';\n';
+  return code;
+};
+Blockly.JavaScript['get_load_cell_weight'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = text_name+'.get_units()';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+Blockly.JavaScript['lcd_init'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  var text_name0 = block.getFieldValue('NAME0');
+  var text_name1 = block.getFieldValue('NAME1');
+  var text_name2 = block.getFieldValue('NAME2');
+  var text_name3 = block.getFieldValue('NAME3');
+  var text_name4 = block.getFieldValue('NAME4');
+  var text_name5 = block.getFieldValue('NAME5');
 
+  // TODO: Assemble JavaScript into code variable.
+  var code = '#include <LiquidCrystal.h>\n'
+  +'LiquidCrystal '+text_name+'('+text_name0+', '+text_name1+', '+text_name2+', '+text_name3+', '+text_name4+', '+text_name5+');\n';
+  return code;
+};
+Blockly.JavaScript['lcd_begin'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  var text_name0 = block.getFieldValue('NAME0');
+  var text_name1 = block.getFieldValue('NAME1');
+  // TODO: Assemble JavaScript into code variable.
+  var code =text_name +'.begin('+text_name0+','+text_name1+');\n';
+  return code;
+};
+Blockly.JavaScript['lcd_clear'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = text_name+'.clear();\n';
+  return code;
+};
+Blockly.JavaScript['lcd_set_cursor'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  var text_name0 = block.getFieldValue('NAME0');
+  var text_name1 = block.getFieldValue('NAME1');
+  // TODO: Assemble JavaScript into code variable.
+  var code = text_name+'.setCursor('+text_name0+','+text_name1+');\n';
+  return code;
+};
+Blockly.JavaScript['lcd_print'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  var text_name0 = block.getFieldValue('NAME0');
+  // TODO: Assemble JavaScript into code variable.
+  var code = text_name+'.print(\"'+text_name0+'\");\n';
+  return code;
+};
 Blockly.JavaScript.workspaceToCodeWithId = Blockly.JavaScript.workspaceToCode;
 
 Blockly.JavaScript.workspaceToCode = function(workspace) {

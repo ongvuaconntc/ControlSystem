@@ -26,7 +26,20 @@
         <block type="servo_init"></block>
         <block type="servo_attach"></block>
         <block type="servo_write"></block>
+        <block type="servo_detach"></block>
         <block type="pulsein"></block>
+        <block type="timer_init"></block>
+        <block type="timer_at_every"></block>
+        <block type="load_cell_init"></block>
+        <block type="get_load_cell_weight"></block>
+        <block type="lcd_init"></block>
+        <block type="lcd_begin"></block>
+        <block type="lcd_clear"></block>
+        <block type="lcd_set_cursor"></block>
+        <block type="lcd_print"></block>
+
+
+
     </category>
     <category name="Logic" colour="120">
         <block type="controls_if"></block>
