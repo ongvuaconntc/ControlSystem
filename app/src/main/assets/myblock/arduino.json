@@ -652,7 +652,7 @@
   }
   ,{
   "type": "timer_at_every",
-  "message0": "timer  %1 every milisecond %2 do function name  %3",
+  "message0": "timer  %1 every millisecond %2 do function name  %3",
   "args0": [
     {
       "type": "field_input",

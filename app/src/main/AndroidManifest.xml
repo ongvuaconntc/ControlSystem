@@ -23,7 +23,8 @@
         <activity android:name=".ViewElementActivity" />
         <activity
             android:name=".BlocklyActivity"
-            android:theme="@style/AppThemeBlockly" />
+            android:theme="@style/AppThemeBlockly"
+            android:screenOrientation="landscape" />
         <activity android:name=".ViewDetailElementActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".LanguageActivity">

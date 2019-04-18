@@ -31,4 +31,6 @@
     <string name="change_pass">Đổi mật khẩu</string>
     <string name="log_out">Đăng xuất</string>
     <string name="welcome_txt">Xin chào</string>
+    <string name="update_func_name">Thay đổi tên</string>
+    <string name="add_funcion">Thêm hàm</string>
 </resources>

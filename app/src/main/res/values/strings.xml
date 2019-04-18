@@ -34,4 +34,6 @@
     <string name="change_pass">Change Password</string>
     <string name="log_out">Log out</string>
     <string name="welcome_txt">Welcome</string>
+    <string name="update_func_name">Update Name</string>
+    <string name="add_funcion">Add Function</string>
 </resources>

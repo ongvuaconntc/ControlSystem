@@ -76,7 +76,7 @@
                 android:layout_marginBottom="13dp"
                 android:layout_toStartOf="@+id/btnUpdate"
                 android:background="@drawable/mybutton"
-                android:text="Update Name"
+                android:text="@string/update_func_name"
                 android:textAllCaps="false"
                 android:textColor="#ffffff"
                 android:textSize="12sp" />

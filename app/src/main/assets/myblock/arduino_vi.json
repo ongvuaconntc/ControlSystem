@@ -224,7 +224,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 105,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   },
@@ -618,7 +618,7 @@
   }
   ,{
   "type": "servo_detach",
-  "message0": "Servo %1 detach",
+  "message0": "Servo %1 dừng",
   "args0": [
     {
       "type": "field_input",
@@ -628,14 +628,14 @@
   ],
   "previousStatement": null,
   "nextStatement": null,
-  "colour": 230,
+  "colour": "#f1b701",
   "tooltip": "",
   "helpUrl": ""
 }
 ,
   {
     "type": "timer_init",
-    "message0": "init timer %1",
+    "message0": "khởi tạo bộ hẹn giờ %1",
     "args0": [
       {
         "type": "field_input",
@@ -645,13 +645,13 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 135,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   }
 ,{
   "type": "timer_at_every",
-  "message0": "timer  %1 every milisecond %2 do function name  %3",
+  "message0": "hẹn giờ  %1 mỗi mili giây %2 thực hiện hàm tên %3",
   "args0": [
     {
       "type": "field_input",
@@ -671,13 +671,13 @@
       "text": "f1"
     }
   ],
-  "colour": 60,
+  "colour": "#f1b701",
   "tooltip": "",
   "helpUrl": ""
 }
 ,{
   "type": "load_cell_init",
-  "message0": "init load cell name %1 DOUT pin at %2 CLK pin at %3 calibration factor %4",
+  "message0": "khởi tạo cân %1 DOUT pin ở %2 CLK pin ở %3 hệ số hiệu chuẩn %4",
   "args0": [
     {
       "type": "field_input",
@@ -702,7 +702,7 @@
   ],
   "previousStatement": null,
   "nextStatement": null,
-  "colour": 120,
+  "colour": "#f1b701",
   "tooltip": "",
   "helpUrl": ""
 },{
@@ -723,7 +723,7 @@
 },
   {
     "type": "get_load_cell_weight",
-    "message0": "%1 get load cell weight",
+    "message0": "%1 lấy giá trị cân",
     "args0": [
       {
         "type": "field_input",
@@ -732,13 +732,13 @@
       }
     ],
     "output": null,
-    "colour": 230,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   },
   {
     "type": "lcd_init",
-    "message0": "init lcd %1 : rs %2 enable %3 d4 %4 d5 %5 d6 %6 d7 %7",
+    "message0": "khởi tạo lcd %1 : rs %2 enable %3 d4 %4 d5 %5 d6 %6 d7 %7",
     "args0": [
       {
         "type": "field_input",
@@ -778,14 +778,14 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 135,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   }
 ,
   {
     "type": "lcd_begin",
-    "message0": "lcd %1 begin at column %2 row %3",
+    "message0": "lcd %1 bắt đầu tại cột %2 hàng %3",
     "args0": [
       {
         "type": "field_input",
@@ -805,13 +805,13 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 135,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   },
   {
     "type": "lcd_clear",
-    "message0": "lcd %1 clear",
+    "message0": "làm trống lcd %1",
     "args0": [
       {
         "type": "field_input",
@@ -821,13 +821,13 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 135,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   },
   {
     "type": "lcd_set_cursor",
-    "message0": "lcd %1 set cursor column %2 row %3",
+    "message0": "lcd %1 đặt con trỏ cột %2 hàng %3",
     "args0": [
       {
         "type": "field_input",
@@ -847,13 +847,13 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 135,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   },
   {
     "type": "lcd_print",
-    "message0": "lcd %1 print %2",
+    "message0": "lcd %1 hiển thị %2",
     "args0": [
       {
         "type": "field_input",
@@ -868,7 +868,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 135,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   }

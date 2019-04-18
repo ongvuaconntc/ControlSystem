@@ -33,6 +33,7 @@ public class ViewDetailElementActivity extends AppCompatActivity {
     private TextView txtAccount;
     private Button btnAddFunction;
     private ViewDetailElementActivity pointer;
+    private static String languageApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class ViewDetailElementActivity extends AppCompatActivity {
         Intent intent=getIntent();
         recyclerView=(RecyclerView) findViewById(R.id.recylcerView_);
         pointer=this;
-
+        languageApp = getResources().getConfiguration().locale.getLanguage();
 
         if (intent.getSerializableExtra("element")!=null) {
             SystemElement element = (SystemElement) intent.getSerializableExtra("element");
@@ -71,27 +72,51 @@ public class ViewDetailElementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(pointer);
-                builder.setTitle("Add Function Name");
-                final EditText input = new EditText(pointer);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
-                builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String text = input.getText().toString();
-                        listFunc.add(new SystemFunction("",text,"",""));
-                        adapter.notifyItemInserted(listFunc.size()-1);
+                if(languageApp.equalsIgnoreCase("vi")) {
+                    builder.setTitle("Thêm hàm tên: ");
+                    final EditText input = new EditText(pointer);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
+                    builder.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String text = input.getText().toString();
+                            listFunc.add(new SystemFunction("", text, "", ""));
+                            adapter.notifyItemInserted(listFunc.size() - 1);
 
-                        //send update name to server;
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                builder.show();
+                            //send update name to server;
+                        }
+                    });
+                    builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                }else{
+                    builder.setTitle("Add Function Name");
+                    final EditText input = new EditText(pointer);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
+                    builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String text = input.getText().toString();
+                            listFunc.add(new SystemFunction("", text, "", ""));
+                            adapter.notifyItemInserted(listFunc.size() - 1);
+
+                            //send update name to server;
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                }
             }
         });
 
