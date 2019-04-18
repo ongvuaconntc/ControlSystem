@@ -31,6 +31,7 @@
         <block type="timer_init"></block>
         <block type="timer_at_every"></block>
         <block type="load_cell_init"></block>
+        <block type="load_cell_begin"></block>
         <block type="get_load_cell_weight"></block>
         <block type="lcd_init"></block>
         <block type="lcd_begin"></block>

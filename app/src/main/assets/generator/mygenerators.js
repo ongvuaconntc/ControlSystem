@@ -233,6 +233,13 @@ Blockly.JavaScript['lcd_print'] = function(block) {
   var code = text_name+'.print(\"'+text_name0+'\");\n';
   return code;
 };
+
+Blockly.JavaScript['load_cell_begin'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = text_name+'.begin(DOUT, CLK);\n'+text_name+'.set_scale();\n'+text_name+'.tare();\n'+text_name+'.set_scale(calibration_factor);\n';
+  return code;
+};
 Blockly.JavaScript.workspaceToCodeWithId = Blockly.JavaScript.workspaceToCode;
 
 Blockly.JavaScript.workspaceToCode = function(workspace) {
