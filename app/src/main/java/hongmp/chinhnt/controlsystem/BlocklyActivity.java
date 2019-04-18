@@ -1,6 +1,7 @@
 package hongmp.chinhnt.controlsystem;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -15,16 +16,25 @@ import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.codegen.LanguageDefinition;
 import com.google.blockly.model.DefaultBlocks;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import hongmp.chinhnt.controlsystem.blockly_utils.MyGenerators;
 import hongmp.chinhnt.controlsystem.file_utils.CustomJSONLoader;
 import hongmp.chinhnt.controlsystem.list_utils.CustomAdapterSystemFunction;
+import hongmp.chinhnt.controlsystem.net.Configuration;
 import hongmp.chinhnt.controlsystem.object.SystemElement;
 import hongmp.chinhnt.controlsystem.object.SystemFunction;
 
@@ -224,15 +234,11 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
     @Override
     public void onSaveWorkspace() {
         super.onSaveWorkspace();
+
         if (generated_Code==null) return;
-        byte[] data=new byte[generated_Code.length()];
-        for (int i=0;i<generated_Code.length();i++) data[i]=(byte)generated_Code.charAt(i);
-        try {
-            ViewElementActivity.client.writeData(data);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        SendTask mSendTask = new SendTask();
+        mSendTask.execute(generated_Code);
+
         generated_Code=null;
         Toast.makeText(this,"Saved to "+function.getNode()+"_"+function.getName()+".xml", 1).show();
 
@@ -280,5 +286,81 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
     }
 
 
+
+}
+
+
+class SendTask extends AsyncTask<String, Void, Boolean> {
+
+    SendTask() {
+    }
+
+    @Override
+    protected Boolean doInBackground(String... data) {
+        for (int i = 0; i < data.length; i++) {
+            System.out.println("data: [" + i + "] " + data[i]);
+        }
+        // TODO: attempt authentication against a network service.
+        HttpURLConnection conn = null;
+        byte[] postDataBytes = null;
+        String intentData = "";
+        try {
+            if (data[0].startsWith("Ar:")) {
+                String code = data[0].substring(2, data[0].length());
+                // prepare data
+                Map<String, Object> params = new LinkedHashMap<>();
+                params.put("request", "send_arduino_code");
+                params.put("port", "/dev/ttyACM0");
+                params.put("q", code);
+                StringBuilder postData = new StringBuilder();
+                for (Map.Entry<String, Object> param : params.entrySet()) {
+                    if (postData.length() != 0) postData.append('&');
+                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                }
+                postDataBytes = postData.toString().getBytes("UTF-8");
+            } else {
+//                String jobId = data[0].substring(0, data[0].indexOf('|'));
+                String code = data[0].substring(data[0].indexOf('|') + 1, data[0].length());
+                // prepare data
+                Map<String, Object> params = new LinkedHashMap<>();
+                params.put("request", "send_python_code");
+                params.put("q", data);
+                StringBuilder postData = new StringBuilder();
+                for (Map.Entry<String, Object> param : params.entrySet()) {
+                    if (postData.length() != 0) postData.append('&');
+                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                }
+                postDataBytes = postData.toString().getBytes("UTF-8");
+            }
+            // Simulate network access.
+            URL url = new URL(Configuration.SERVER_IP + ":" + Configuration.PORT + "/");
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+            conn.setDoOutput(true);
+            conn.getOutputStream().write(postDataBytes);
+            Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            StringBuilder returnData = new StringBuilder();
+            for (int c; (c = in.read()) >= 0; ) {
+                returnData.append((char) c);
+            }
+
+            //////////////////this is all serial ports
+            System.out.println(returnData.toString());
+
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ex: " + e);
+            return true;
+        }
+
+        return true;
+    }
 
 }

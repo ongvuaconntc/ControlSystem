@@ -38,43 +38,43 @@
         ],
         [
           "D0",
-          "0"
+          "00"
         ],
         [
           "D1",
-          "1"
+          "01"
         ],
         [
           "D2",
-          "2"
+          "02"
         ],
         [
           "D3",
-          "3"
+          "03"
         ],
         [
           "D4",
-          "4"
+          "04"
         ],
         [
           "D5",
-          "5"
+          "05"
         ],
         [
           "D6",
-          "6"
+          "06"
         ],
         [
           "D7",
-          "7"
+          "07"
         ],
         [
           "D8",
-          "8"
+          "08"
         ],
         [
           "D9",
-          "9"
+          "09"
         ],
         [
           "D10",
@@ -107,7 +107,7 @@
       {
         "type": "field_input",
         "name": "NodeName",
-        "text": "12345678"
+        "text": "12345"
       },
       {
         "type": "field_dropdown",
@@ -139,43 +139,43 @@
           ],
           [
             "D0",
-            "0"
+            "00"
           ],
           [
             "D1",
-            "1"
+            "01"
           ],
           [
             "D2",
-            "2"
+            "02"
           ],
           [
             "D3",
-            "3"
+            "03"
           ],
           [
             "D4",
-            "4"
+            "04"
           ],
           [
             "D5",
-            "5"
+            "05"
           ],
           [
             "D6",
-            "6"
+            "06"
           ],
           [
             "D7",
-            "7"
+            "07"
           ],
           [
             "D8",
-            "8"
+            "08"
           ],
           [
             "D9",
-            "9"
+            "09"
           ],
           [
             "D10",
@@ -207,41 +207,7 @@
     "tooltip": "",
     "helpUrl": ""
   },
-  {
-    "type": "task_pi_control",
-    "message0": "task %1 %2",
-    "args0": [
-      {
-        "type": "input_dummy"
-      },
-      {
-        "type": "input_statement",
-        "name": "DO0"
-      }
-    ],
-    "previousStatement": null,
-    "nextStatement": null,
-    "colour": 230,
-    "tooltip": "",
-    "helpUrl": ""
-  },
-  {
-    "type": "main_pi_control",
-    "message0": "task_control %1 %2",
-    "args0": [
-      {
-        "type": "input_dummy"
-      },
-      {
-        "type": "input_statement",
-        "name": "DO0"
-      }
-    ],
-    "previousStatement": null,
-    "colour": 90,
-    "tooltip": "",
-    "helpUrl": ""
-  },
+
   {
     "type": "pi_delay",
     "message0": "Delay %1",

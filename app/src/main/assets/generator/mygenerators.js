@@ -119,7 +119,7 @@ Blockly.JavaScript['core_arduino'] = function(block) {
 
     }
   //var code = setup_init+statements_do0+'};\n'+'function loop(){\n'+loop_init+tmp+serialcode+'}\n';
-  var code = 'Ar:function setup(){'+statements_do0+'};\n'+'function loop(){'+statements_do+'}\n';
+  var code = 'function setup(){'+statements_do0+'};\n'+'function loop(){'+statements_do+'}\n';
   return code;
 };
 
@@ -245,6 +245,6 @@ Blockly.JavaScript.workspaceToCodeWithId = Blockly.JavaScript.workspaceToCode;
 Blockly.JavaScript.workspaceToCode = function(workspace) {
   var code = this.workspaceToCodeWithId(workspace);
   // Strip out block IDs for readability.
-  code = goog.string.trimRight(code.replace(/(,\s*)?'block_id_[^']+'\)/g, ')'))
+  code = 'Ar:'+goog.string.trimRight(code.replace(/(,\s*)?'block_id_[^']+'\)/g, ')'))
   return code;
 };

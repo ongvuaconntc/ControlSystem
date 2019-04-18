@@ -86,14 +86,17 @@ public class ChangePasswordActivity extends Activity implements LoaderCallbacks<
     }
 
     private void populateAutoComplete() {
+        /*
         if (!mayRequestContacts()) {
             return;
         }
+        */
 
         getLoaderManager().initLoader(0, null, this);
     }
 
     private boolean mayRequestContacts() {
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
         }

@@ -115,6 +115,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             return;
         }
 
+
         getLoaderManager().initLoader(0, null, this);
     }
 
