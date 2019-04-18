@@ -26,15 +26,15 @@
             android:theme="@style/AppThemeBlockly"
             android:screenOrientation="landscape" />
         <activity android:name=".ViewDetailElementActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".LanguageActivity">
+        <activity android:name=".LoginActivity" >
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.intent.action.VIEW" />
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+
         <activity
             android:name=".ChangePasswordActivity"
             android:label="@string/title_activity_change_password" />
