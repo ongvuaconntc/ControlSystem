@@ -31,4 +31,7 @@
     <string name="title_systemelement_detail">SystemElement Detail</string>
     <string name="title_activity_change_password">Change Password</string>
     <string name="title_activity_user_detail">UserDetailActivity</string>
+    <string name="change_pass">Change Password</string>
+    <string name="log_out">Log out</string>
+    <string name="welcome_txt">Welcome</string>
 </resources>

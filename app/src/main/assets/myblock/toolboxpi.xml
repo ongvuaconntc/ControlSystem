@@ -14,14 +14,14 @@
   -->
 
 <toolbox>
-    <category name="Server" colour="330">
+    <category name="Server" colour="#f1b701">
         <block type="pi_get_node_port_value"></block>
         <block type="pi_set_node_port_value"></block>
         <block type="task_pi_control"></block>
         <block type="main_pi_control"></block>
         <block type="pi_delay"></block>
     </category>
-    <category name="Logic" colour="210">
+    <category name="Logic" colour="120">
         <block type="controls_if"></block>
         <block type="controls_ifelse"></block>
         <block type="logic_compare"></block>

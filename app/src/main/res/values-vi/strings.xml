@@ -28,4 +28,7 @@
     <string name="actionbar_save">Lưu</string>
     <string name="actionbar_clear">Xóa</string>
     <string name="actionbar_run">Chạy</string>
+    <string name="change_pass">Đổi mật khẩu</string>
+    <string name="log_out">Đăng xuất</string>
+    <string name="welcome_txt">Xin chào</string>
 </resources>

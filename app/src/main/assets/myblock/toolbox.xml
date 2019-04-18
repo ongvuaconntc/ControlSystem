@@ -14,7 +14,7 @@
   -->
 
 <toolbox>
-    <category name="Arduino" colour="330">
+    <category name="Arduino" colour="#f1b701">
         <block type="init_arduino"></block>
         <block type="core_arduino"></block>
         <block type="set port mode">
@@ -28,7 +28,7 @@
         <block type="servo_write"></block>
         <block type="pulsein"></block>
     </category>
-    <category name="Logic" colour="210">
+    <category name="Logic" colour="120">
         <block type="controls_if"></block>
         <block type="controls_ifelse"></block>
         <block type="logic_compare"></block>

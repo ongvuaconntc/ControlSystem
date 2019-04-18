@@ -10,7 +10,7 @@
       }
     ],
     "output": null,
-    "colour": 330,
+    "colour": "#FFFF658E",
     "tooltip": "Returns the value of this variable.",
     "helpUrl": "https://github.com/google/blockly/wiki/Variables#get"
   },
@@ -31,7 +31,7 @@
     "previousStatement": null,
     "nextStatement": null,
     "inputsInline": true,
-    "colour": 330,
+    "colour": "#FFFF658E",
     "tooltip": "Đặt biến này bằng với đầu vào.",
     "helpUrl": "https://github.com/google/blockly/wiki/Variables#set"
   }

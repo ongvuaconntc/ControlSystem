@@ -24,7 +24,7 @@
       }
     ],
     "output": "String",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Thư, từ hoặc dòng văn bản.",
     "helpUrl": "https://en.wikipedia.org/wiki/String_(computer_science)"
   },
@@ -44,7 +44,7 @@
       }
     ],
     "output": "String",
-    "colour": 160,
+    "colour": "#3364a9",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#text-modification",
     "TODO(#386)": "https://github.com/google/blockly-android/issues/386"
   },
@@ -59,7 +59,7 @@
       }
     ],
     "output": "Number",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Trả về số chữ cái (bao gồm dấu cách) trong văn bản được cung cấp.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#text-modification"
   },
@@ -75,7 +75,7 @@
     ],
     "inputsInline": true,
     "output": "Boolean",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Trả về đúng nếu văn bản được cung cấp trống.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#checking-for-empty-text"
   },
@@ -110,7 +110,7 @@
     ],
     "inputsInline": true,
     "output": "Number",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Trả về chỉ mục của lần xuất hiện đầu tiên / cuối cùng của văn bản đầu tiên trong văn bản thứ hai. Trả về% 1 nếu không tìm thấy văn bản.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#finding-text"
   },
@@ -145,7 +145,7 @@
     ],
     "inputsInline": true,
     "output": "String",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Returns the letter at the specified position.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#extracting-text",
     "TODO(#390)": "https://github.com/google/blockly-android/issues/390"
@@ -200,7 +200,7 @@
     ],
     "inputsInline": true,
     "output": "String",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Trả về phần được chỉ định của văn bản.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#extracting-a-region-of-text",
     "TODO(#391)": "https://github.com/google/blockly-android/issues/391"
@@ -234,7 +234,7 @@
       }
     ],
     "output": "String",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Trả lại một bản sao của văn bản trong một trường hợp khác.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#adjusting-text-case"
   },
@@ -267,7 +267,7 @@
       }
     ],
     "output": "String",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Trả lại bản sao của văn bản có dấu cách bị xóa khỏi một hoặc cả hai đầu.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#trimming-removing-spaces"
   },
@@ -282,7 +282,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Hiển thị văn bản, số hoặc giá trị khác được chỉ định.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#printing-text"
   },
@@ -312,7 +312,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Nhắc người dùng cho một số văn bản hoặc một số.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#getting-input-from-the-user",
     "TODO(#394)": "https://github.com/google/blockly-android/issues/394"

@@ -1,1 +1,1 @@
-include ':app', ':blocklylib-core-debug', ':blocklylib-core-release', ':blocklylib-vertical-debug', ':blocklylib-vertical-release'
+include ':app', ':blocklylib-core-debug', ':blocklylib-vertical-debug', ':blocklylib-vertical-release', ':blocklylib-core-release'

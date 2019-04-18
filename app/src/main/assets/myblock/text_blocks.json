@@ -24,7 +24,7 @@
       }
     ],
     "output": "String",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "A letter, word, or line of text.",
     "helpUrl": "https://en.wikipedia.org/wiki/String_(computer_science)"
   },
@@ -44,7 +44,7 @@
       }
     ],
     "output": "String",
-    "colour": 160,
+    "colour": "#3364a9",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#text-modification",
     "TODO(#386)": "https://github.com/google/blockly-android/issues/386"
   },
@@ -59,7 +59,7 @@
       }
     ],
     "output": "Number",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Returns the number of letters (including spaces) in the provided text.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#text-modification"
   },
@@ -75,7 +75,7 @@
     ],
     "inputsInline": true,
     "output": "Boolean",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Returns true if the provided text is empty.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#checking-for-empty-text"
   },
@@ -110,7 +110,7 @@
     ],
     "inputsInline": true,
     "output": "Number",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Returns the index of the first/last occurrence of the first text in the second text. Returns %1 if text is not found.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#finding-text"
   },
@@ -145,7 +145,7 @@
     ],
     "inputsInline": true,
     "output": "String",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Returns the letter at the specified position.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#extracting-text",
     "TODO(#390)": "https://github.com/google/blockly-android/issues/390"
@@ -200,7 +200,7 @@
     ],
     "inputsInline": true,
     "output": "String",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Returns a specified portion of the text.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#extracting-a-region-of-text",
     "TODO(#391)": "https://github.com/google/blockly-android/issues/391"
@@ -234,7 +234,7 @@
       }
     ],
     "output": "String",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Return a copy of the text in a different case.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#adjusting-text-case"
   },
@@ -267,7 +267,7 @@
       }
     ],
     "output": "String",
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Return a copy of the text with spaces removed from one or both ends.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#trimming-removing-spaces"
   },
@@ -282,7 +282,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Print the specified text, number or other value.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#printing-text"
   },
@@ -312,7 +312,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 160,
+    "colour": "#3364a9",
     "tooltip": "Prompt for user for some text or a number.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#getting-input-from-the-user",
     "TODO(#394)": "https://github.com/google/blockly-android/issues/394"

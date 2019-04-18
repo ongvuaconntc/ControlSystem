@@ -14,7 +14,7 @@
       }
     ],
     "mutator": "procedures_defnoreturn_mutator",
-    "colour": "290",
+    "colour": "#09a275",
     "tooltip": "Tạo một hàm không có đầu ra.",
     "helpUrl": "https://en.wikipedia.org/wiki/Subroutine"
   },
@@ -41,7 +41,7 @@
       }
     ],
     "mutator": "procedures_defreturn_mutator",
-    "colour": "290",
+    "colour": "#09a275",
     "tooltip": "Tạo một hàm với đầu ra.",
     "helpUrl": "https://en.wikipedia.org/wiki/Subroutine"
   },
@@ -61,7 +61,7 @@
     "mutator": "procedures_callnoreturn_mutator",
     "previousStatement": null,
     "nextStatement": null,
-    "colour": "290",
+    "colour": "#09a275",
     "helpUrl": "https://en.wikipedia.org/wiki/Subroutine"
   },
   {
@@ -79,7 +79,7 @@
     ],
     "mutator": "procedures_callreturn_mutator",
     "output": null,
-    "colour": "290",
+    "colour": "#09a275",
     "helpUrl": "https://en.wikipedia.org/wiki/Subroutine"
   },
   {
@@ -100,7 +100,7 @@
     "inputsInline": true,
     "previousStatement": null,
     "nextStatement": null,
-    "colour": "290",
+    "colour": "#09a275",
     "tooltip": "Nếu giá trị là đúng, sau đó trả lại giá trị thứ hai.",
     "helpUrl": "https://en.wikipedia.org/wiki/Subroutine"
   }
