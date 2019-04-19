@@ -50,7 +50,9 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
                     */
                         Intent intent = new Intent(activity, BlocklyActivity.class);
                         intent.putExtra("element", element);
-                        activity.startActivity(intent);
+                        intent.putExtra("user", activity.getUser());
+
+                    activity.startActivity(intent);
                     //}
                 }
             });
@@ -74,9 +76,11 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtFunction.setText(elements.get(position).getId());
-        holder.txtName.setText(elements.get(position).getName());
-        holder.position=position;
+        if (elements.size()>position) {
+            holder.txtFunction.setText(elements.get(position).getId());
+            holder.txtName.setText(elements.get(position).getName());
+            holder.position = position;
+        }
 
     }
 

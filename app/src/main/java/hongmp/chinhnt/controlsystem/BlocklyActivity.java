@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.os.WorkSource;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -15,9 +16,12 @@ import com.google.blockly.android.AbstractBlocklyActivity;
 import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.codegen.LanguageDefinition;
 import com.google.blockly.model.DefaultBlocks;
+import com.google.blockly.model.Workspace;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
@@ -32,17 +36,18 @@ import java.util.Locale;
 import java.util.Map;
 
 import hongmp.chinhnt.controlsystem.blockly_utils.MyGenerators;
-import hongmp.chinhnt.controlsystem.file_utils.CustomJSONLoader;
 import hongmp.chinhnt.controlsystem.list_utils.CustomAdapterSystemFunction;
 import hongmp.chinhnt.controlsystem.net.Configuration;
 import hongmp.chinhnt.controlsystem.object.SystemElement;
 import hongmp.chinhnt.controlsystem.object.SystemFunction;
+import hongmp.chinhnt.controlsystem.object.User;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class BlocklyActivity extends AbstractBlocklyActivity {
     String generated_Code;
     static SystemElement  element=null;
     private static String languageApp;
+    private User user;
 
     private static List<String> JS_NODE_BLOCK_DEFINITIONS=Arrays.asList(
             "myblock/colour_blocks.json",
@@ -186,23 +191,11 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         if (intent.getSerializableExtra("element")!=null) {
             element = (SystemElement) intent.getSerializableExtra("element");
         }
-        /*
-        if (intent.getSerializableExtra("listEL")!=null){
-            ArrayList<SystemElement> listEL =(ArrayList<SystemElement>)intent.getSerializableExtra("listEL");
-            ArrayList<String> listCOm=new ArrayList<>();
-            for (SystemElement element:listEL){
-                if (!element.getName().equalsIgnoreCase("master")){
-                    listCOm.add(element.getName());
-                }
-            }
-            //if ( BlocklyActivity.PYTHON_NODE_BLOCK_DEFINITIONS.size()<9) {
-                System.out.println("WRITE TO EXTERNAL "+this.getExternalCacheDir()+"/newpi.json");
-                //BlocklyActivity.PYTHON_NODE_BLOCK_DEFINITIONS.add(this.getExternalCacheDir()+"/newpi.json");
-                CustomJSONLoader.getNewPIJson(listCOm, this);
-           // }
-
+        if (intent.getSerializableExtra("user")!=null) {
+            user = (User) intent.getSerializableExtra("user");
         }
-        */
+
+
         languageApp = getResources().getConfiguration().locale.getLanguage();
         System.out.println("ID :"+element.getName());
         System.out.println("Name :"+element.getName());
@@ -227,11 +220,30 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         super.onSaveWorkspace();
 
         if (generated_Code==null) return;
-        SendTask mSendTask = new SendTask();
-        mSendTask.execute(generated_Code);
+        String xml="";
+        try {
+            String fileName ="/data/data/hongmp.chinhnt.controlsystem/files/"+getWorkspaceSavePath();
+            File file = new File(fileName);
+            FileInputStream fis = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                //process the line
+                xml+="\n"+line;
+            }
+            br.close();
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+   //     System.out.println("XML:"+xml);
+        SendTask mSendTask = new SendTask(element,user);
+        mSendTask.execute(generated_Code,xml);
 
         generated_Code=null;
-        Toast.makeText(this,"Saved to "+element.getId()+"_"+element.getName()+".xml", 1).show();
+        Toast.makeText(this,"Saved to "+element.getId()+"_"+element.getName()+".xml", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -281,8 +293,11 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
 
 
 class SendTask extends AsyncTask<String, Void, Boolean> {
-
-    SendTask() {
+    SystemElement el;
+    User user;
+    SendTask(SystemElement el,User user) {
+        this.el=el;
+        this.user=user;
     }
 
     @Override
@@ -300,8 +315,13 @@ class SendTask extends AsyncTask<String, Void, Boolean> {
                 // prepare data
                 Map<String, Object> params = new LinkedHashMap<>();
                 params.put("request", "send_arduino_code");
-                params.put("port", "/dev/ttyACM0");
                 params.put("q", code);
+                params.put("deviceId",el.getId());
+                params.put("xml",data[1]);
+                params.put("session_id",user.getSession_id());
+
+
+
                 StringBuilder postData = new StringBuilder();
                 for (Map.Entry<String, Object> param : params.entrySet()) {
                     if (postData.length() != 0) postData.append('&');
@@ -317,6 +337,9 @@ class SendTask extends AsyncTask<String, Void, Boolean> {
                 Map<String, Object> params = new LinkedHashMap<>();
                 params.put("request", "send_python_code");
                 params.put("q", data[0]);
+                params.put("xml",data[1]);
+                params.put("session_id",user.getSession_id());
+
                 StringBuilder postData = new StringBuilder();
                 for (Map.Entry<String, Object> param : params.entrySet()) {
                     if (postData.length() != 0) postData.append('&');

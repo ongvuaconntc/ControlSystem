@@ -37,10 +37,6 @@ import hongmp.chinhnt.controlsystem.object.SystemFunction;
 import hongmp.chinhnt.controlsystem.object.User;
 
 public class ViewElementActivity extends AppCompatActivity {
-    static String ipServer = "10.3.141.1";
-    static int port = 11000;
-    static boolean TEST_MODE = true;
-
     public ArrayList<SystemElement> listEl;
     private CustomAdapterSystemElement adapter;
     private RecyclerView recyclerView;
@@ -87,59 +83,18 @@ public class ViewElementActivity extends AppCompatActivity {
         } else {
             // Permission has already been granted
         }
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        if (!TEST_MODE) {
-            try {
-            } catch (Exception e) {
-                e.printStackTrace();
 
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                builder1.setMessage("Can't connect to hub wifi, Please check connection and try again!");
-                builder1.setCancelable(true);
-
-                builder1.setPositiveButton(
-                        "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                finish();
-                            }
-                        });
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-
-            }
-
-
-        } else {
-            listEl = new ArrayList<>();
-        //    SystemFunction function=new SystemFunction("D1","Tắt cửa","cửa cửa","Node1");
-//            SystemFunction function1=new SystemFunction("D2","Tắt đèn","cửa cửa","Node1");
-
-            ArrayList<SystemFunction> functions=new ArrayList<>();
-  //          functions.add(function);
-    //        functions.add(function1);
-            SystemElement element=new SystemElement("Node1","1236","");
-            SystemElement element1=new SystemElement("Node2","1235","");
-            SystemElement element2=new SystemElement("Node3","1234","");
-
-
-
-            ArrayList<SystemFunction> m_function = new ArrayList<>();
-            m_function.add(new SystemFunction(0 + "", "Master", "system control", "Master"));
-            SystemElement element_ = new SystemElement("Master", "0000","");
-            listEl.add(element_);
-            listEl.add(element);
-            listEl.add(element1);
-            listEl.add(element2);
-
-        }
         System.out.println("In View Element Activity");
         Intent intent=getIntent();
         if (intent.getSerializableExtra("User")!=null) {
             user = (User) intent.getSerializableExtra("User");
+        }
+
+        if (intent.getSerializableExtra("elements")!=null) {
+            listEl = (ArrayList<SystemElement>) intent.getSerializableExtra("elements");
         }
 
         txtAccount=(TextView)findViewById(R.id.txtAccount);
@@ -156,10 +111,6 @@ public class ViewElementActivity extends AppCompatActivity {
         adapter = new CustomAdapterSystemElement(listEl);
         adapter.setActivity(this);
         recyclerView.setAdapter(adapter);
-
-
-
-
     }
 
     private void onClickAccount(){
@@ -219,21 +170,33 @@ public class ViewElementActivity extends AppCompatActivity {
 
     public void scanBtn(View v) {
         System.out.println("scanning");
-        ScanTask mScanTask = new ScanTask(this);
+        ScanTask mScanTask = new ScanTask(this,user);
         try {
             while (listEl.size()>0){
+              //  recyclerView.removeViewAt(0);
                 listEl.remove(0);
-                recyclerView.removeViewAt(0);
-                adapter.notifyItemRemoved(0);
-                adapter.notifyItemRangeChanged(0, listEl.size());
+                recyclerView.getRecycledViewPool().clear();
+                adapter.notifyDataSetChanged();
+            //    adapter.notifyItemRemoved(0);
+            //    adapter.notifyItemRangeChanged(0, listEl.size());
             }
 
-
-
             JSONObject jsonObj = mScanTask.execute((Void) null).get();
+            if (jsonObj!=null) {
+                int elements_length = jsonObj.getInt("elements_length");
+                JSONObject elements = jsonObj.getJSONObject("elements");
 
-            SystemElement element_ = new SystemElement("Master", "0000","");
-            listEl.add(element_);
+                for (int i = 0; i < elements_length; i++) {
+                    String ele_name = "" + i;
+                    JSONObject element = elements.getJSONObject(ele_name);
+                    String element_name = element.getString("name");
+                    String element_id = element.getString("id");
+                    String element_xml = element.getString("xml");
+                    SystemElement element_ = new SystemElement(element_name, element_id, element_xml);
+                    listEl.add(element_);
+                    adapter.notifyItemInserted(i);
+                }
+
 /*
             for (int i = 0; i < jsonObj.length(); i++) {
                 ArrayList<SystemFunction> functions_ = new ArrayList<>();
@@ -248,7 +211,8 @@ public class ViewElementActivity extends AppCompatActivity {
                 adapter.notifyItemInserted(i);
             }
             */
-            adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("ex: " + e);
@@ -257,10 +221,6 @@ public class ViewElementActivity extends AppCompatActivity {
 
     public ArrayList<SystemElement> getListEl() {
         return listEl;
-    }
-
-    public void setListEl(ArrayList<SystemElement> listEl) {
-        this.listEl = listEl;
     }
 
     public CustomAdapterSystemElement getAdapter() {
@@ -275,11 +235,13 @@ public class ViewElementActivity extends AppCompatActivity {
 class ScanTask extends AsyncTask<Void, String, JSONObject> {
 
     private Activity contextParent;
-
-    ScanTask() {
+    User user;
+    ScanTask(User user) {
+        this.user=user;
     }
 
-    public ScanTask(Activity contextParent) {
+    public ScanTask(Activity contextParent,User user) {
+        this.user=user;
         this.contextParent = contextParent;
     }
 
@@ -292,6 +254,8 @@ class ScanTask extends AsyncTask<Void, String, JSONObject> {
             // prepare data
             Map<String, Object> params = new LinkedHashMap<>();
             params.put("request", "scan");
+            params.put("session_id", user.getSession_id());
+
             StringBuilder postData = new StringBuilder();
             for (Map.Entry<String, Object> param : params.entrySet()) {
                 if (postData.length() != 0) postData.append('&');

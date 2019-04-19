@@ -3,6 +3,7 @@ package hongmp.chinhnt.controlsystem;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 
@@ -29,8 +30,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import hongmp.chinhnt.controlsystem.net.Configuration;
+import hongmp.chinhnt.controlsystem.object.SystemElement;
+import hongmp.chinhnt.controlsystem.object.User;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -63,7 +78,7 @@ public class ChangePasswordActivity extends Activity implements LoaderCallbacks<
 
     private View mProgressView;
     private View mLoginFormView;
-
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +95,11 @@ public class ChangePasswordActivity extends Activity implements LoaderCallbacks<
                 attemptChange();
             }
         });
+
+        Intent intent=getIntent();
+        if (intent.getSerializableExtra("User")!=null) {
+            user = (User) intent.getSerializableExtra("User");
+        }
 
         mLoginFormView = findViewById(R.id.change_pass_form);
         mProgressView = findViewById(R.id.change_pass_process);
@@ -174,7 +194,7 @@ public class ChangePasswordActivity extends Activity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserChangePassTask(password,newpassword,confirmnewpassword);
+            mAuthTask = new UserChangePassTask(user.getName(),password,newpassword,confirmnewpassword,user.getSession_id());
             mAuthTask.execute((Void) null);
         }
     }
@@ -269,26 +289,74 @@ public class ChangePasswordActivity extends Activity implements LoaderCallbacks<
         private final String mPassword;
         private final String mNewPassword;
         private final String mConfirmPassword;
+        private final String username;
+        private final String session_id;
 
-
-        UserChangePassTask(String password, String newpassword,String confirmpassword) {
+        UserChangePassTask(String username,String password, String newpassword,String confirmpassword,String session_id) {
+            this.username=username;
             mPassword = password;
             mNewPassword=newpassword;
             mConfirmPassword=confirmpassword;
+            this.session_id=session_id;
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... data) {
             // TODO: attempt authentication against a network service.
+            if (!mNewPassword.equals(mConfirmPassword)) return false;
+            HttpURLConnection conn = null;
+            byte[] postDataBytes = null;
+            String intentData = "";
             try {
+                System.out.println("in request change password");
+                // prepare data
+                Map<String, Object> params = new LinkedHashMap<>();
+                params.put("request", "change_password");
+                params.put("user_name", this.username);
+                params.put("password", this.mPassword);
+                params.put("new_password", this.mNewPassword);
+                params.put("session_id",session_id );
+
+
+                StringBuilder postData = new StringBuilder();
+                for (Map.Entry<String, Object> param : params.entrySet()) {
+                    if (postData.length() != 0) postData.append('&');
+                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                }
+                postDataBytes = postData.toString().getBytes("UTF-8");
+
                 // Simulate network access.
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
+                URL url = new URL(Configuration.SERVER_IP + ":" + Configuration.PORT + "/");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+                conn.setDoOutput(true);
+                conn.getOutputStream().write(postDataBytes);
+                Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                StringBuilder returnData = new StringBuilder();
+                for (int c; (c = in.read()) >= 0; ) {
+                    returnData.append((char) c);
+                }
+                intentData = returnData.toString();
+                if (intentData.equals("change_failed")) {
+                    return false;
+                }
+                if (intentData.equals("change_successfully")){
+                    return true;
+                }
+
+                //    Thread.sleep(2000);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("ex: " + e);
                 return false;
             }
-
+            return false;
             // TODO: register the new account here.
-            return true;
+
         }
 
         @Override

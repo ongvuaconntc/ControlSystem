@@ -31,8 +31,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -43,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 
 import hongmp.chinhnt.controlsystem.net.Configuration;
+import hongmp.chinhnt.controlsystem.object.SystemElement;
 import hongmp.chinhnt.controlsystem.object.User;
 //import hongmp.chinhnt.controlsystem.net.ServerConnection;
 
@@ -302,6 +310,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         private final String mEmail;
         private final String mPassword;
         LoginActivity loginActivity;
+        private User user;
+        private ArrayList<SystemElement> listEL;
 
         UserLoginTask(String email, String password,LoginActivity loginActivity) {
             mEmail = email;
@@ -321,6 +331,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 params.put("request", "login");
                 params.put("email", this.mEmail);
                 params.put("password", this.mPassword);
+
                 StringBuilder postData = new StringBuilder();
                 for (Map.Entry<String, Object> param : params.entrySet()) {
                     if (postData.length() != 0) postData.append('&');
@@ -344,37 +355,75 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     returnData.append((char) c);
                 }
                 intentData = returnData.toString();
-                if (intentData.equals("login successfully")) {
+                System.out.println("received Data after login:"+intentData);
 
-                    return true;
-                } else if (intentData.equals("login failed")) {
+                if (intentData.equals("login_failed")) {
                     return false;
                 }
+                JSONObject response=new JSONObject(intentData);
+                String username=response.getString("username");
+                String userdata=response.getString("userdata");
+                String session_id=response.getString("session_id");
 
-                Thread.sleep(2000);
+                user=new User();
+                user.setName(username);
+                user.setLog_list(userdata);
+                user.setSession_id(session_id);
+
+                int elements_length=response.getInt("elements_length");
+                JSONObject elements=response.getJSONObject("elements");
+                listEL=new ArrayList<>();
+                for (int i=0;i<elements_length;i++){
+                    String ele_name=""+i;
+                    JSONObject element=elements.getJSONObject(ele_name);
+                    String element_name=element.getString("name");
+                    String element_id=element.getString("id");
+                    String element_xml=element.getString("xml");
+                    SystemElement element_=new SystemElement(element_name,element_id,element_xml);
+                    listEL.add(element_);
+                    writeToLocal(element_id + "_" + element_name + ".xml", element_xml);
+                }
+                return true;
+            //    Thread.sleep(2000);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("ex: " + e);
-                return true;
+                return false;
             }
-
             // TODO: register the new account here.
-            return true;
-        }
 
+        }
+        private void writeToLocal(String path,String xml){
+            try {
+                File dir = new File("/data/data/hongmp.chinhnt.controlsystem/files/");
+                if(!dir.exists()) {
+                    // do something here
+                    dir.mkdirs();
+                }
+                String fileName ="/data/data/hongmp.chinhnt.controlsystem/files/"+path;
+                System.out.println("try to write to "+fileName);
+                File file = new File(fileName);
+                FileOutputStream fis = new FileOutputStream(file);
+                OutputStreamWriter isr = new OutputStreamWriter(fis);
+                BufferedWriter br = new BufferedWriter(isr);
+
+                br.write(xml);
+                br.close();
+            }
+            catch (Exception e){
+                System.out.println(e);
+            }
+        }
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
 
             if (success) {
-                User user=new User();
-                user.setName("GoodBoy");
-                user.setPassword("1234243");
-                user.setLog_list("Log_list: ffmpeg.exe -i C:\\Users\\len\\Desktop\\Videos\\record.mp4 -loop 1 -i C:\\Users\\len\\Desktop\\Watermark\\1.png  -loop 1 -i C:\\Users\\len\\Desktop\\Watermark\\2.png  -loop 1 -i C:\\Users\\len\\Desktop\\Watermark\\3.png -loop 1 -i C:\\Users\\len\\Desktop\\Watermark2\\1.png -loop 1 -i C:\\Users\\len\\Desktop\\Watermark2\\2.png -loop 1 -i C:\\Users\\len\\Desktop\\Watermark2\\3.png -filter_complex \"[1]lut=a=val*0.3,scale=120:320,trim=0:3,fade=in:d=1:alpha=1,fade=out:st=2:d=1:alpha=1,loop=4:30:0,setpts=N/10/TB[1a];[2]scale=120:320,trim=0:3,fade=in:d=1:alpha=1,fade=out:st=2:d=1:alpha=1,loop=4:30:0,setpts=N/10/TB[2a];[3]scale=120:320,trim=0:3,fade=in:d=1:alpha=1,fade=out:st=2:d=1:alpha=1,loop=4:30:0,setpts=N/10/TB[3a];[4]scale=120:320,trim=0:3,fade=in:d=1:alpha=1,fade=out:st=2:d=1:alpha=1,loop=4:75:0,setpts=N/25/TB[4a];[5]scale=120:320,trim=0:3,fade=in:d=1:alpha=1,fade=out:st=2:d=1:alpha=1,loop=4:75:0,setpts=N/25/TB[5a];[6]scale=120:320,trim=0:3,fade=in:d=1:alpha=1,fade=out:st=2:d=1:alpha=1,loop=4:75:0,setpts=N/25/TB[6a]; [0][1a] overlay=10:10:enable='between(mod(floor(t/3),3),0,0)' [tmp]; [tmp][2a] overlay=10:10:enable='between(mod(floor(t/3),3),1,1)' [tmp1];  [tmp1][3a] overlay=10:10:enable='between(mod(floor(t/3),3),2,2)'[tmp2]; [tmp2][4a] overlay=main_w-overlay_w-10:10:enable='between(mod(floor(t/3),3),0,0)'[tmp3]; [tmp3][5a] overlay=main_w-overlay_w-10:10:enable='between(mod(floor(t/3),3),1,1)'[tmp4];  [tmp4][6a] overlay=main_w-overlay_w-10:10:enable='between(mod(floor(t/3),3),2,2)'\" -metadata title=\"\" -metadata artist=\"\" -metadata album_artist=\"\" -metadata album=\"\" -metadata date=\"\" -metadata track=\"\" -metadata genre=\"\" -metadata publisher=\"\" -metadata encoded_by=\"\" -metadata copyright=\"\" -metadata composer=\"\" -metadata performer=\"\" -metadata TIT1=\"\" -metadata TIT3=\"\" -metadata disc=\"\" -metadata TKEY=\"\" -metadata TBPM=\"\" -metadata language=\"eng\" -metadata encoder=\"\" output.mp4");
 
                 Intent intent=new Intent(loginActivity,ViewElementActivity.class);
                 intent.putExtra("User",user);
+                intent.putExtra("elements",listEL);
                 startActivity(intent);
                 finish();
             } else {

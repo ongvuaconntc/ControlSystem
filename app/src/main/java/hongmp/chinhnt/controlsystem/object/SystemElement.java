@@ -6,12 +6,12 @@ import java.util.ArrayList;
 public class SystemElement implements Serializable {
     String name;
     String id;
-    String code;
+    String xml;
 
-    public SystemElement(String name, String id, String code) {
+    public SystemElement(String name, String id, String xml) {
         this.name = name;
         this.id = id;
-        this.code = code;
+        this.xml = xml;
     }
 
     public String getName() {
@@ -31,11 +31,11 @@ public class SystemElement implements Serializable {
     }
 
     public String getCode() {
-        return code;
+        return xml;
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.xml = code;
     }
 
     /*

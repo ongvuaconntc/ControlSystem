@@ -6,9 +6,8 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     private String name;
-    private String password;
-    private int role;
     private String log_list;
+    private String session_id;
 
     public String getName() {
         return name;
@@ -18,21 +17,6 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
-    }
 
     public String getLog_list() {
         return log_list;
@@ -40,5 +24,13 @@ public class User implements Serializable {
 
     public void setLog_list(String log_list) {
         this.log_list = log_list;
+    }
+
+    public String getSession_id() {
+        return session_id;
+    }
+
+    public void setSession_id(String session_id) {
+        this.session_id = session_id;
     }
 }
