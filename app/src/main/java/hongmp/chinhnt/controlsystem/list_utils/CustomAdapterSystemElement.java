@@ -38,6 +38,7 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
                 @Override
                 public void onClick(View v) {
                     SystemElement element=activity.listEl.get(position);
+                    /*
                     if (!element.getName().equalsIgnoreCase("Master")) {
                         Intent intent = new Intent(activity, ViewDetailElementActivity.class);
                         System.out.println("holder postion: " + position);
@@ -46,11 +47,11 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
                         activity.startActivityForResult(intent, 100);
                     }
                     else{
+                    */
                         Intent intent = new Intent(activity, BlocklyActivity.class);
-                        intent.putExtra("function", element.getListFunctions().get(0));
-                        intent.putExtra("listEL",activity.listEl);
+                        intent.putExtra("element", element);
                         activity.startActivity(intent);
-                    }
+                    //}
                 }
             });
 
@@ -73,7 +74,7 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtFunction.setText(elements.get(position).getAppendFunctions());
+        holder.txtFunction.setText(elements.get(position).getId());
         holder.txtName.setText(elements.get(position).getName());
         holder.position=position;
 

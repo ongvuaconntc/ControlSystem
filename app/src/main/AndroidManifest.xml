@@ -25,7 +25,6 @@
             android:name=".BlocklyActivity"
             android:theme="@style/AppThemeBlockly"
             android:screenOrientation="landscape" />
-        <activity android:name=".ViewDetailElementActivity" />
         <activity android:name=".LoginActivity" >
             <intent-filter>
             <action android:name="android.intent.action.VIEW" />

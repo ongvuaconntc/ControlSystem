@@ -1,24 +1,12 @@
 package hongmp.chinhnt.controlsystem.blockly_utils;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.blockly.android.codegen.CodeGenerationRequest;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import hongmp.chinhnt.controlsystem.BlocklyActivity;
-import hongmp.chinhnt.controlsystem.net.Configuration;
-import hongmp.chinhnt.controlsystem.net.MyTCPClient;
 
 public class MyGenerators implements CodeGenerationRequest.CodeGeneratorCallback {
     protected final String mTag;

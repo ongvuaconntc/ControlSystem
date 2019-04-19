@@ -24,7 +24,7 @@ import hongmp.chinhnt.controlsystem.object.SystemFunction;
 import hongmp.chinhnt.controlsystem.object.User;
 
 public class ViewDetailElementActivity extends AppCompatActivity {
-
+/*
     ArrayList<SystemFunction> listFunc;
     private CustomAdapterSystemFunction adapter;
     private RecyclerView recyclerView;
@@ -143,4 +143,5 @@ public class ViewDetailElementActivity extends AppCompatActivity {
 //    public void removeFunction(View v){
 //
 //    }
+*/
 }

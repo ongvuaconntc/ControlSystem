@@ -853,7 +853,7 @@
   },
   {
     "type": "lcd_print",
-    "message0": "lcd %1 hiển thị %2",
+    "message0": "lcd %1 print %2",
     "args0": [
       {
         "type": "field_input",
@@ -861,14 +861,83 @@
         "text": "lcd1"
       },
       {
-        "type": "field_input",
-        "name": "NAME0",
-        "text": "0"
+        "type": "input_value",
+        "name": "NAME",
+        "check": [
+          "String",
+          "Number"
+        ]
       }
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": "#f1b701",
+    "colour": 135,
+    "tooltip": "",
+    "helpUrl": ""
+  }
+  ,{
+  "type": "get_received_data_at",
+  "message0": "get_received_data_at %1",
+  "args0": [
+    {
+      "type": "field_number",
+      "name": "NAME",
+      "value": 0,
+      "min": 0,
+      "max": 5
+    }
+  ],
+  "output": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+  {
+    "type": "receive_data_handle",
+    "message0": "receive data handle %1",
+    "args0": [
+      {
+        "type": "input_statement",
+        "name": "DO"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "to_number",
+    "message0": "to_number %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "NAME",
+        "check": "String"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "write_response",
+    "message0": "write response %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "NAME",
+        "check": [
+          "Number",
+          "String"
+        ]
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 230,
     "tooltip": "",
     "helpUrl": ""
   }

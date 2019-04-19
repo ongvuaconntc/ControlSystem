@@ -16,8 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONObject;
@@ -26,19 +24,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import hongmp.chinhnt.controlsystem.list_utils.CustomAdapterSystemElement;
-import hongmp.chinhnt.controlsystem.list_utils.CustomAdapterSystemFunction;
 import hongmp.chinhnt.controlsystem.net.Configuration;
-import hongmp.chinhnt.controlsystem.net.MyTCPClient;
 import hongmp.chinhnt.controlsystem.object.SystemElement;
 import hongmp.chinhnt.controlsystem.object.SystemFunction;
 import hongmp.chinhnt.controlsystem.object.User;
@@ -50,7 +43,6 @@ public class ViewElementActivity extends AppCompatActivity {
 
     public ArrayList<SystemElement> listEl;
     private CustomAdapterSystemElement adapter;
-    static public MyTCPClient client;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     static int pressCount=0;
@@ -99,11 +91,6 @@ public class ViewElementActivity extends AppCompatActivity {
 
         if (!TEST_MODE) {
             try {
-                client = new MyTCPClient(InetAddress.getByName(ipServer), port);
-                String x = "hello\n";
-                byte[] data = new byte[6];
-                for (int i = 0; i < 6; i++) data[i] = (byte) x.charAt(i);
-                client.writeData(data);
             } catch (Exception e) {
                 e.printStackTrace();
 
@@ -125,10 +112,7 @@ public class ViewElementActivity extends AppCompatActivity {
 
             }
 
-            if (client != null)
-                listEl = client.requestStatus();
-            else
-                listEl = new ArrayList<>();
+
         } else {
             listEl = new ArrayList<>();
         //    SystemFunction function=new SystemFunction("D1","Tắt cửa","cửa cửa","Node1");
@@ -137,14 +121,15 @@ public class ViewElementActivity extends AppCompatActivity {
             ArrayList<SystemFunction> functions=new ArrayList<>();
   //          functions.add(function);
     //        functions.add(function1);
-            SystemElement element=new SystemElement("Node1",functions);
-            SystemElement element1=new SystemElement("Node2",functions);
-            SystemElement element2=new SystemElement("Node3",functions);
+            SystemElement element=new SystemElement("Node1","1236","");
+            SystemElement element1=new SystemElement("Node2","1235","");
+            SystemElement element2=new SystemElement("Node3","1234","");
+
 
 
             ArrayList<SystemFunction> m_function = new ArrayList<>();
             m_function.add(new SystemFunction(0 + "", "Master", "system control", "Master"));
-            SystemElement element_ = new SystemElement("Master", m_function);
+            SystemElement element_ = new SystemElement("Master", "0000","");
             listEl.add(element_);
             listEl.add(element);
             listEl.add(element1);
@@ -247,11 +232,9 @@ public class ViewElementActivity extends AppCompatActivity {
 
             JSONObject jsonObj = mScanTask.execute((Void) null).get();
 
-            ArrayList<SystemFunction> m_function = new ArrayList<>();
-            m_function.add(new SystemFunction("0", "Master", "system control", "Master"));
-            SystemElement element_ = new SystemElement("Master", m_function);
+            SystemElement element_ = new SystemElement("Master", "0000","");
             listEl.add(element_);
-
+/*
             for (int i = 0; i < jsonObj.length(); i++) {
                 ArrayList<SystemFunction> functions_ = new ArrayList<>();
                 SystemFunction function7 = new SystemFunction("1", "Hẹn giờ bật nóng lạnh", "cửa cửa", "Node" + (i + 1));
@@ -264,6 +247,7 @@ public class ViewElementActivity extends AppCompatActivity {
                 listEl.add(element);
                 adapter.notifyItemInserted(i);
             }
+            */
             adapter.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();

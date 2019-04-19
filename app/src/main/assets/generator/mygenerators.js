@@ -226,20 +226,48 @@ Blockly.JavaScript['lcd_set_cursor'] = function(block) {
   var code = text_name+'.setCursor('+text_name0+','+text_name1+');\n';
   return code;
 };
+
 Blockly.JavaScript['lcd_print'] = function(block) {
   var text_name = block.getFieldValue('NAME');
-  var text_name0 = block.getFieldValue('NAME0');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  var code = text_name+'.print(\"'+text_name0+'\");\n';
+  var code = text_name+'.print('+value_name+');\n';
   return code;
 };
-
 Blockly.JavaScript['load_cell_begin'] = function(block) {
   var text_name = block.getFieldValue('NAME');
   // TODO: Assemble JavaScript into code variable.
   var code = text_name+'.begin(DOUT, CLK);\n'+text_name+'.set_scale();\n'+text_name+'.tare();\n'+text_name+'.set_scale(calibration_factor);\n';
   return code;
 };
+Blockly.JavaScript['get_received_data_at'] = function(block) {
+  var number_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'receivedData['+number_name+']';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+Blockly.JavaScript['receive_data_handle'] = function(block) {
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'DO');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'if (have_receivedData==1){\n'+statements_name+'\nhave_receivedData=0;\n}';
+  return code;
+};
+
+Blockly.JavaScript['to_number'] = function(block) {
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'atoi('+value_name+')';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+Blockly.JavaScript['write_response'] = function(block) {
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = ' writeRes((char*)\"17\", _deviceId, (char*)\"0000\", (char*)\"01\", (char*)\"02\", (char*)\"03\", (char*)'+value_name+', '+(value_name.length-2)+');\n';
+  return code;
+};
+
 Blockly.JavaScript.workspaceToCodeWithId = Blockly.JavaScript.workspaceToCode;
 
 Blockly.JavaScript.workspaceToCode = function(workspace) {

@@ -38,7 +38,10 @@
         <block type="lcd_clear"></block>
         <block type="lcd_set_cursor"></block>
         <block type="lcd_print"></block>
-
+        <block type="get_received_data_at"></block>
+        <block type="receive_data_handle"></block>
+        <block type="to_number"></block>
+        <block type="write_response"></block>
     </category>
     <category name="Logic" colour="210">
         <block type="controls_if"></block>

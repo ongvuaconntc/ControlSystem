@@ -41,7 +41,7 @@ import hongmp.chinhnt.controlsystem.object.SystemFunction;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class BlocklyActivity extends AbstractBlocklyActivity {
     String generated_Code;
-    static SystemFunction  function=null;
+    static SystemElement  element=null;
     private static String languageApp;
 
     private static List<String> JS_NODE_BLOCK_DEFINITIONS=Arrays.asList(
@@ -106,7 +106,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
     @NonNull
     @Override
     protected LanguageDefinition getBlockGeneratorLanguage() {
-        if (!function.getName().equalsIgnoreCase("Master"))
+        if (!element.getName().equalsIgnoreCase("Master"))
             return super.getBlockGeneratorLanguage();
         else
             return PYTHON_LANGUAGE_DEF;
@@ -120,21 +120,12 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-
-
-        Intent intent=getIntent();
-
-
-        if (intent.getSerializableExtra("function")!=null) {
-           function = (SystemFunction) intent.getSerializableExtra("function");
-        }
-        System.out.println("Name :"+function.getName());
     }
 
     @NonNull
     @Override
     protected String getToolboxContentsXmlPath() {
-        if (!function.getName().equalsIgnoreCase("Master")) {
+        if (!element.getName().equalsIgnoreCase("Master")) {
             if(languageApp.equalsIgnoreCase("vi")){
                 return "myblock/toolbox_vi.xml";
             }else return "myblock/toolbox.xml";
@@ -154,7 +145,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         return assetPaths;
     }
     public static List<String> getAllBlockDefinitions() {
-        if (!function.getName().equalsIgnoreCase("Master"))
+        if (!element.getName().equalsIgnoreCase("Master"))
             if(languageApp.equalsIgnoreCase("vi")){
                 return JS_NODE_BLOCK_DEFINITIONS_VIE;
             }else {
@@ -171,7 +162,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
     @NonNull
     @Override
     protected List<String> getGeneratorsJsPaths() {
-        if (!function.getName().equalsIgnoreCase("Master"))
+        if (!element.getName().equalsIgnoreCase("Master"))
             return JAVASCRIPT_GENERATORS;
         else return PYTHON_GENERATORS;
     }
@@ -192,8 +183,8 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
 
         System.out.println("onCreateContentView");
         Intent intent=getIntent();
-        if (intent.getSerializableExtra("function")!=null) {
-            function = (SystemFunction) intent.getSerializableExtra("function");
+        if (intent.getSerializableExtra("element")!=null) {
+            element = (SystemElement) intent.getSerializableExtra("element");
         }
         /*
         if (intent.getSerializableExtra("listEL")!=null){
@@ -213,8 +204,8 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         }
         */
         languageApp = getResources().getConfiguration().locale.getLanguage();
-        System.out.println("Name :"+function.getName());
-        System.out.println("Node :"+function.getNode());
+        System.out.println("ID :"+element.getName());
+        System.out.println("Name :"+element.getName());
         return getLayoutInflater().inflate(R.layout.blockly_unified_workspace, null);
     }
 
@@ -240,8 +231,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         mSendTask.execute(generated_Code);
 
         generated_Code=null;
-        Toast.makeText(this,"Saved to "+function.getNode()+"_"+function.getName()+".xml", 1).show();
-
+        Toast.makeText(this,"Saved to "+element.getId()+"_"+element.getName()+".xml", 1).show();
     }
 
     @Override
@@ -261,8 +251,8 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
     @NonNull
     @Override
     protected String getWorkspaceSavePath() {
-        System.out.println(function.getNode()+"_"+function.getName()+".xml");
-        return function.getNode()+"_"+function.getName()+".xml";
+        System.out.println(element.getId()+"_"+element.getName()+".xml");
+        return element.getId()+"_"+element.getName()+".xml";
     }
 
     @Override
@@ -326,7 +316,7 @@ class SendTask extends AsyncTask<String, Void, Boolean> {
                 // prepare data
                 Map<String, Object> params = new LinkedHashMap<>();
                 params.put("request", "send_python_code");
-                params.put("q", data);
+                params.put("q", data[0]);
                 StringBuilder postData = new StringBuilder();
                 for (Map.Entry<String, Object> param : params.entrySet()) {
                     if (postData.length() != 0) postData.append('&');
