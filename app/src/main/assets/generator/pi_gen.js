@@ -6,7 +6,7 @@ Blockly.Python['pi_get_node_port_value'] = function(block) {
   var text_nodename = block.getFieldValue('NodeName');
   var dropdown_portname = block.getFieldValue('portName');
   // TODO: Assemble Python into code variable.
-  var code = 'read(\"*170000'+text_nodename+'0102R'+dropdown_portname+'\\0\")';
+  var code = 'read(\"*170000'+text_nodename+'010203R'+dropdown_portname+'\\0\")';
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.Python.ORDER_NONE];
 };
@@ -29,6 +29,43 @@ Blockly.Python['pi_delay'] = function(block) {
     return code;
 };
 
+Blockly.Python['pi_main'] = function(block) {
+  var statements_do = Blockly.Python.statementToCode(block, 'DO');
+  var value_name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC);
+  var statements_do0 = Blockly.Python.statementToCode(block, 'DO0');
+  // TODO: Assemble Python into code variable.
+  var code =  'def constructResponseSlave():\n'+statements_do+"\n    return "+value_name+"\ndef main_function():\n"+statements_do0;
+  return code;
+};
+Blockly.Python['received_id'] = function(block) {
+  // TODO: Assemble Python into code variable.
+  var code = 'id_';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.Python.ORDER_NONE];
+}
+
+Blockly.Python['received_data'] = function(block) {
+  // TODO: Assemble Python into code variable.
+  var code = 'data_';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.Python.ORDER_NONE];
+};
+Blockly.Python['response_to_slave'] = function(block) {
+  var value_name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC);
+  var value_name2 = Blockly.Python.valueToCode(block, 'NAME2', Blockly.Python.ORDER_ATOMIC);
+  // TODO: Assemble Python into code variable.
+  var code = '\"*210000\"+'+value_name+'+\"010203D\"+'+value_name2;
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.Python.ORDER_NONE];
+};
+Blockly.Python['append_string'] = function(block) {
+  var value_name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC);
+  var value_name0 = Blockly.Python.valueToCode(block, 'NAME0', Blockly.Python.ORDER_ATOMIC);
+  // TODO: Assemble Python into code variable.
+  var code = value_name+'+'+value_name0;
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.Python.ORDER_NONE];
+};
 Blockly.Python.workspaceToCodeWithId = Blockly.Python.workspaceToCode;
 
 Blockly.Python.workspaceToCode = function(workspace) {

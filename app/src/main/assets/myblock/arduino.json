@@ -672,6 +672,8 @@
       "text": "f1"
     }
   ],
+  "previousStatement": null,
+  "nextStatement": null,
   "colour": 60,
   "tooltip": "",
   "helpUrl": ""

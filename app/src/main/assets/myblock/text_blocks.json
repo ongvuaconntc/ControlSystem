@@ -316,5 +316,24 @@
     "tooltip": "Prompt for user for some text or a number.",
     "helpUrl": "https://github.com/google/blockly/wiki/Text#getting-input-from-the-user",
     "TODO(#394)": "https://github.com/google/blockly-android/issues/394"
+  },
+  {
+    "type": "append_string",
+    "message0": "%1 append %2",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "NAME"
+      },
+      {
+        "type": "input_value",
+        "name": "NAME0"
+      }
+    ],
+    "inputsInline": true,
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
   }
 ]

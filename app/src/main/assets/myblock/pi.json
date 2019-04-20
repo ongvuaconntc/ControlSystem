@@ -224,4 +224,64 @@
     "tooltip": "",
     "helpUrl": ""
   }
+  ,
+  {
+    "type": "pi_main",
+    "message0": "handle slave requests %1 return %2 main procedure %3",
+    "args0": [
+      {
+        "type": "input_statement",
+        "name": "DO"
+      },
+      {
+        "type": "input_value",
+        "name": "NAME",
+        "align": "RIGHT"
+      },
+      {
+        "type": "input_statement",
+        "name": "DO0"
+      }
+    ],
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "received_data",
+    "message0": "received_data",
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "received_id",
+    "message0": "received_id",
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "response_to_slave",
+    "message0": "response to slave id %1 with data %2",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "NAME",
+        "align": "CENTRE"
+      },
+      {
+        "type": "input_value",
+        "name": "NAME2",
+        "check": "String"
+      }
+    ],
+    "inputsInline": true,
+    "output": null,
+    "colour": 150,
+    "tooltip": "",
+    "helpUrl": ""
+  }
 ]

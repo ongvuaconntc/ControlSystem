@@ -15,9 +15,13 @@
 
 <toolbox>
     <category name="Server" colour="#f1b701">
+        <block type="pi_main"></block>
         <block type="pi_get_node_port_value"></block>
         <block type="pi_set_node_port_value"></block>
         <block type="pi_delay"></block>
+        <block type="received_id"></block>
+        <block type="received_data"></block>
+        <block type="response_to_slave"></block>
     </category>
     <category name="Logic" colour="120">
         <block type="controls_if"></block>
@@ -28,6 +32,7 @@
         <block type="logic_boolean"></block>
         <block type="logic_null"></block>
         <block type="logic_ternary"></block>
+
     </category>
     <category name="Variable" colour="330" custom="VARIABLE" />
     <category name="Loop" colour="120">
@@ -227,6 +232,7 @@
                 </shadow>
             </value>
         </block>
+        <block type="append_string"></block>
     </category>
 
     <category name="Function" colour="290" custom="PROCEDURE" />
