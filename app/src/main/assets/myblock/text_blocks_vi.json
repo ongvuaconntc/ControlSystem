@@ -319,7 +319,7 @@
   },
   {
     "type": "append_string",
-    "message0": "%1 append %2",
+    "message0": "%1 nối chuỗi %2",
     "args0": [
       {
         "type": "input_value",
@@ -332,7 +332,7 @@
     ],
     "inputsInline": true,
     "output": null,
-    "colour": 230,
+    "colour": "#3364a9",
     "tooltip": "",
     "helpUrl": ""
   }

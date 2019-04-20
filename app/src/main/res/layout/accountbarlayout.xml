@@ -17,45 +17,47 @@
         android:layout_marginBottom="5dp"
         card_view:cardCornerRadius="12dp"
         card_view:cardElevation="3dp"
-        card_view:contentPadding="4dp">
+        card_view:contentPadding="4dp"
+
+        >
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="75dp"
+            android:layout_height="50dp"
             android:padding="16dp">
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
-                android:layout_height="44dp"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="0dp"
                 android:layout_marginStart="29dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
+                android:gravity="center"
                 android:text="@string/welcome_txt"
                 android:textAlignment="center"
-                android:textSize="18sp"
-                android:gravity="center" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txtAccount"
                 android:layout_width="264dp"
                 android:layout_height="62dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="30dp"
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="0dp"
-                android:background="@drawable/rounded_corner_account"
+
                 android:layout_toEndOf="@+id/textView6"
+                android:gravity="center"
                 android:text="User"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:gravity="center" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </merge>

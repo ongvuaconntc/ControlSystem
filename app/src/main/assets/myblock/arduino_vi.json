@@ -709,7 +709,7 @@
   "helpUrl": ""
 },{
   "type": "load_cell_begin",
-  "message0": "load cell %1 begin",
+  "message0": "cân %1 bắt đầu",
   "args0": [
     {
       "type": "field_input",
@@ -719,7 +719,7 @@
   ],
   "previousStatement": null,
   "nextStatement": null,
-  "colour": 135,
+  "colour": "#f1b701",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -855,7 +855,7 @@
   },
   {
     "type": "lcd_print",
-    "message0": "lcd %1 print %2",
+    "message0": "lcd %1 hiển thị %2",
     "args0": [
       {
         "type": "field_input",
@@ -873,13 +873,13 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 135,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   }
   ,{
   "type": "get_received_data_at",
-  "message0": "get_received_data_at %1",
+  "message0": "nhận dữ liệu tại %1",
   "args0": [
     {
       "type": "field_number",
@@ -890,13 +890,13 @@
     }
   ],
   "output": null,
-  "colour": 230,
+  "colour": "#f1b701",
   "tooltip": "",
   "helpUrl": ""
 },
   {
     "type": "receive_data_handle",
-    "message0": "receive data handle %1",
+    "message0": "nhận dữ liệu xử lý %1",
     "args0": [
       {
         "type": "input_statement",
@@ -905,13 +905,13 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 230,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   },
   {
     "type": "to_number",
-    "message0": "to_number %1",
+    "message0": "đến số %1",
     "args0": [
       {
         "type": "input_value",
@@ -920,13 +920,13 @@
       }
     ],
     "output": null,
-    "colour": 230,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   },
   {
     "type": "write_response",
-    "message0": "write response %1",
+    "message0": "phản hồi %1",
     "args0": [
       {
         "type": "input_value",
@@ -939,7 +939,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 230,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   }

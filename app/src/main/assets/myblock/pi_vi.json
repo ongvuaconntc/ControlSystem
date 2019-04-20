@@ -95,7 +95,7 @@
     }
   ],
   "output": null,
-  "colour": 180,
+  "colour": "#f1b701",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -202,7 +202,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 315,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   },
@@ -218,13 +218,13 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 230,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   }
   ,{
   "type": "pi_main",
-  "message0": "handle slave requests %1 return %2 main procedure %3",
+  "message0": "xử lý yêu cầu %1 trả về %2 phương thức chính %3",
   "args0": [
     {
       "type": "input_statement",
@@ -240,29 +240,29 @@
       "name": "DO0"
     }
   ],
-  "colour": 230,
+  "colour": "#f1b701",
   "tooltip": "",
   "helpUrl": ""
 },
   {
     "type": "received_data",
-    "message0": "received_data",
+    "message0": "nhận dữ liệu",
     "output": null,
-    "colour": 230,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   },
   {
     "type": "received_id",
-    "message0": "received_id",
+    "message0": "nhận id",
     "output": null,
-    "colour": 230,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   },
   {
     "type": "response_to_slave",
-    "message0": "response to slave id %1 with data %2",
+    "message0": "phản hồi tới id %1 với dữ liệu %2",
     "args0": [
       {
         "type": "input_value",
@@ -277,7 +277,7 @@
     ],
     "inputsInline": true,
     "output": null,
-    "colour": 150,
+    "colour": "#f1b701",
     "tooltip": "",
     "helpUrl": ""
   }
