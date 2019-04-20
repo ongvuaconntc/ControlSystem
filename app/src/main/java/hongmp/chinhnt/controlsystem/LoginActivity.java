@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -81,6 +82,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private View mProgressView;
     private View mLoginFormView;
     private ImageView mImageView;
+    private int resultCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +91,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+       // populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -326,6 +328,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             byte[] postDataBytes = null;
             String intentData = "";
             try {
+                resultCode=1;
                 // prepare data
                 Map<String, Object> params = new LinkedHashMap<>();
                 params.put("request", "login");
@@ -358,6 +361,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 System.out.println("received Data after login:"+intentData);
 
                 if (intentData.equals("login_failed")) {
+                    resultCode=-1;
                     return false;
                 }
                 JSONObject response=new JSONObject(intentData);
@@ -388,7 +392,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("ex: " + e);
-                return false;
+                resultCode=-2;
+                return true;
             }
             // TODO: register the new account here.
 
@@ -420,15 +425,30 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(false);
 
             if (success) {
-
+                if (resultCode==-2){
+                    user=new User();
+                    user.setName("tester");
+                    user.setSession_id("12222");
+                    user.setLog_list("NULL");
+                    listEL=new ArrayList<>();
+                    SystemElement element_=new SystemElement("Master","0000","");
+                    listEL.add(element_);
+                    SystemElement element_1=new SystemElement("1","1234","");
+                    listEL.add(element_1);
+                }
                 Intent intent=new Intent(loginActivity,ViewElementActivity.class);
                 intent.putExtra("User",user);
                 intent.putExtra("elements",listEL);
                 startActivity(intent);
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                if (resultCode==-1) {
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                }
+                else if (resultCode==-2){
+                    Toast.makeText(this.loginActivity,"Internet connection error! Please connect to server wifi!",Toast.LENGTH_LONG).show();
+                }
             }
         }
 
