@@ -15,7 +15,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": "#e57d04",
+    "colour": "#7dc877",
     "mutator": "controls_if_mutator",
     "tooltip": "Nếu một giá trị là đúng, sau đó thực hiện một số câu lệnh."
   },
@@ -45,7 +45,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": "#e57d04",
+    "colour": "#7dc877",
     "tooltip": "Nếu một giá trị là đúng, thì hãy thực hiện khối lệnh đầu tiên. Nếu không, hãy thực hiện khối lệnh thứ hai.",
     "helpUrl": "https://github.com/google/blockly/wiki/IfElse"
   },
@@ -98,7 +98,7 @@
     ],
     "inputsInline": true,
     "output": "Boolean",
-    "colour": "#e57d04",
+    "colour": "#7dc877",
     "tooltip": "",
     "helpUrl": "https://en.wikipedia.org/wiki/Equality_(mathematics)"
   },
@@ -131,7 +131,7 @@
     ],
     "inputsInline": true,
     "output": "Boolean",
-    "colour": "#e57d04",
+    "colour": "#7dc877",
     "tooltip": "",
     "helpUrl": "https://github.com/google/blockly/wiki/Logic#logical-operations"
   },
@@ -146,7 +146,7 @@
       }
     ],
     "output": "Boolean",
-    "colour": "#e57d04",
+    "colour": "#7dc877",
     "tooltip": "Trả về đúng nếu đầu vào là sai. Trả về sai nếu đầu vào là đúng.",
     "helpUrl": "https://github.com/google/blockly/wiki/Logic#not"
   },
@@ -170,7 +170,7 @@
       }
     ],
     "output": "Boolean",
-    "colour": "#e57d04",
+    "colour": "#7dc877",
     "tooltip": "Trả về giá trị đúng hoặc sai.",
     "helpUrl": "https://github.com/google/blockly/wiki/Logic#values"
   },
@@ -178,7 +178,7 @@
     "type": "logic_null",
     "message0": "null",
     "output": null,
-    "colour": "#e57d04",
+    "colour": "#7dc877",
     "tooltip": "Trả về null.",
     "helpUrl": "https://en.wikipedia.org/wiki/Nullable_type"
   },
@@ -200,7 +200,7 @@
       }
     ],
     "output": null,
-    "colour": "#e57d04",
+    "colour": "#7dc877",
     "tooltip": "Kiểm tra điều kiện trong \"test \". Nếu điều kiện là đúng, trả về giá trị \"nếu đúng\"; ngược lại trả về giá trị \"nếu sai\" ",
     "helpUrl": "https://en.wikipedia.org/wiki/%3F:",
     "TODO(#374)": "https://github.com/google/blockly-android/issues/374"
