@@ -381,7 +381,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     JSONObject element=elements.getJSONObject(ele_name);
                     String element_name=element.getString("name");
                     String element_id=element.getString("id");
-                    String element_xml=element.getString("xml");
+                    String encodedXml=element.getString("xml");
+                    byte[] bytesData = android.util.Base64.decode(encodedXml, android.util.Base64.DEFAULT);
+                    String element_xml = new String(bytesData);
                     SystemElement element_=new SystemElement(element_name,element_id,element_xml);
                     listEL.add(element_);
                     XMLUtils.writeToLocal(element_id + "_" + element_name + ".xml", element_xml);
