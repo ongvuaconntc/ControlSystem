@@ -2,7 +2,6 @@ package hongmp.chinhnt.controlsystem.list_utils;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import hongmp.chinhnt.controlsystem.BlocklyActivity;
-import hongmp.chinhnt.controlsystem.ViewDetailElementActivity;
 import hongmp.chinhnt.controlsystem.ViewElementActivity;
 import hongmp.chinhnt.controlsystem.R;
 import hongmp.chinhnt.controlsystem.object.SystemElement;
@@ -38,16 +36,7 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
                 @Override
                 public void onClick(View v) {
                     SystemElement element=activity.listEl.get(position);
-                    /*
-                    if (!element.getName().equalsIgnoreCase("Master")) {
-                        Intent intent = new Intent(activity, ViewDetailElementActivity.class);
-                        System.out.println("holder postion: " + position);
-                        intent.putExtra("element", element);
-                        intent.putExtra("User",activity.getUser());
-                        activity.startActivityForResult(intent, 100);
-                    }
-                    else{
-                    */
+
                         Intent intent = new Intent(activity, BlocklyActivity.class);
                         intent.putExtra("element", element);
                         intent.putExtra("user", activity.getUser());
