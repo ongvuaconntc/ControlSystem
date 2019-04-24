@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +32,6 @@ import java.util.Map;
 import hongmp.chinhnt.controlsystem.list_utils.CustomAdapterSystemElement;
 import hongmp.chinhnt.controlsystem.net.Configuration;
 import hongmp.chinhnt.controlsystem.object.SystemElement;
-import hongmp.chinhnt.controlsystem.object.SystemFunction;
 import hongmp.chinhnt.controlsystem.object.User;
 
 public class ViewElementActivity extends AppCompatActivity {
@@ -124,17 +122,6 @@ public class ViewElementActivity extends AppCompatActivity {
         return user;
     }
 
-    public void viewDetail(View v) {
-        Intent intent = new Intent(this, ViewDetailElementActivity.class);
-        ConstraintLayout layout = (ConstraintLayout) v.getParent();
-        CustomAdapterSystemElement.ViewHolder holder = (CustomAdapterSystemElement.ViewHolder) layout.getTag();
-        System.out.println("Holder: " + holder);
-        if (holder == null) return;
-        System.out.println("holder postion: " + holder.position);
-        intent.putExtra("element", listEl.get(holder.position));
-        intent.putExtra("User",user);
-        startActivityForResult(intent, 100);
-    }
 
     @Override
     public void onBackPressed() {
@@ -197,20 +184,6 @@ public class ViewElementActivity extends AppCompatActivity {
                     adapter.notifyItemInserted(i);
                 }
 
-/*
-            for (int i = 0; i < jsonObj.length(); i++) {
-                ArrayList<SystemFunction> functions_ = new ArrayList<>();
-                SystemFunction function7 = new SystemFunction("1", "Hẹn giờ bật nóng lạnh", "cửa cửa", "Node" + (i + 1));
-                SystemFunction function8 = new SystemFunction("2", "Bật điều hòa", "cửa cửa", "Node2" + (i + 1));
-                SystemFunction function9 = new SystemFunction("3", "Bật camera", "cửa cửa", "Node2" + (i + 1));
-                functions_.add(function8);
-                functions_.add(function9);
-                functions_.add(function7);
-                SystemElement element = new SystemElement("Node" + (i + 1), functions_);
-                listEl.add(element);
-                adapter.notifyItemInserted(i);
-            }
-            */
                 adapter.notifyDataSetChanged();
             }
         } catch (Exception e) {

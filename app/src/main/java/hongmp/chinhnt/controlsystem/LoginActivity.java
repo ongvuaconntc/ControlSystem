@@ -50,10 +50,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import hongmp.chinhnt.controlsystem.file_utils.XMLUtils;
 import hongmp.chinhnt.controlsystem.net.Configuration;
 import hongmp.chinhnt.controlsystem.object.SystemElement;
 import hongmp.chinhnt.controlsystem.object.User;
-//import hongmp.chinhnt.controlsystem.net.ServerConnection;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -343,7 +343,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
                 }
                 postDataBytes = postData.toString().getBytes("UTF-8");
-
                 // Simulate network access.
                 URL url = new URL(Configuration.SERVER_IP + ":" + Configuration.PORT + "/");
                 conn = (HttpURLConnection) url.openConnection();
@@ -385,7 +384,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     String element_xml=element.getString("xml");
                     SystemElement element_=new SystemElement(element_name,element_id,element_xml);
                     listEL.add(element_);
-                    writeToLocal(element_id + "_" + element_name + ".xml", element_xml);
+                    XMLUtils.writeToLocal(element_id + "_" + element_name + ".xml", element_xml);
                 }
                 return true;
             //    Thread.sleep(2000);
@@ -398,27 +397,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             // TODO: register the new account here.
 
         }
-        private void writeToLocal(String path,String xml){
-            try {
-                File dir = new File("/data/data/hongmp.chinhnt.controlsystem/files/");
-                if(!dir.exists()) {
-                    // do something here
-                    dir.mkdirs();
-                }
-                String fileName ="/data/data/hongmp.chinhnt.controlsystem/files/"+path;
-                System.out.println("try to write to "+fileName);
-                File file = new File(fileName);
-                FileOutputStream fis = new FileOutputStream(file);
-                OutputStreamWriter isr = new OutputStreamWriter(fis);
-                BufferedWriter br = new BufferedWriter(isr);
 
-                br.write(xml);
-                br.close();
-            }
-            catch (Exception e){
-                System.out.println(e);
-            }
-        }
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
