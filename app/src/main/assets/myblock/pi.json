@@ -227,23 +227,14 @@
   ,
   {
     "type": "pi_main",
-    "message0": "handle slave requests %1 return %2 main procedure %3",
+    "message0": "main procedure %1",
     "args0": [
-      {
-        "type": "input_statement",
-        "name": "DO"
-      },
-      {
-        "type": "input_value",
-        "name": "NAME",
-        "align": "RIGHT"
-      },
       {
         "type": "input_statement",
         "name": "DO0"
       }
     ],
-    "colour": "#00acee",
+    "colour": 230,
     "tooltip": "",
     "helpUrl": ""
   },
@@ -279,8 +270,26 @@
       }
     ],
     "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 150,
+    "tooltip": "",
+    "helpUrl": ""
+  }
+  ,
+  {
+    "type": "to_string",
+    "message0": "to_string %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "NAME",
+        "check": "Number"
+      }
+    ],
+    "inputsInline": true,
     "output": null,
-    "colour": "#00acee",
+    "colour": 230,
     "tooltip": "",
     "helpUrl": ""
   }

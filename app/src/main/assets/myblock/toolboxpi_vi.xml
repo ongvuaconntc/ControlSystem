@@ -22,6 +22,7 @@
         <block type="received_id"></block>
         <block type="received_data"></block>
         <block type="response_to_slave"></block>
+        <block type="to_string"></block>
     </category>
     <category name="Logic" colour="210">
         <block type="controls_if"></block>
