@@ -96,7 +96,7 @@
     }
   ],
   "output": null,
-  "colour": "#00acee",
+  "colour": "#4c97ff",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -203,7 +203,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": "#00acee",
+    "colour": "#4c97ff",
     "tooltip": "",
     "helpUrl": ""
   },
@@ -220,7 +220,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": "#00acee",
+    "colour": "#4c97ff",
     "tooltip": "",
     "helpUrl": ""
   }
@@ -243,7 +243,7 @@
         "name": "DO0"
       }
     ],
-    "colour": "#00acee",
+    "colour": "#4c97ff",
     "tooltip": "",
     "helpUrl": ""
   },
@@ -251,7 +251,7 @@
     "type": "received_data",
     "message0": "received_data",
     "output": null,
-    "colour": "#00acee",
+    "colour": "#4c97ff",
     "tooltip": "",
     "helpUrl": ""
   },
@@ -259,7 +259,7 @@
     "type": "received_id",
     "message0": "received_id",
     "output": null,
-    "colour": "#00acee",
+    "colour": "#4c97ff",
     "tooltip": "",
     "helpUrl": ""
   },
@@ -280,7 +280,7 @@
     ],
     "inputsInline": true,
     "output": null,
-    "colour": "#00acee",
+    "colour": "#4c97ff",
     "tooltip": "",
     "helpUrl": ""
   }

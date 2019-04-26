@@ -43,21 +43,52 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <TextView
+                        <!--<TextView-->
+                            <!--android:id="@+id/txtName"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:textColor="#ffffff"-->
+                            <!--android:textSize="24dp" />-->
+
+                            <TextView
                             android:id="@+id/txtName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#ffffff"
                             android:textSize="24dp" />
 
-                        <TextView
-                            android:id="@+id/txtFunction"
+
+                        <!--<TextView-->
+                            <!--android:id="@+id/txtFunction"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:textColor="#77FFFFFF"-->
+                            <!--android:textSize="16dp" />-->
+
+                        <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="#77FFFFFF"
-                            android:textSize="16dp" />
+                            android:layout_height="30dp">
+
+                            <Button
+                                android:id="@+id/btnEditId"
+                                android:layout_width="21dp"
+                                android:layout_height="21dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_toRightOf="@+id/txtFunction"
+                                android:background="@mipmap/ic_edit" />
+
+                            <TextView
+                                android:id="@+id/txtFunction"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentLeft="true"
+                                android:textSize="16dp"></TextView>
+
+                        </RelativeLayout>
 
                     </LinearLayout>
+
 
 
                 </LinearLayout>
