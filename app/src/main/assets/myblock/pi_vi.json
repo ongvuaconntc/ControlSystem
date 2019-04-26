@@ -224,17 +224,8 @@
   }
   ,{
   "type": "pi_main",
-  "message0": "xử lý yêu cầu %1 trả về %2 phương thức chính %3",
+  "message0": "main procedure %1",
   "args0": [
-    {
-      "type": "input_statement",
-      "name": "DO"
-    },
-    {
-      "type": "input_value",
-      "name": "NAME",
-      "align": "RIGHT"
-    },
     {
       "type": "input_statement",
       "name": "DO0"
@@ -243,7 +234,7 @@
   "colour": "#4c97ff",
   "tooltip": "",
   "helpUrl": ""
-},
+  },
   {
     "type": "received_data",
     "message0": "nhận dữ liệu",
@@ -262,7 +253,7 @@
   },
   {
     "type": "response_to_slave",
-    "message0": "phản hồi tới id %1 với dữ liệu %2",
+    "message0": "response to slave id %1 with data %2",
     "args0": [
       {
         "type": "input_value",
@@ -273,6 +264,24 @@
         "type": "input_value",
         "name": "NAME2",
         "check": "String"
+      }
+    ],
+    "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 150,
+    "tooltip": "",
+    "helpUrl": ""
+  }
+  ,
+  {
+    "type": "to_string",
+    "message0": "to_string %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "NAME",
+        "check": "Number"
       }
     ],
     "inputsInline": true,

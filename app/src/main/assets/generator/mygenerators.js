@@ -231,7 +231,10 @@ Blockly.JavaScript['lcd_print'] = function(block) {
   var text_name = block.getFieldValue('NAME');
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
+  value_name=value_name.replace('\'','\"');
+  value_name=value_name.replace('\'','\"');
   var code = text_name+'.print('+value_name+');\n';
+
   return code;
 };
 Blockly.JavaScript['load_cell_begin'] = function(block) {
