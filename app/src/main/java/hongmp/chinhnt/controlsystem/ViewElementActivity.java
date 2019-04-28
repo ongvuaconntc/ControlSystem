@@ -1,12 +1,14 @@
 package hongmp.chinhnt.controlsystem;
 
 import android.Manifest;
-import android.app.Activity;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
@@ -39,6 +41,8 @@ public class ViewElementActivity extends AppCompatActivity {
     private CustomAdapterSystemElement adapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
+    private View processView;
+    private View allView;
     static int pressCount=0;
     private ViewElementActivity pointer;
     private User user;
@@ -83,7 +87,8 @@ public class ViewElementActivity extends AppCompatActivity {
         }
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
+        processView=(View)findViewById(R.id.progress_bar);
+        allView=(View)findViewById(R.id.constraint_layout);
 
         System.out.println("In View Element Activity");
         Intent intent=getIntent();
@@ -167,8 +172,9 @@ public class ViewElementActivity extends AppCompatActivity {
             //    adapter.notifyItemRemoved(0);
             //    adapter.notifyItemRangeChanged(0, listEl.size());
             }
-
+            showProgress(true);
             JSONObject jsonObj = mScanTask.execute((Void) null).get();
+
             if (jsonObj!=null) {
                 int elements_length = jsonObj.getInt("elements_length");
                 JSONObject elements = jsonObj.getJSONObject("elements");
@@ -191,7 +197,35 @@ public class ViewElementActivity extends AppCompatActivity {
             System.out.println("ex: " + e);
         }
     }
+    public void showProgress(final boolean show){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
+            allView.setVisibility(show ? View.GONE : View.VISIBLE);
+            allView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    allView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            processView.setVisibility(show ? View.VISIBLE : View.GONE);
+            processView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    processView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            processView.setVisibility(show ? View.VISIBLE : View.GONE);
+            allView.setVisibility(show ? View.GONE : View.VISIBLE);
+           // mImageView.setVisibility(View.VISIBLE);
+        }
+    }
     public ArrayList<SystemElement> getListEl() {
         return listEl;
     }
@@ -203,62 +237,138 @@ public class ViewElementActivity extends AppCompatActivity {
     public void setAdapter(CustomAdapterSystemElement adapter) {
         this.adapter = adapter;
     }
-}
 
-class ScanTask extends AsyncTask<Void, String, JSONObject> {
+    public void startEdit(String oldid, String newid){
 
-    private Activity contextParent;
-    User user;
-    ScanTask(User user) {
-        this.user=user;
+        EditIDTask task=new EditIDTask(this);
+        showProgress(true);
+        task.execute(oldid,newid);
     }
 
-    public ScanTask(Activity contextParent,User user) {
-        this.user=user;
-        this.contextParent = contextParent;
-    }
+    class ScanTask extends AsyncTask<Void, String, JSONObject> {
 
-    @Override
-    protected JSONObject doInBackground(Void... data) {
-        // TODO: attempt authentication against a network service.
-        HttpURLConnection conn = null;
-        byte[] postDataBytes = null;
-        try {
-            // prepare data
-            Map<String, Object> params = new LinkedHashMap<>();
-            params.put("request", "scan");
-            params.put("session_id", user.getSession_id());
+        private ViewElementActivity contextParent;
+        User user;
 
-            StringBuilder postData = new StringBuilder();
-            for (Map.Entry<String, Object> param : params.entrySet()) {
-                if (postData.length() != 0) postData.append('&');
-                postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-                postData.append('=');
-                postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
-            }
-            postDataBytes = postData.toString().getBytes("UTF-8");
-
-            // Simulate network access.
-            URL url = new URL(Configuration.SERVER_IP + ":" + Configuration.PORT + "/");
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-            conn.setDoOutput(true);
-            conn.getOutputStream().write(postDataBytes);
-            Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            StringBuilder returnData = new StringBuilder();
-            for (int c; (c = in.read()) >= 0; ) {
-                returnData.append((char) c);
-            }
-
-            return new JSONObject(returnData.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("ex: " + e);
-            return null;
+        public ScanTask(ViewElementActivity contextParent,User user) {
+            this.user=user;
+            this.contextParent = contextParent;
         }
 
-    }
+        @Override
+        protected JSONObject doInBackground(Void... data) {
+            // TODO: attempt authentication against a network service.
+            HttpURLConnection conn = null;
+            byte[] postDataBytes = null;
+            try {
+                // prepare data
+                Map<String, Object> params = new LinkedHashMap<>();
+                params.put("request", "scan");
+                params.put("session_id", user.getSession_id());
 
+                StringBuilder postData = new StringBuilder();
+                for (Map.Entry<String, Object> param : params.entrySet()) {
+                    if (postData.length() != 0) postData.append('&');
+                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                }
+                postDataBytes = postData.toString().getBytes("UTF-8");
+
+                // Simulate network access.
+                URL url = new URL(Configuration.SERVER_IP + ":" + Configuration.PORT + "/");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+                conn.setDoOutput(true);
+                conn.getOutputStream().write(postDataBytes);
+                Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                StringBuilder returnData = new StringBuilder();
+                for (int c; (c = in.read()) >= 0; ) {
+                    returnData.append((char) c);
+                }
+                return new JSONObject(returnData.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("ex: " + e);
+                return null;
+            }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
+            showProgress(false);
+        }
+    }
+    class EditIDTask extends AsyncTask<String, Void, Boolean> {
+
+        private ViewElementActivity contextParent;
+        User user;
+
+        public EditIDTask(ViewElementActivity contextParent) {
+
+            this.contextParent = contextParent;
+            this.user=contextParent.getUser();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... data) {
+            // TODO: attempt authentication against a network service.
+            HttpURLConnection conn = null;
+            byte[] postDataBytes = null;
+            try {
+                // prepare data
+                Map<String, Object> params = new LinkedHashMap<>();
+                params.put("request", "edit_id");
+                params.put("old_id", data[0]);
+                params.put("new_id",data[1]);
+                params.put("session_id", user.getSession_id());
+
+                StringBuilder postData = new StringBuilder();
+                for (Map.Entry<String, Object> param : params.entrySet()) {
+                    if (postData.length() != 0) postData.append('&');
+                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                }
+                postDataBytes = postData.toString().getBytes("UTF-8");
+
+                // Simulate network access.
+                URL url = new URL(Configuration.SERVER_IP + ":" + Configuration.PORT + "/");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+                conn.setDoOutput(true);
+                conn.getOutputStream().write(postDataBytes);
+                Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                StringBuilder returnData = new StringBuilder();
+                for (int c; (c = in.read()) >= 0; ) {
+                    returnData.append((char) c);
+                }
+
+
+
+                return returnData.equals("ahihi");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("ex: " + e);
+
+                return null;
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            showProgress(false);
+        }
+    }
 }
+
+

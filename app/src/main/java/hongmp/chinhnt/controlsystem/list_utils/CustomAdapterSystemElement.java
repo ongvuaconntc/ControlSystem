@@ -1,21 +1,40 @@
 package hongmp.chinhnt.controlsystem.list_utils;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.sql.SQLOutput;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import hongmp.chinhnt.controlsystem.BlocklyActivity;
 import hongmp.chinhnt.controlsystem.ViewElementActivity;
 import hongmp.chinhnt.controlsystem.R;
+import hongmp.chinhnt.controlsystem.net.Configuration;
 import hongmp.chinhnt.controlsystem.object.SystemElement;
+import hongmp.chinhnt.controlsystem.object.User;
 
 public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapterSystemElement.ViewHolder>{
     private ViewElementActivity activity;
@@ -25,12 +44,16 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
         TextView txtName;
         TextView txtFunction;
         Button btnDetail;
+        Button btnEditId;
+        boolean isError;
         public int position;
+        AlertDialog.Builder builder;
         public ViewHolder(LinearLayout itemView) {
             super(itemView);
             this.txtName=itemView.findViewById(R.id.txtName);
             this.txtFunction=itemView.findViewById(R.id.txtFunction);
             this.btnDetail=itemView.findViewById(R.id.btnDetail);
+            this.btnEditId=itemView.findViewById(R.id.btnEditId);
 
             this.btnDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -43,6 +66,87 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
 
                     activity.startActivity(intent);
                     //}
+                }
+            });
+
+            this.btnEditId.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    isError=false;
+/*
+                         builder = new AlertDialog.Builder(activity);
+                        String addition="";
+                        if (isError) addition=" (ID length = 4 only)";
+                        builder.setTitle("Edit " + txtName.getText().toString() + " ID"+addition);
+                        final EditText input = new EditText(activity);
+                        input.setInputType(InputType.TYPE_CLASS_TEXT);
+                        builder.setView(input);
+
+                        builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String text = input.getText().toString();
+                                if (text.length() != 4) {
+                                    System.out.println("error!!!!");
+                                    isError=true;
+                                }
+                                else
+                                activity.startEdit(txtFunction.getText().toString(), text);
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        while (true) {
+                            System.out.println("in loop");
+                            builder.show();
+                            if (!isError) {
+                                System.out.println("Breakkkkkk");;
+                                break;
+                            }
+                        }
+                        */
+                    final EditText input = new EditText(activity);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    
+                    final AlertDialog d = new AlertDialog.Builder(activity)
+                            .setView(input)
+                            .setTitle("Edit " + txtName.getText().toString() + "'s ID")
+                            .setPositiveButton("Edit", null) //Set to null. We override the onclick
+                            .setNegativeButton("Cancel", null)
+                            .create();
+
+                    d.setOnShowListener(new DialogInterface.OnShowListener() {
+
+                        @Override
+                        public void onShow(DialogInterface dialog) {
+
+                            Button b = d.getButton(AlertDialog.BUTTON_POSITIVE);
+                            b.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View view) {
+                                    // TODO Do something
+                                    String text = input.getText().toString();
+                                    if (text.length() != 4) {
+                                        System.out.println("error!!!!");
+                                        isError=true;
+                                        String addition=" (ID length = 4 only)";
+                                        d.setTitle("Edit " + txtName.getText().toString() + "'s ID"+addition);
+                                    }
+                                    else
+                                    {
+                                        activity.startEdit(txtFunction.getText().toString(), text);
+                                        d.dismiss();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                    d.show();
                 }
             });
 
@@ -83,3 +187,5 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
     }
 
 }
+
+

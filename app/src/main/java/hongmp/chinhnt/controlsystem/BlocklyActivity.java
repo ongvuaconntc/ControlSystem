@@ -1,5 +1,7 @@
 package hongmp.chinhnt.controlsystem;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -40,6 +42,9 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
     static SystemElement  element=null;
     private static String languageApp;
     private User user;
+    private View all_View;
+    private View progress_View;
+
 
     private static List<String> JS_NODE_BLOCK_DEFINITIONS=Arrays.asList(
             "myblock/colour_blocks.json",
@@ -231,6 +236,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
             System.out.println(e);
         }
    //     System.out.println("XML:"+xml);
+        showProgress(true);
         SendTask mSendTask = new SendTask(element,user);
         mSendTask.execute(generated_Code,xml);
 
@@ -278,94 +284,130 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         }
 
     }
+    public void showProgress(final boolean show){
+        all_View=(View)findViewById(R.id.allblockly_view);
+        progress_View=(View)findViewById(R.id.blockly_progress);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
+            all_View.setVisibility(show ? View.GONE : View.VISIBLE);
+            all_View.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    all_View.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
 
-}
+            progress_View.setVisibility(show ? View.VISIBLE : View.GONE);
+            progress_View.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    progress_View.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            progress_View.setVisibility(show ? View.VISIBLE : View.GONE);
+            all_View.setVisibility(show ? View.GONE : View.VISIBLE);
 
-
-class SendTask extends AsyncTask<String, Void, Boolean> {
-    SystemElement el;
-    User user;
-    SendTask(SystemElement el,User user) {
-        this.el=el;
-        this.user=user;
-    }
-
-    @Override
-    protected Boolean doInBackground(String... data) {
-        for (int i = 0; i < data.length; i++) {
-            System.out.println("data: [" + i + "] " + data[i]);
+            // mImageView.setVisibility(View.VISIBLE);
         }
-        // TODO: attempt authentication against a network service.
-        HttpURLConnection conn = null;
-        byte[] postDataBytes = null;
-        String intentData = "";
-        try {
-            if (data[0].startsWith("Ar:")) {
-                String code = data[0].substring(2, data[0].length());
-                // prepare data
-                Map<String, Object> params = new LinkedHashMap<>();
-                params.put("request", "send_arduino_code");
-                params.put("q", code);
-                params.put("deviceId",el.getId());
-                params.put("xml",data[1]);
-                params.put("session_id",user.getSession_id());
+    }
+    class SendTask extends AsyncTask<String, Void, Boolean> {
+        SystemElement el;
+        User user;
+        SendTask(SystemElement el,User user) {
+            this.el=el;
+            this.user=user;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... data) {
+            for (int i = 0; i < data.length; i++) {
+                System.out.println("data: [" + i + "] " + data[i]);
+            }
+            // TODO: attempt authentication against a network service.
+            HttpURLConnection conn = null;
+            byte[] postDataBytes = null;
+            String intentData = "";
+            try {
+                if (data[0].startsWith("Ar:")) {
+                    String code = data[0].substring(2, data[0].length());
+                    // prepare data
+                    Map<String, Object> params = new LinkedHashMap<>();
+                    params.put("request", "send_arduino_code");
+                    params.put("q", code);
+                    params.put("deviceId",el.getId());
+                    params.put("xml",data[1]);
+                    params.put("session_id",user.getSession_id());
 
 
 
-                StringBuilder postData = new StringBuilder();
-                for (Map.Entry<String, Object> param : params.entrySet()) {
-                    if (postData.length() != 0) postData.append('&');
-                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-                    postData.append('=');
-                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
-                }
-                postDataBytes = postData.toString().getBytes("UTF-8");
-            } else {
+                    StringBuilder postData = new StringBuilder();
+                    for (Map.Entry<String, Object> param : params.entrySet()) {
+                        if (postData.length() != 0) postData.append('&');
+                        postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                        postData.append('=');
+                        postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                    }
+                    postDataBytes = postData.toString().getBytes("UTF-8");
+                } else {
 //                String jobId = data[0].substring(0, data[0].indexOf('|'));
-                String code = data[0].substring(data[0].indexOf('|') + 1, data[0].length());
-                // prepare data
-                Map<String, Object> params = new LinkedHashMap<>();
-                params.put("request", "send_python_code");
-                params.put("q", data[0]);
-                params.put("xml",data[1]);
-                params.put("session_id",user.getSession_id());
+                    String code = data[0].substring(data[0].indexOf('|') + 1, data[0].length());
+                    // prepare data
+                    Map<String, Object> params = new LinkedHashMap<>();
+                    params.put("request", "send_python_code");
+                    params.put("q", data[0]);
+                    params.put("xml",data[1]);
+                    params.put("session_id",user.getSession_id());
 
-                StringBuilder postData = new StringBuilder();
-                for (Map.Entry<String, Object> param : params.entrySet()) {
-                    if (postData.length() != 0) postData.append('&');
-                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-                    postData.append('=');
-                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                    StringBuilder postData = new StringBuilder();
+                    for (Map.Entry<String, Object> param : params.entrySet()) {
+                        if (postData.length() != 0) postData.append('&');
+                        postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                        postData.append('=');
+                        postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                    }
+                    postDataBytes = postData.toString().getBytes("UTF-8");
                 }
-                postDataBytes = postData.toString().getBytes("UTF-8");
-            }
-            // Simulate network access.
-            URL url = new URL(Configuration.SERVER_IP + ":" + Configuration.PORT + "/");
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-            conn.setDoOutput(true);
-            conn.getOutputStream().write(postDataBytes);
-            Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            StringBuilder returnData = new StringBuilder();
-            for (int c; (c = in.read()) >= 0; ) {
-                returnData.append((char) c);
+                // Simulate network access.
+                URL url = new URL(Configuration.SERVER_IP + ":" + Configuration.PORT + "/");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+                conn.setDoOutput(true);
+                conn.getOutputStream().write(postDataBytes);
+                Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                StringBuilder returnData = new StringBuilder();
+                for (int c; (c = in.read()) >= 0; ) {
+                    returnData.append((char) c);
+                }
+
+                //////////////////this is all serial ports
+                System.out.println(returnData.toString());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("ex: " + e);
+                return true;
             }
 
-            //////////////////this is all serial ports
-            System.out.println(returnData.toString());
-
-            Thread.sleep(2000);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("ex: " + e);
             return true;
         }
 
-        return true;
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            showProgress(false);
+        }
     }
 
+
 }
+
+
