@@ -196,7 +196,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         languageApp = getResources().getConfiguration().locale.getLanguage();
         System.out.println("ID :"+element.getName());
         System.out.println("Name :"+element.getName());
-        return getLayoutInflater().inflate(R.layout.blockly_unified_workspace, null);
+        return getLayoutInflater().inflate(R.layout.myblocklylayout, null);
     }
 
 
