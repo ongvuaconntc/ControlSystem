@@ -18,8 +18,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -238,11 +240,11 @@ public class ViewElementActivity extends AppCompatActivity {
         this.adapter = adapter;
     }
 
-    public void startEdit(String oldid, String newid){
+    public void startEdit(TextView oldid, String newid){
 
-        EditIDTask task=new EditIDTask(this);
+        EditIDTask task=new EditIDTask(oldid,this);
         showProgress(true);
-        task.execute(oldid,newid);
+        task.execute(oldid.getText().toString(),newid);
     }
 
     class ScanTask extends AsyncTask<Void, String, JSONObject> {
@@ -304,19 +306,21 @@ public class ViewElementActivity extends AppCompatActivity {
             showProgress(false);
         }
     }
-    class EditIDTask extends AsyncTask<String, Void, Boolean> {
+    class EditIDTask extends AsyncTask<String, Void, String> {
 
         private ViewElementActivity contextParent;
+        private TextView textView;
         User user;
+        private String new_id;
 
-        public EditIDTask(ViewElementActivity contextParent) {
-
+        public EditIDTask(TextView textView,ViewElementActivity contextParent) {
+            this.textView=textView;
             this.contextParent = contextParent;
             this.user=contextParent.getUser();
         }
 
         @Override
-        protected Boolean doInBackground(String... data) {
+        protected String doInBackground(String... data) {
             // TODO: attempt authentication against a network service.
             HttpURLConnection conn = null;
             byte[] postDataBytes = null;
@@ -327,6 +331,7 @@ public class ViewElementActivity extends AppCompatActivity {
                 params.put("old_id", data[0]);
                 params.put("new_id",data[1]);
                 params.put("session_id", user.getSession_id());
+                new_id=data[1];
 
                 StringBuilder postData = new StringBuilder();
                 for (Map.Entry<String, Object> param : params.entrySet()) {
@@ -352,21 +357,28 @@ public class ViewElementActivity extends AppCompatActivity {
                 }
 
 
-
-                return returnData.equals("ahihi");
+//equals("Edit id successfully")
+                return returnData.toString();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("ex: " + e);
 
-                return null;
+                return "Server error!";
             }
 
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
+        protected void onPostExecute(String string) {
+            super.onPostExecute(string);
             showProgress(false);
+            if (string.equals("Edit id successfully")){
+                textView.setText(new_id);
+                Toast.makeText(contextParent,"Change ID successfully", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(contextParent,"Change ID fail!", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

@@ -139,7 +139,7 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
                                     }
                                     else
                                     {
-                                        activity.startEdit(txtFunction.getText().toString(), text);
+                                        activity.startEdit(txtFunction, text);
                                         d.dismiss();
                                     }
                                 }

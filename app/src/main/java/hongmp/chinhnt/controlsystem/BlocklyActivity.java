@@ -44,6 +44,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
     private User user;
     private View all_View;
     private View progress_View;
+    private BlocklyActivity pointer;
 
 
     private static List<String> JS_NODE_BLOCK_DEFINITIONS=Arrays.asList(
@@ -191,7 +192,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         if (intent.getSerializableExtra("user")!=null) {
             user = (User) intent.getSerializableExtra("user");
         }
-
+        pointer=this;
 
         languageApp = getResources().getConfiguration().locale.getLanguage();
         System.out.println("ID :"+element.getName());
@@ -241,7 +242,6 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
         mSendTask.execute(generated_Code,xml);
 
         generated_Code=null;
-        Toast.makeText(this,"Saved to "+element.getId()+"_"+element.getName()+".xml", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -317,16 +317,18 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
             // mImageView.setVisibility(View.VISIBLE);
         }
     }
-    class SendTask extends AsyncTask<String, Void, Boolean> {
+    class SendTask extends AsyncTask<String, Void, String> {
         SystemElement el;
         User user;
+        int type;
         SendTask(SystemElement el,User user) {
             this.el=el;
             this.user=user;
+            type=0;
         }
 
         @Override
-        protected Boolean doInBackground(String... data) {
+        protected String doInBackground(String... data) {
             for (int i = 0; i < data.length; i++) {
                 System.out.println("data: [" + i + "] " + data[i]);
             }
@@ -357,6 +359,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
                     postDataBytes = postData.toString().getBytes("UTF-8");
                 } else {
 //                String jobId = data[0].substring(0, data[0].indexOf('|'));
+                    type=1;
                     String code = data[0].substring(data[0].indexOf('|') + 1, data[0].length());
                     // prepare data
                     Map<String, Object> params = new LinkedHashMap<>();
@@ -389,21 +392,20 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
                 }
 
                 //////////////////this is all serial ports
-                System.out.println(returnData.toString());
+                return returnData.toString();
 
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("ex: " + e);
-                return true;
+                return "Server Error!";
             }
-
-            return true;
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
+        protected void onPostExecute(String string) {
+            super.onPostExecute(string);
             showProgress(false);
+            Toast.makeText(pointer,string, Toast.LENGTH_LONG).show();
         }
     }
 

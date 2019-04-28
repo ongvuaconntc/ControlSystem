@@ -15,7 +15,7 @@
 
     <style name="AppThemeBlockly" parent="BlocklyVerticalTheme">
         <!-- Customize your theme here. -->
-        <item name="blockTextSize">10sp</item>
+        <item name="blockTextSize">14sp</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>

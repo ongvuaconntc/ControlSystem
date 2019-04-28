@@ -1,6 +1,10 @@
 package hongmp.chinhnt.controlsystem.blockly_utils;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,13 +22,22 @@ public class MyGenerators implements CodeGenerationRequest.CodeGeneratorCallback
         this.mContext = context;
         blocklyActivity=(BlocklyActivity)mContext;
     }
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onFinishCodeGeneration(String s) {
         if (s.isEmpty()) {
             Toast.makeText(this.mContext, "Something went wrong with code generation.", Toast.LENGTH_LONG).show();
         } else {
-            Log.d(this.mTag, "code: \n" + s);
-            Toast.makeText(this.mContext, s, Toast.LENGTH_LONG).show();
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this.mContext);
+            dialog.setTitle("Generated code");
+            dialog.setMessage(s);
+            dialog.setPositiveButton(" OK ", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+
+                }
+            });
+            dialog.show();
             blocklyActivity.addNewCode(s);
         }
     }
