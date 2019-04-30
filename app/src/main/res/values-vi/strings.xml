@@ -33,4 +33,9 @@
     <string name="welcome_txt">Xin chào</string>
     <string name="update_func_name">Thay đổi tên</string>
     <string name="add_funcion">Thêm hàm</string>
+    <string name="edit_txt">Chỉnh sửa</string>
+    <string name="cancel_txt">Hủy bỏ</string>
+    <string name="change_id_msg">ID có độ dài 4 kí tự</string>
+    <string name="gen_code_error_msg">Đã xảy ra lỗi với việc tạo mã.</string>
+    <string name="gen_code_txt">Code đã được tạo</string>
 </resources>

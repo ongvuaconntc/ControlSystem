@@ -36,4 +36,9 @@
     <string name="welcome_txt">Welcome</string>
     <string name="update_func_name">Update Name</string>
     <string name="add_funcion">Add Function</string>
+    <string name="edit_txt">Edit</string>
+    <string name="cancel_txt">Cancel</string>
+    <string name="change_id_msg">ID length = 4 only</string>
+    <string name="gen_code_error_msg">Something went wrong with code generation.</string>
+    <string name="gen_code_txt">Generated code</string>
 </resources>

@@ -224,7 +224,7 @@
   }
   ,{
   "type": "pi_main",
-  "message0": "main procedure %1",
+  "message0": "tiến trình chính %1",
   "args0": [
     {
       "type": "input_statement",
@@ -253,7 +253,7 @@
   },
   {
     "type": "response_to_slave",
-    "message0": "response to slave id %1 with data %2",
+    "message0": "phản hồi tới id %1 với dữ liệu %2",
     "args0": [
       {
         "type": "input_value",
@@ -276,7 +276,7 @@
   ,
   {
     "type": "to_string",
-    "message0": "to_string %1",
+    "message0": "chuỗi %1",
     "args0": [
       {
         "type": "input_value",

@@ -114,9 +114,9 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
                     
                     final AlertDialog d = new AlertDialog.Builder(activity)
                             .setView(input)
-                            .setTitle("Edit " + txtName.getText().toString() + "'s ID")
-                            .setPositiveButton("Edit", null) //Set to null. We override the onclick
-                            .setNegativeButton("Cancel", null)
+                            .setTitle(activity.getResources().getString(R.string.edit_txt)+" " + txtName.getText().toString() + "'s ID")
+                            .setPositiveButton(activity.getResources().getString(R.string.edit_txt), null) //Set to null. We override the onclick
+                            .setNegativeButton(activity.getResources().getString(R.string.cancel_txt), null)
                             .create();
 
                     d.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -134,8 +134,8 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
                                     if (text.length() != 4) {
                                         System.out.println("error!!!!");
                                         isError=true;
-                                        String addition=" (ID length = 4 only)";
-                                        d.setTitle("Edit " + txtName.getText().toString() + "'s ID"+addition);
+                                        String addition=" ("+activity.getResources().getString(R.string.change_id_msg)+")";
+                                        d.setTitle(activity.getResources().getString(R.string.edit_txt)+" " + txtName.getText().toString() + "'s ID"+addition);
                                     }
                                     else
                                     {
