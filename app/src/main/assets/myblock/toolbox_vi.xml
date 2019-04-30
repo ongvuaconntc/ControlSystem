@@ -14,7 +14,7 @@
   -->
 
 <toolbox>
-    <category name="Arduino" colour="330">
+    <category name="Slave" colour="330">
         <block type="init_arduino"></block>
         <block type="core_arduino"></block>
         <block type="set port mode">

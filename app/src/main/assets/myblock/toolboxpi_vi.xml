@@ -14,7 +14,7 @@
   -->
 
 <toolbox>
-    <category name="Server" colour="330">
+    <category name="Master" colour="330">
         <block type="pi_main"></block>
         <block type="pi_get_node_port_value"></block>
         <block type="pi_set_node_port_value"></block>
