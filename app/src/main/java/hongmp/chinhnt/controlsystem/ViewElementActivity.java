@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class ViewElementActivity extends AppCompatActivity {
     static int pressCount=0;
     private ViewElementActivity pointer;
     private User user;
+    private Button scanButton;
 
     private TextView txtAccount;
 
@@ -91,6 +93,13 @@ public class ViewElementActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         processView=(View)findViewById(R.id.progress_bar);
         allView=(View)findViewById(R.id.constraint_layout);
+        scanButton=(Button)findViewById(R.id.button2);
+        scanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scanBtn();
+            }
+        });
 
         System.out.println("In View Element Activity");
         Intent intent=getIntent();
@@ -162,38 +171,36 @@ public class ViewElementActivity extends AppCompatActivity {
         }
      }
 
-    public void scanBtn(View v) {
+    public void scanBtn() {
         System.out.println("scanning");
         ScanTask mScanTask = new ScanTask(this,user);
+        showProgress(true);
         try {
-            while (listEl.size()>0){
-              //  recyclerView.removeViewAt(0);
-                listEl.remove(0);
-                recyclerView.getRecycledViewPool().clear();
-                adapter.notifyDataSetChanged();
-            //    adapter.notifyItemRemoved(0);
-            //    adapter.notifyItemRangeChanged(0, listEl.size());
-            }
-            showProgress(true);
-            JSONObject jsonObj = mScanTask.execute((Void) null).get();
+//            if (listEl.size()>0){
+//                listEl.clear();
+//                recyclerView.getRecycledViewPool().clear();
+//                adapter.notifyDataSetChanged();
+//            }
 
-            if (jsonObj!=null) {
-                int elements_length = jsonObj.getInt("elements_length");
-                JSONObject elements = jsonObj.getJSONObject("elements");
-
-                for (int i = 0; i < elements_length; i++) {
-                    String ele_name = "" + i;
-                    JSONObject element = elements.getJSONObject(ele_name);
-                    String element_name = element.getString("name");
-                    String element_id = element.getString("id");
-                    String element_xml = element.getString("xml");
-                    SystemElement element_ = new SystemElement(element_name, element_id, element_xml);
-                    listEl.add(element_);
-                    adapter.notifyItemInserted(i);
-                }
-
-                adapter.notifyDataSetChanged();
-            }
+            mScanTask.execute((Void) null);
+            adapter.notifyDataSetChanged();
+//            if (jsonObj!=null) {
+//                int elements_length = jsonObj.getInt("elements_length");
+//                JSONObject elements = jsonObj.getJSONObject("elements");
+//
+//                for (int i = 0; i < elements_length; i++) {
+//                    String ele_name = "" + i;
+//                    JSONObject element = elements.getJSONObject(ele_name);
+//                    String element_name = element.getString("name");
+//                    String element_id = element.getString("id");
+//                    String element_xml = element.getString("xml");
+//                    SystemElement element_ = new SystemElement(element_name, element_id, element_xml);
+//                    listEl.add(element_);
+//                    adapter.notifyItemInserted(i);
+//                }
+//
+//                adapter.notifyDataSetChanged();
+//            }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("ex: " + e);
@@ -236,10 +243,6 @@ public class ViewElementActivity extends AppCompatActivity {
         return adapter;
     }
 
-    public void setAdapter(CustomAdapterSystemElement adapter) {
-        this.adapter = adapter;
-    }
-
     public void startEdit(TextView oldid, String newid){
 
         EditIDTask task=new EditIDTask(oldid,this);
@@ -247,7 +250,7 @@ public class ViewElementActivity extends AppCompatActivity {
         task.execute(oldid.getText().toString(),newid);
     }
 
-    class ScanTask extends AsyncTask<Void, String, JSONObject> {
+    class ScanTask extends AsyncTask<Void, String, Void> {
 
         private ViewElementActivity contextParent;
         User user;
@@ -258,7 +261,7 @@ public class ViewElementActivity extends AppCompatActivity {
         }
 
         @Override
-        protected JSONObject doInBackground(Void... data) {
+        protected  Void doInBackground(Void... data) {
             // TODO: attempt authentication against a network service.
             HttpURLConnection conn = null;
             byte[] postDataBytes = null;
@@ -290,7 +293,24 @@ public class ViewElementActivity extends AppCompatActivity {
                 for (int c; (c = in.read()) >= 0; ) {
                     returnData.append((char) c);
                 }
-                return new JSONObject(returnData.toString());
+
+                JSONObject jsonObj=new JSONObject(returnData.toString());
+                listEl.clear();
+                if (jsonObj!=null) {
+                    int elements_length = jsonObj.getInt("elements_length");
+                    JSONObject elements = jsonObj.getJSONObject("elements");
+
+                    for (int i = 0; i < elements_length; i++) {
+                        String ele_name = "" + i;
+                        JSONObject element = elements.getJSONObject(ele_name);
+                        String element_name = element.getString("name");
+                        String element_id = element.getString("id");
+                        String element_xml = element.getString("xml");
+                        SystemElement element_ = new SystemElement(element_name, element_id, element_xml);
+                        listEl.add(element_);
+                    }
+                  }
+                return null;
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("ex: " + e);
@@ -301,7 +321,7 @@ public class ViewElementActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(JSONObject jsonObject) {
+        protected void onPostExecute( Void jsonObject) {
             super.onPostExecute(jsonObject);
             showProgress(false);
         }

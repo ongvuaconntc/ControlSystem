@@ -38,7 +38,6 @@ import hongmp.chinhnt.controlsystem.object.User;
 
 public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapterSystemElement.ViewHolder>{
     private ViewElementActivity activity;
-    private String[] mDataset;
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         TextView txtName;
@@ -68,6 +67,7 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
                     //}
                 }
             });
+
 
             this.btnEditId.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -111,7 +111,7 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
                         */
                     final EditText input = new EditText(activity);
                     input.setInputType(InputType.TYPE_CLASS_TEXT);
-                    
+
                     final AlertDialog d = new AlertDialog.Builder(activity)
                             .setView(input)
                             .setTitle(activity.getResources().getString(R.string.edit_txt)+" " + txtName.getText().toString() + "'s ID")
@@ -173,6 +173,10 @@ public class CustomAdapterSystemElement extends RecyclerView.Adapter<CustomAdapt
             holder.txtFunction.setText(elements.get(position).getId());
             holder.txtName.setText(elements.get(position).getName());
             holder.position = position;
+            if (holder.txtName.getText().equals("Master")){
+                System.out.println("Set Button edit gone");
+                holder.btnEditId.setVisibility(View.GONE);
+            }
         }
 
     }
